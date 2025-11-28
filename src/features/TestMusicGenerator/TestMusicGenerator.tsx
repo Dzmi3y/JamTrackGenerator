@@ -25,6 +25,8 @@ const TestMusicGenerator: React.FC = () => {
   const { ticksToSeconds } = useNoteTiming(bpm, 64);
 
   const play = async () => {
+    Tone.Transport.cancel();
+    Tone.Transport.stop();
     await Tone.start();
     Tone.Transport.bpm.value = bpm;
 
@@ -114,7 +116,7 @@ const TestMusicGenerator: React.FC = () => {
     //synth.triggerAttackRelease(["C4", "E4", "G4"], "2n", "0:0:2", 0.7);
 
     part.start(0);
-
+    part.stop(`+${currentOffSet}`);
     Tone.Transport.start();
   };
 
