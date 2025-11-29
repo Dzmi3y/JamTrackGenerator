@@ -1,12 +1,21 @@
 import React from "react";
 import * as Tone from "tone";
 import * as scribble from "scribbletune";
-import { usePartBuilder, type PartResult } from "../hooks/usePartBuilder";
+import {
+  usePartBuilder,
+  type PartResult,
+} from "../../shared/hooks/usePartBuilder";
 import type { PartInfo } from "../../interfaces/PartInfo";
 
-const TestMusicGenerator: React.FC = () => {
+const TestTonMusicGenerator: React.FC = () => {
   const bpm = 120;
   const { getPart } = usePartBuilder();
+
+  function isStringArray(value: unknown): value is string[] {
+    return (
+      Array.isArray(value) && value.every((item) => typeof item === "string")
+    );
+  }
 
   const play = async () => {
     Tone.Transport.cancel();
@@ -31,11 +40,13 @@ const TestMusicGenerator: React.FC = () => {
     const synth = new Tone.Synth().toDestination();
 
     const part = new Tone.Part((time, event) => {
+      const bpm = 120;
+      const { getPart } = usePartBuilder();
       synth.triggerAttackRelease(
-        event.event.note,
+        event.event.note.join(" "),
         event.event.duration,
         time,
-        event.event.velocity
+        event.event.velocity / 100
       );
     }, partResult.part);
 
@@ -47,4 +58,4 @@ const TestMusicGenerator: React.FC = () => {
   return <button onClick={play}>▶ Play</button>;
 };
 
-export default TestMusicGenerator;
+export default TestTonMusicGenerator;

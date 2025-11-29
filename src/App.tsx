@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./App.css";
-import TestMusicGenerator from "./features/TestMusicGenerator/TestMusicGenerator";
+import TestMusicGenerator from "./features/TestSoundfontMusicGenerator/TestSoundfontMusicGenerator";
 
 function App() {
   const [count, setCount] = useState(0);

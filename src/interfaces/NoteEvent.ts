@@ -1,5 +1,5 @@
 export interface NoteEvent {
-  note: string;
-  duration: string | number;
+  note: string[];
+  duration: number;
   velocity: number;
 }
