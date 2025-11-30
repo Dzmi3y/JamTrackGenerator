@@ -18,9 +18,13 @@
       #preloader {
         position: fixed;
         inset: 0;
+        color: #f0ede5;
         display: flex;
+        gap: 10px;
+        text-align: "Nunito Sans", sans-serif;
         align-items: center;
         justify-content: center;
+        flex-direction: column;
         background-color: rgba(44, 62, 80, 0.8);
         z-index: 9999;
       }
@@ -77,6 +81,7 @@
         <div></div>
         <div></div>
       </div>
+      <div id="preloaderText"></div>
     </div>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>

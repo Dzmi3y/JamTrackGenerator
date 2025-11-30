@@ -1,16 +1,16 @@
-import { useState } from "react";
-import "./App.css";
-import TestMusicGenerator from "./features/TestSoundfontMusicGenerator/TestSoundfontMusicGenerator";
+import React, { useEffect } from "react";
+import { PreloaderProvider } from "./shared/components/PreloaderProvider";
+import TestSoundfontMusicGenerator from "./features/TestSoundfontMusicGenerator/TestSoundfontMusicGenerator";
 
-function App() {
-  const [count, setCount] = useState(0);
-
+const App: React.FC = () => {
   return (
-    <>
-      <h1>JamTrack Generator</h1>
-      <TestMusicGenerator />
-    </>
+    <div id="appContainer">
+      <PreloaderProvider>
+        <h1>JamTrack Generator</h1>
+        <TestSoundfontMusicGenerator />
+      </PreloaderProvider>
+    </div>
   );
-}
+};
 
 export default App;

@@ -10,11 +10,6 @@ export interface PartResult {
   totalDuration: number;
 }
 export function usePartBuilder() {
-  function isStringArray(value: unknown): value is string[] {
-    return (
-      Array.isArray(value) && value.every((item) => typeof item === "string")
-    );
-  }
   const { ticksToSeconds } = useNoteTiming();
   const getPart = useCallback(
     (partInfo: PartInfo, bpm: number = 120): PartResult => {

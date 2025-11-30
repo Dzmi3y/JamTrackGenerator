@@ -1,14 +1,17 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Soundfont from "soundfont-player";
 import type { PartInfo } from "../../interfaces/PartInfo";
 import {
   usePartBuilder,
   type PartResult,
 } from "../../shared/hooks/usePartBuilder";
+import { usePreloader } from "../../shared/components/PreloaderProvider";
 
 const TestSoundfontMusicGenerator: React.FC = () => {
   const acRef = React.useRef<AudioContext | null>(null);
   const { getPart } = usePartBuilder();
+  const { hidePreloader, isPreloaderVisible, setPreloaderText } =
+    usePreloader();
 
   if (!acRef.current) {
     acRef.current = new AudioContext();
@@ -17,9 +20,9 @@ const TestSoundfontMusicGenerator: React.FC = () => {
   const gainNode = ac.createGain();
   gainNode.connect(ac.destination);
 
-  const [piano, setPiano] = React.useState<Soundfont.Player | null>(null);
+  const [piano, setPiano] = useState<Soundfont.Player | null>(null);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const loadInstrument = async () => {
       const inst = await Soundfont.instrument(ac, "acoustic_grand_piano", {
         destination: gainNode,
@@ -28,6 +31,14 @@ const TestSoundfontMusicGenerator: React.FC = () => {
     };
     loadInstrument();
   }, [ac, gainNode]);
+
+  useEffect(() => {
+    if (piano && isPreloaderVisible) {
+      hidePreloader();
+    } else if (isPreloaderVisible) {
+      setPreloaderText("Loading musical instruments...");
+    }
+  }, [piano, isPreloaderVisible]);
 
   const play = async () => {
     await ac.resume();

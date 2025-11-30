@@ -10,12 +10,6 @@ root.render(
   </StrictMode>
 );
 
-const preloader = document.getElementById("preloader");
-if (preloader) {
-  preloader.classList.add("fade-out");
-  setTimeout(() => preloader.remove(), 500);
-}
-
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
     navigator.serviceWorker
