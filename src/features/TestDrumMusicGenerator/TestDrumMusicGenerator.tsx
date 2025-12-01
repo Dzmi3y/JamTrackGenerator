@@ -60,24 +60,32 @@ const TestDrumMusicGenerator: React.FC = () => {
     await Tone.start();
     Tone.Transport.bpm.value = bpm;
 
-    console.log(scribble.scale("C4 major"));
+    let kickInfo: PartInfo = {
+      notes: "C1",
+      pattern: "x___x___",
+      accent: "xxxxxxxx",
+    };
 
-    let partInfo: PartInfo = {
-      notes: [
-        ["C1", "A#1"],
-        ["F#1"],
-        ["D1", "F#1"],
-        ["F#1"],
-        ["C1", "F#1"],
-        ["F#1"],
-        ["D1", "F#1"],
-        ["F#1"],
-      ],
+    let snareInfo: PartInfo = {
+      notes: "D1",
+      pattern: "--x_--x_",
+      accent: "x---",
+    };
+
+    let hihatInfo: PartInfo = {
+      notes: "F#1",
       pattern: "xxxxxxxx",
       accent: "x---",
     };
 
-    let partResult: PartResult = getPart(partInfo, bpm);
+    let partKick: PartResult = getPart(kickInfo, bpm);
+    let partSnare: PartResult = getPart(snareInfo, bpm);
+    let partHihat: PartResult = getPart(hihatInfo, bpm);
+
+    let partResult: PartResult = {
+      totalDuration: partHihat.totalDuration,
+      part: [...partKick.part, ...partSnare.part, ...partHihat.part],
+    };
 
     console.log("resultArray");
     console.log(partResult.part);
