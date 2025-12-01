@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import * as Tone from "tone";
 import * as scribble from "scribbletune";
 import {
@@ -6,10 +6,17 @@ import {
   type PartResult,
 } from "../../shared/hooks/usePartBuilder";
 import type { PartInfo } from "../../interfaces/PartInfo";
+import { usePreloader } from "../../shared/components/PreloaderProvider";
 
 const TestTonMusicGenerator: React.FC = () => {
   const bpm = 120;
   const { getPart } = usePartBuilder();
+  const { hidePreloader, isPreloaderVisible, setPreloaderText } =
+    usePreloader();
+
+  useEffect(() => {
+    hidePreloader();
+  }, []);
 
   function isStringArray(value: unknown): value is string[] {
     return (

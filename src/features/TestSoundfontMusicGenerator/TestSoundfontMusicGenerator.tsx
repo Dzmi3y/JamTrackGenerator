@@ -46,26 +46,46 @@ const TestSoundfontMusicGenerator: React.FC = () => {
       return;
     }
 
-    let partInfo: PartInfo = {
-      notes: "C4 FM GM CM",
+    let partInfo1: PartInfo = {
+      notes: "C4 E4 G4",
       pattern: "x_x_x_x_",
       accent: "x---",
     };
 
-    let partResult: PartResult = getPart(partInfo, 120);
+    let partInfo2: PartInfo = {
+      notes: "C3 G3",
+      pattern: "x___x___",
+      accent: "x---",
+    };
 
-    console.log(partResult.part);
+    let partResult1: PartResult = getPart(partInfo1, 120);
+    let partResult2: PartResult = getPart(partInfo2, 120);
 
-    let currentTime = ac.currentTime;
+    console.log("Part 1:", partResult1.part);
+    console.log("Part 2:", partResult2.part);
 
-    partResult.part.forEach((partItem) => {
+    let startTime = ac.currentTime;
+
+    let currentTime1 = startTime;
+    partResult1.part.forEach((partItem) => {
       partItem.event.note.forEach((n) => {
-        piano.play(n, currentTime, {
+        piano.play(n, currentTime1, {
           duration: partItem.event.duration,
           gain: partItem.event.velocity,
         });
       });
-      currentTime += partItem.event.duration;
+      currentTime1 += partItem.event.duration;
+    });
+
+    let currentTime2 = startTime;
+    partResult2.part.forEach((partItem) => {
+      partItem.event.note.forEach((n) => {
+        piano.play(n, currentTime2, {
+          duration: partItem.event.duration,
+          gain: partItem.event.velocity * 0.7,
+        });
+      });
+      currentTime2 += partItem.event.duration;
     });
   };
 
