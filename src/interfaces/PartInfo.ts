@@ -1,5 +1,5 @@
 export interface PartInfo {
-  notes: string | string[];
+  notes: string | string[] | string[][];
   pattern: string;
   accent: string;
 }

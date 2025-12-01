@@ -8,7 +8,7 @@ import {
 import type { PartInfo } from "../../interfaces/PartInfo";
 import { usePreloader } from "../../shared/components/PreloaderProvider";
 
-const TestTSMusicGenerator: React.FC = () => {
+const TestDrumMusicGenerator: React.FC = () => {
   const bpm = 120;
   const { getPart } = usePartBuilder();
   const [pianoSampler, setPianoSampler] = useState<Tone.Sampler | null>(null);
@@ -22,17 +22,20 @@ const TestTSMusicGenerator: React.FC = () => {
       setIsLoading(true);
       const sampler = new Tone.Sampler({
         urls: {
-          A0: "A0v1.wav",
-          A1: "A1v1.wav",
-          A2: "A2v1.wav",
-          "D#3": "Ds3v1.wav",
-          A4: "A4v1.wav",
-          A5: "A5v1.wav",
-          "D#7": "Ds7v1.wav",
+          C1: "kick.wav",
+          D1: "snare.wav",
+          "C#1": "rimshot.wav",
+          "F#1": "hihat.wav",
+          "A#1": "ohihat.wav",
+          F1: "lowTom.wav",
+          B1: "midTom.wav",
+          D2: "highTom.wav",
+          "C#2": "crash.wav",
+          "D#2": "ride.wav",
         },
-        baseUrl: "/Samples/Piano/",
+        baseUrl: "/Samples/Drumkit/",
         onload: () => {
-          console.log("Piano samples loaded");
+          console.log("Drumkit samples loaded");
           setIsLoading(false);
         },
         release: 1,
@@ -60,8 +63,17 @@ const TestTSMusicGenerator: React.FC = () => {
     console.log(scribble.scale("C4 major"));
 
     let partInfo: PartInfo = {
-      notes: "CM FM GM CM",
-      pattern: "x_x_x_x_",
+      notes: [
+        ["C1", "A#1"],
+        ["F#1"],
+        ["D1", "F#1"],
+        ["F#1"],
+        ["C1", "F#1"],
+        ["F#1"],
+        ["D1", "F#1"],
+        ["F#1"],
+      ],
+      pattern: "xxxxxxxx",
       accent: "x---",
     };
 
@@ -81,18 +93,21 @@ const TestTSMusicGenerator: React.FC = () => {
       }
     }, partResult.part);
 
+    part.loop = true;
+    part.loopEnd = partResult.totalDuration;
+
     part.start(0);
-    part.stop(`+${partResult.totalDuration}`);
+    //part.stop(`+${partResult.totalDuration}`);
     Tone.Transport.start();
   };
 
   return (
     <div>
       <button onClick={play} disabled={isLoading}>
-        {isLoading ? "Loading piano..." : "▶ Play with Piano"}
+        {isLoading ? "Loading Drumkit..." : "▶ Play with Drumkit"}
       </button>
     </div>
   );
 };
 
-export default TestTSMusicGenerator;
+export default TestDrumMusicGenerator;
