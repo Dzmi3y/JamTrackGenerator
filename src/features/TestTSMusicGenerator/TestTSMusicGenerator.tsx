@@ -7,37 +7,25 @@ import {
 } from "../../shared/hooks/usePartBuilder";
 import type { PartInfo } from "../../interfaces/PartInfo";
 import { usePreloader } from "../../shared/components/PreloaderProvider";
+import { useSampler } from "../Sampler/useSampler";
 
 const TestTSMusicGenerator: React.FC = () => {
   const bpm = 120;
   const { getPart } = usePartBuilder();
   const [pianoSampler, setPianoSampler] = useState<Tone.Sampler | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-
+  const { getSampler } = useSampler();
   const { hidePreloader, isPreloaderVisible, setPreloaderText } =
     usePreloader();
 
   useEffect(() => {
     const loadPiano = async () => {
       setIsLoading(true);
-      const sampler = new Tone.Sampler({
-        urls: {
-          A0: "A0v1.wav",
-          A1: "A1v1.wav",
-          A2: "A2v1.wav",
-          "D#3": "Ds3v1.wav",
-          A4: "A4v1.wav",
-          A5: "A5v1.wav",
-          "D#7": "Ds7v1.wav",
-        },
-        baseUrl: "/Samples/Piano/",
-        onload: () => {
-          console.log("Piano samples loaded");
-          setIsLoading(false);
-        },
-        release: 1,
-      }).toDestination();
-
+      setPreloaderText("Instruments is loading...");
+      const sampler = getSampler("piano", () => {
+        console.log("Piano samples loaded");
+        setIsLoading(false);
+      });
       hidePreloader();
       setPianoSampler(sampler);
     };
