@@ -8,7 +8,7 @@ const App: React.FC = () => {
     <div id="appContainer">
       <PreloaderProvider>
         <h1>JamTrack Generator</h1>
-        <TestTSMusicGenerator />
+        <TestDrumMusicGenerator />
       </PreloaderProvider>
     </div>
   );

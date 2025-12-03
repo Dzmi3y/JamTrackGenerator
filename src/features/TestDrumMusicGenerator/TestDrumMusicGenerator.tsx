@@ -6,41 +6,30 @@ import {
   type PartResult,
 } from "../../shared/hooks/usePartBuilder";
 import type { PartInfo } from "../../interfaces/PartInfo";
+
 import { usePreloader } from "../../shared/components/PreloaderProvider";
+import { useSampler } from "../Sampler/useSampler";
+import { usePattern } from "../Sampler/usePattern";
+import { useDrumPart } from "../Sampler/useDrumPart";
 
 const TestDrumMusicGenerator: React.FC = () => {
-  const bpm = 120;
-  const { getPart } = usePartBuilder();
+  const bpm = 180;
   const [pianoSampler, setPianoSampler] = useState<Tone.Sampler | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const { getSampler } = useSampler();
 
   const { hidePreloader, isPreloaderVisible, setPreloaderText } =
     usePreloader();
 
+  const { getDefaultDrumPart } = useDrumPart();
   useEffect(() => {
     const loadPiano = async () => {
       setIsLoading(true);
-      const sampler = new Tone.Sampler({
-        urls: {
-          C1: "kick.wav",
-          D1: "snare.wav",
-          "C#1": "rimshot.wav",
-          "F#1": "hihat.wav",
-          "A#1": "ohihat.wav",
-          F1: "lowTom.wav",
-          B1: "midTom.wav",
-          D2: "highTom.wav",
-          "C#2": "crash.wav",
-          "D#2": "ride.wav",
-        },
-        baseUrl: "/Samples/Drumkit/",
-        onload: () => {
-          console.log("Drumkit samples loaded");
-          setIsLoading(false);
-        },
-        release: 1,
-      }).toDestination();
-
+      setPreloaderText("Instruments is loading...");
+      const sampler = getSampler("drums", () => {
+        console.log("Drumkit samples loaded");
+        setIsLoading(false);
+      });
       hidePreloader();
       setPianoSampler(sampler);
     };
@@ -50,7 +39,7 @@ const TestDrumMusicGenerator: React.FC = () => {
 
   const play = async () => {
     if (!pianoSampler || isLoading) {
-      console.error("Piano not loaded yet");
+      console.error("Drumkit not loaded yet");
       return;
     }
 
@@ -60,33 +49,10 @@ const TestDrumMusicGenerator: React.FC = () => {
     await Tone.start();
     Tone.Transport.bpm.value = bpm;
 
-    let kickInfo: PartInfo = {
-      notes: "C1",
-      pattern: "x___x___",
-      accent: "xxxxxxxx",
-    };
-
-    let snareInfo: PartInfo = {
-      notes: "D1",
-      pattern: "--x_--x_",
-      accent: "x---",
-    };
-
-    let hihatInfo: PartInfo = {
-      notes: "F#1",
-      pattern: "xxxxxxxx",
-      accent: "x---",
-    };
-
-    let partKick: PartResult = getPart(kickInfo, bpm);
-    let partSnare: PartResult = getPart(snareInfo, bpm);
-    let partHihat: PartResult = getPart(hihatInfo, bpm);
-
-    let partResult: PartResult = {
-      totalDuration: partHihat.totalDuration,
-      part: [...partKick.part, ...partSnare.part, ...partHihat.part],
-    };
-
+    const partResult = getDefaultDrumPart(bpm);
+    if (!partResult) {
+      return;
+    }
     console.log("resultArray");
     console.log(partResult.part);
 
