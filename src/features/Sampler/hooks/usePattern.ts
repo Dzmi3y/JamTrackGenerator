@@ -1,7 +1,7 @@
 import { useCallback } from "react";
-import patternsData from "./patterns/patterns.json";
-import type { RhythmPattern } from "./rhythmPattern";
-import type { PartInfo } from "../../interfaces/PartInfo";
+import patternsData from "../patterns/patterns.json";
+import type { RhythmPattern } from "../rhythmPattern";
+import type { PartInfo } from "../../../interfaces/PartInfo";
 
 export function usePattern() {
   const getPartInfo = useCallback(

@@ -1,9 +1,9 @@
 import { useCallback } from "react";
-import type { ClipEvent } from "../../interfaces/ClipEvent";
+import type { ClipEvent } from "../../../interfaces/ClipEvent";
 import * as scribble from "scribbletune";
-import type { PartItem } from "../../interfaces/Part";
+import type { PartItem } from "../../../interfaces/Part";
 import { useNoteTiming } from "./useNoteTiming";
-import type { PartInfo } from "../../interfaces/PartInfo";
+import type { PartInfo } from "../../../interfaces/PartInfo";
 
 export interface PartResult {
   part: Array<PartItem>;

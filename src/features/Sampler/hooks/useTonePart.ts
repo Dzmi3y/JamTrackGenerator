@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useState } from "react";
 import * as Tone from "tone";
-import type { PartResult } from "../../shared/hooks/usePartBuilder";
-import { useSampler } from "../../features/Sampler/useSampler";
-import { usePreloader } from "../components/PreloaderProvider";
-import type { SampleInstrument } from "../../features/Sampler/SampleInstrument";
+import { useSampler } from "./useSampler";
+import { usePreloader } from "../../../shared/components/PreloaderProvider";
+import type { SampleInstrument } from "../SampleInstrument";
+import type { PartResult } from "./usePartBuilder";
 
 export function useTonePart(instrument: SampleInstrument) {
   const [sampler, setSampler] = useState<Tone.Sampler | null>(null);

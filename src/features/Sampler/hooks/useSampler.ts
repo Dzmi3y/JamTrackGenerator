@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 import * as Tone from "tone";
-import type { SampleInstrument } from "./SampleInstrument";
-import { instrumentConfigs } from "./instrumentConfigs";
+import type { SampleInstrument } from "../SampleInstrument";
+import { instrumentConfigs } from "../instrumentConfigs";
 
 export function useSampler() {
   const getSampler = useCallback(

@@ -1,18 +1,29 @@
 import React, { useState, useEffect } from "react";
 import * as Tone from "tone";
-import { useDrumPart } from "../Sampler/useDrumPart";
-import { useTonePart } from "../../shared/hooks/useTonePart";
-import { useInstrumentPart } from "../Sampler/useInstrumentPart";
+import { useDrumPart } from "../Sampler/hooks/useDrumPart";
+import { useTonePart } from "../Sampler/hooks/useTonePart";
+import { useInstrumentPart } from "../Sampler/hooks/useInstrumentPart";
+import * as scribble from "scribbletune";
+import { useChord } from "../Sampler/hooks/useChord";
 
-const TestDrumMusicGenerator: React.FC = () => {
+const TestMusicGenerator: React.FC = () => {
   const bpm = 180;
+  const { getChord } = useChord();
 
   const drumsPart = useTonePart("drums");
   const pianoPart = useTonePart("piano");
 
   const { getDefaultDrumPart } = useDrumPart();
   const { getInstrumentPart } = useInstrumentPart();
-  const partResultInst = getInstrumentPart("D3 G3 C3 F3", "1", bpm);
+
+  const dm7 = getChord("D", "m7", 3);
+  const g7 = getChord("G", "7th", 3);
+  const cmaj7 = getChord("C", "maj7", 3);
+  const fmaj7 = getChord("F", "maj7", 3);
+
+  //scribble.getChordsByProgression("C4 melodic minor", "ii V I I")
+
+  const partResultInst = getInstrumentPart([dm7, g7, cmaj7, fmaj7], "1", bpm);
   const partResult = getDefaultDrumPart(bpm);
 
   const [transportTime, setTransportTime] = useState(0);
@@ -69,4 +80,4 @@ const TestDrumMusicGenerator: React.FC = () => {
   );
 };
 
-export default TestDrumMusicGenerator;
+export default TestMusicGenerator;

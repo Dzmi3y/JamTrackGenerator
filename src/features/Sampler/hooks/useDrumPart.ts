@@ -1,9 +1,6 @@
 import { useCallback } from "react";
 import { usePattern } from "./usePattern";
-import {
-  usePartBuilder,
-  type PartResult,
-} from "../../shared/hooks/usePartBuilder";
+import { usePartBuilder, type PartResult } from "./usePartBuilder";
 
 export function useDrumPart() {
   const { getPart } = usePartBuilder();
