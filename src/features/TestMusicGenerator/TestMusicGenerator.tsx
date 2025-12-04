@@ -1,75 +1,75 @@
-import React, { useState, useEffect } from "react";
-import * as Tone from "tone";
+import React from "react";
 import { useDrumPart } from "../Sampler/hooks/useDrumPart";
 import { useTonePart } from "../Sampler/hooks/useTonePart";
 import { useInstrumentPart } from "../Sampler/hooks/useInstrumentPart";
 import * as scribble from "scribbletune";
 import { useChord } from "../Sampler/hooks/useChord";
+import { usePlayer } from "../Player/usePlayer";
 
 const TestMusicGenerator: React.FC = () => {
   const bpm = 180;
   const { getChord } = useChord();
 
-  const drumsPart = useTonePart("drums");
+  const drumPart = useTonePart("drums");
   const pianoPart = useTonePart("piano");
 
   const { getDefaultDrumPart } = useDrumPart();
   const { getInstrumentPart } = useInstrumentPart();
 
-  const dm7 = getChord("D", "m7", 3);
-  const g7 = getChord("G", "7th", 3);
-  const cmaj7 = getChord("C", "maj7", 3);
-  const fmaj7 = getChord("F", "maj7", 3);
+  const dMinor7 = getChord("D", "m7", 3);
+  const gDominant7 = getChord("G", "7th", 3);
+  const cMajor7 = getChord("C", "maj7", 3);
+  const fMajor7 = getChord("F", "maj7", 3);
 
-  //scribble.getChordsByProgression("C4 melodic minor", "ii V I I")
+  // scribble.getChordsByProgression("C4 melodic minor", "ii V I I")
 
-  const partResultInst = getInstrumentPart([dm7, g7, cmaj7, fmaj7], "1", bpm);
-  const partResult = getDefaultDrumPart(bpm);
+  const instrumentSequence = getInstrumentPart(
+    [dMinor7, gDominant7, cMajor7, fMajor7],
+    "1",
+    bpm
+  );
+  const drumSequence = getDefaultDrumPart(bpm);
 
-  const [transportTime, setTransportTime] = useState(0);
-  const [transportPosition, setTransportPosition] =
-    useState<Tone.Unit.Time>("0:0:0");
+  const handlePlayParts = () => {
+    if (!instrumentSequence || !drumSequence) return;
 
-  const play = async () => {
-    Tone.Transport.timeSignature = [4, 4];
-    Tone.Transport.cancel();
-    Tone.Transport.stop();
-
-    await Tone.start();
-    Tone.Transport.bpm.value = bpm;
-
-    if (!partResult || !partResultInst) {
-      return;
-    }
-
-    pianoPart.playPart(partResultInst, false);
-    drumsPart.playPart(partResult, false);
-
-    Tone.Transport.start();
+    pianoPart.playPart(instrumentSequence, false);
+    drumPart.playPart(drumSequence, false);
   };
 
-  const stop = () => {
-    Tone.Transport.stop();
+  const {
+    setBpm,
+    togglePlayback,
+    stopPlayback,
+    setPlaybackPosition,
+    pausePlayback,
+    startPlayback,
+    timeSignature,
+    setTimeSignature,
+    transportTime,
+    transportPosition,
+  } = usePlayer(handlePlayParts);
+
+  const handlePlayClick = async () => {
+    startPlayback();
   };
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setTransportTime(Tone.Transport.seconds);
-      setTransportPosition(Tone.Transport.position);
-    }, 100);
-
-    return () => clearInterval(interval);
-  }, []);
+  const handleChangePosition = () => {
+    setPlaybackPosition("1:0:0");
+  };
 
   return (
     <div>
-      <button onClick={play} disabled={pianoPart.isLoading}>
+      <button onClick={handlePlayClick} disabled={pianoPart.isLoading}>
         {pianoPart.isLoading
           ? "Loading Instruments..."
           : "▶ Play with Instruments"}
       </button>
-      <button onClick={stop} disabled={pianoPart.isLoading}>
+      <button onClick={stopPlayback} disabled={pianoPart.isLoading}>
         {pianoPart.isLoading ? "Loading Instruments..." : "Stop"}
+      </button>
+      <button onClick={handleChangePosition} disabled={pianoPart.isLoading}>
+        {pianoPart.isLoading ? "Loading Instruments..." : "Change Position"}
       </button>
 
       <div style={{ marginTop: "1rem" }}>
