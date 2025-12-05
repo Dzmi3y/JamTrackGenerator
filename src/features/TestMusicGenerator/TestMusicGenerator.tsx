@@ -5,6 +5,7 @@ import { useInstrumentPart } from "../Sampler/hooks/useInstrumentPart";
 import * as scribble from "scribbletune";
 import { useChord } from "../Sampler/hooks/useChord";
 import { usePlayer } from "../Player/usePlayer";
+import PlayerScrollbar from "../Player/PlayerScrollbar";
 
 const TestMusicGenerator: React.FC = () => {
   const bpm = 180;
@@ -54,8 +55,13 @@ const TestMusicGenerator: React.FC = () => {
     startPlayback();
   };
 
+  //todo playback line, add autostop
   const handleChangePosition = () => {
     setPlaybackPosition("1:0:0");
+  };
+
+  const scrollbarHandleChangePosition = (pos: number) => {
+    setPlaybackPosition(pos);
   };
 
   return (
@@ -75,6 +81,7 @@ const TestMusicGenerator: React.FC = () => {
       <div style={{ marginTop: "1rem" }}>
         <p>Transport time: {transportTime.toFixed(2)}s</p>
         <p>Position: {transportPosition.toString()}</p>
+        <PlayerScrollbar changePosition={scrollbarHandleChangePosition} />
       </div>
     </div>
   );

@@ -36,13 +36,16 @@ export function usePlayer(partCallback: () => void) {
   }, [startPlayback, pausePlayback]);
 
   const setPlaybackPosition = useCallback(
-    async (pos: Tone.Unit.Time) => {
+    async (pos: Tone.Unit.Time | number) => {
       if (Tone.Transport.state === "stopped") {
         await startPlayback();
         pausePlayback();
       }
-
-      Tone.Transport.position = pos;
+      if (typeof pos === "number") {
+        Tone.Transport.seconds = pos;
+      } else {
+        Tone.Transport.position = pos;
+      }
     },
     [startPlayback, pausePlayback]
   );
