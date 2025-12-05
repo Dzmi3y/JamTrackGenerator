@@ -1,9 +1,12 @@
 import { useCallback, useEffect, useState } from "react";
 import * as Tone from "tone";
 
-export function usePlayer(partCallback: () => void) {
+export function usePlayer(
+  partCallback: () => void,
+  duration: number,
+  bpm: number
+) {
   const [transportTime, setTransportTime] = useState(0);
-  const [bpm, setBpm] = useState(120);
   const [timeSignature, setTimeSignature] = useState<[number, number]>([4, 4]);
   const [transportPosition, setTransportPosition] =
     useState<Tone.Unit.Time>("0:0:0");
@@ -12,6 +15,8 @@ export function usePlayer(partCallback: () => void) {
     Tone.Transport.timeSignature = timeSignature;
 
     if (Tone.Transport.state === "stopped") {
+      Tone.Transport.position = "0:1:0"; // Fixes a bug in Tone.js when a -0 value is available
+      Tone.Transport.position = "0:0:0";
       Tone.Transport.bpm.value = bpm;
       partCallback();
     }
@@ -54,13 +59,14 @@ export function usePlayer(partCallback: () => void) {
     const interval = setInterval(() => {
       setTransportTime(Tone.Transport.seconds);
       setTransportPosition(Tone.Transport.position);
+      if (Tone.Transport.seconds >= duration) {
+        stopPlayback();
+      }
     }, 100);
     return () => clearInterval(interval);
-  }, []);
+  }, [duration]);
 
   return {
-    bpm,
-    setBpm,
     togglePlayback,
     stopPlayback,
     setPlaybackPosition,

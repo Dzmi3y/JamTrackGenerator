@@ -38,8 +38,9 @@ const TestMusicGenerator: React.FC = () => {
     drumPart.playPart(drumSequence, false);
   };
 
+  const totalDuration = instrumentSequence?.totalDuration ?? 60;
+
   const {
-    setBpm,
     togglePlayback,
     stopPlayback,
     setPlaybackPosition,
@@ -49,15 +50,10 @@ const TestMusicGenerator: React.FC = () => {
     setTimeSignature,
     transportTime,
     transportPosition,
-  } = usePlayer(handlePlayParts);
+  } = usePlayer(handlePlayParts, totalDuration, bpm);
 
   const handlePlayClick = async () => {
-    startPlayback();
-  };
-
-  //todo playback line, add autostop
-  const handleChangePosition = () => {
-    setPlaybackPosition("1:0:0");
+    togglePlayback();
   };
 
   const scrollbarHandleChangePosition = (pos: number) => {
@@ -74,14 +70,14 @@ const TestMusicGenerator: React.FC = () => {
       <button onClick={stopPlayback} disabled={pianoPart.isLoading}>
         {pianoPart.isLoading ? "Loading Instruments..." : "Stop"}
       </button>
-      <button onClick={handleChangePosition} disabled={pianoPart.isLoading}>
-        {pianoPart.isLoading ? "Loading Instruments..." : "Change Position"}
-      </button>
 
       <div style={{ marginTop: "1rem" }}>
         <p>Transport time: {transportTime.toFixed(2)}s</p>
         <p>Position: {transportPosition.toString()}</p>
-        <PlayerScrollbar changePosition={scrollbarHandleChangePosition} />
+        <PlayerScrollbar
+          duration={totalDuration}
+          changePosition={scrollbarHandleChangePosition}
+        />
       </div>
     </div>
   );
