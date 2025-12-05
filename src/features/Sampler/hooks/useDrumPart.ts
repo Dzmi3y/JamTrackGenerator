@@ -16,13 +16,13 @@ export function useDrumPart() {
 
       const infos = instruments
         .map(({ note, id }) => getPartInfo(note, id))
-        .filter(Boolean);
+        .filter((r) => r !== undefined);
 
       if (infos.length !== instruments.length) {
         return undefined;
       }
 
-      const parts = infos.map((info) => getPart(info!, bpm));
+      const parts = infos.map((info) => getPart([info], bpm));
       const totalDuration = parts[parts.length - 1].totalDuration;
 
       return {

@@ -1,24 +1,20 @@
 import { useCallback } from "react";
 import { usePattern } from "./usePattern";
 import { usePartBuilder, type PartResult } from "./usePartBuilder";
+import type { PatternBlock } from "../patternBlock";
 
 export function useInstrumentPart() {
   const { getPart } = usePartBuilder();
   const { getPartInfo } = usePattern();
 
   const getInstrumentPart = useCallback(
-    (
-      note: string | string[] | string[][],
-      id: string,
-      bpm: number
-    ): PartResult | undefined => {
-      const partInfo = getPartInfo(note, id);
+    (patternBlock: PatternBlock[], bpm: number): PartResult | undefined => {
+      const partInfoArray = patternBlock.flatMap((p) => {
+        const info = getPartInfo(p.note, p.id);
+        return info ? [info] : [];
+      });
 
-      if (!partInfo) {
-        return undefined;
-      }
-
-      const part = getPart(partInfo!, bpm);
+      const part = getPart(partInfoArray, bpm);
 
       return {
         totalDuration: part.totalDuration,

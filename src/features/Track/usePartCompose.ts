@@ -22,18 +22,20 @@ export function usePartCompose(bpm: number, timeSignature: [number, number]) {
   const fMajor7 = getChord("F", "maj7", 3);
 
   const instrumentSequence = piano.getInstrumentPart(
-    [dMinor7, gDominant7, cMajor7, fMajor7],
-    "1",
+    [
+      { note: [dMinor7, gDominant7, cMajor7, fMajor7], id: "1" },
+      { note: [dMinor7, gDominant7, cMajor7, cMajor7], id: "2" },
+    ],
     bpm
   );
   //scribble.getChordsByProgression("C4 melodic minor", "ii V I I")
-  const instrumentSequence2 = piano.getInstrumentPart(
-    [dMinor7, gDominant7, cMajor7, cMajor7],
-    "1",
-    bpm
-  );
-  let totalDuration = 60;
+
   const drumSequence = getDefaultDrumPart(bpm);
+
+  let totalDuration = Math.max(
+    instrumentSequence?.totalDuration ?? 0,
+    drumSequence?.totalDuration ?? 0
+  );
 
   const playParts = useCallback(() => {
     if (!instrumentSequence || !drumSequence) return;
@@ -42,14 +44,7 @@ export function usePartCompose(bpm: number, timeSignature: [number, number]) {
     drumPart.playPart(drumSequence);
 
     return {};
-  }, [
-    totalDuration,
-    pianoPart,
-    drumPart,
-    instrumentSequence,
-    instrumentSequence2,
-    drumSequence,
-  ]);
+  }, [totalDuration, pianoPart, drumPart, instrumentSequence, drumSequence]);
 
   return {
     playParts,

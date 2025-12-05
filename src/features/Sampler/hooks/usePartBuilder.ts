@@ -9,24 +9,27 @@ export interface PartResult {
   part: Array<PartItem>;
   totalDuration: number;
 }
+
 export function usePartBuilder() {
   const { ticksToSeconds } = useNoteTiming();
   const getPart = useCallback(
-    (partInfo: PartInfo, bpm: number = 120): PartResult => {
-      const clip: Array<ClipEvent> = scribble.clip({
-        notes: partInfo.notes,
-        pattern: partInfo.pattern,
-        accent: partInfo.accent,
-        amp: 100,
-        accentLow: 70,
-        subdiv: "16n",
-      });
+    (partInfo: PartInfo[], bpm: number = 120): PartResult => {
+      const clipResult: ClipEvent[] = partInfo.flatMap((part) =>
+        scribble.clip({
+          notes: part.notes,
+          pattern: part.pattern,
+          accent: part.accent,
+          amp: 100,
+          accentLow: 70,
+          subdiv: "16n",
+        })
+      );
 
       let currentOffSet = 0;
       const resultArray: Array<PartItem> = [];
 
-      for (let i = 0; i < clip.length; i++) {
-        const currentEvent = clip[i];
+      for (let i = 0; i < clipResult.length; i++) {
+        const currentEvent = clipResult[i];
         const currentDurationSec = ticksToSeconds(currentEvent.length, bpm);
 
         if (currentEvent.note && currentEvent.note.length > 0) {
