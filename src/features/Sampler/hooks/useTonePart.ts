@@ -13,7 +13,7 @@ export function useTonePart(instrument: SampleInstrument) {
   const { hidePreloader, setPreloaderText } = usePreloader();
 
   const playPart = useCallback(
-    (partResult: PartResult | undefined, isLoop: Boolean = true) => {
+    (partResult: PartResult | undefined, isLoop: Boolean = false) => {
       if (!sampler || !partResult) return;
 
       const part = new Tone.Part((time, event) => {

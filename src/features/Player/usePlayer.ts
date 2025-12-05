@@ -4,10 +4,10 @@ import * as Tone from "tone";
 export function usePlayer(
   partCallback: () => void,
   duration: number,
-  bpm: number
+  bpm: number,
+  timeSignature: [number, number]
 ) {
   const [transportTime, setTransportTime] = useState(0);
-  const [timeSignature, setTimeSignature] = useState<[number, number]>([4, 4]);
   const [transportPosition, setTransportPosition] =
     useState<Tone.Unit.Time>("0:0:0");
 
@@ -70,10 +70,6 @@ export function usePlayer(
     togglePlayback,
     stopPlayback,
     setPlaybackPosition,
-    pausePlayback,
-    startPlayback,
-    timeSignature,
-    setTimeSignature,
     transportTime,
     transportPosition,
   };
