@@ -25,20 +25,28 @@ export function usePartCompose(bpm: number, timeSignature: [number, number]) {
 
   const instrumentSequence = piano.getInstrumentPart(
     [
-      { note: [dMinor7, gDominant7, cMajor7, fMajor7], id: "1", barNumber: 0 },
-      { note: [dMinor7, gDominant7, cMajor7, cMajor7], id: "2", barNumber: 1 },
+      {
+        note: [dMinor7, gDominant7, cMajor7, fMajor7],
+        id: "basic_4th",
+        barNumber: 0,
+      },
+      {
+        note: [dMinor7, gDominant7, cMajor7, cMajor7],
+        id: "basic_4th",
+        barNumber: 1,
+      },
     ],
     bpm
   );
   //scribble.getChordsByProgression("C4 melodic minor", "ii V I I")
 
   const drums: PatternBlock[] = [
-    { note: [drumMap.kick], id: "1", barNumber: 0 },
-    { note: [drumMap.snare], id: "2", barNumber: 0 },
-    { note: [drumMap.hihat], id: "3", barNumber: 0 },
-    { note: [drumMap.kick], id: "1", barNumber: 1 },
-    { note: [drumMap.snare], id: "2", barNumber: 1 },
-    { note: [drumMap.hihat], id: "3", barNumber: 1 },
+    { note: [drumMap.kick], id: "basic_4th", barNumber: 0 },
+    { note: [drumMap.snare], id: "backbeat_4th", barNumber: 0 },
+    { note: [drumMap.hihat], id: "basic_8th", barNumber: 0 },
+    { note: [drumMap.kick], id: "basic_16th", barNumber: 1 },
+    { note: [drumMap.snare], id: "backbeat_16th", barNumber: 1 },
+    { note: [drumMap.hihat], id: "basic_16th", barNumber: 1 },
   ];
   const drumSequence = getDrumPart(drums, bpm);
 

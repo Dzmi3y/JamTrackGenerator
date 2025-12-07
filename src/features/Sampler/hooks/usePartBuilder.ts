@@ -4,7 +4,7 @@ import * as scribble from "scribbletune";
 import type { PartItem } from "../../../interfaces/Part";
 import { useNoteTiming } from "./useNoteTiming";
 import type { PartInfo } from "../../../interfaces/PartInfo";
-import type { ClipEventBlock } from "../../../interfaces/сlipEventBlock";
+import type { ClipEventBlock } from "../../../interfaces/СlipEventBlock";
 
 export interface PartResult {
   part: Array<PartItem>;
