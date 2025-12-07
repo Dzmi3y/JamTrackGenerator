@@ -6,6 +6,7 @@ import { useDrumPart } from "../Sampler/hooks/useDrumPart";
 import { useInstrumentPart } from "../Sampler/hooks/useInstrumentPart";
 import scribble from "scribbletune";
 import type { PatternBlock } from "../Sampler/patternBlock";
+import { drumMap } from "../Sampler/Data/DrumNotes";
 
 export function usePartCompose(bpm: number, timeSignature: [number, number]) {
   const { getChord } = useChord();
@@ -32,12 +33,12 @@ export function usePartCompose(bpm: number, timeSignature: [number, number]) {
   //scribble.getChordsByProgression("C4 melodic minor", "ii V I I")
 
   const drums: PatternBlock[] = [
-    { note: ["C1"], id: "1", barNumber: 0 },
-    { note: ["D1"], id: "2", barNumber: 0 },
-    { note: ["F#1"], id: "3", barNumber: 0 },
-    { note: ["C1"], id: "1", barNumber: 1 },
-    { note: ["D1"], id: "2", barNumber: 1 },
-    { note: ["F#1"], id: "3", barNumber: 1 },
+    { note: [drumMap.kick], id: "1", barNumber: 0 },
+    { note: [drumMap.snare], id: "2", barNumber: 0 },
+    { note: [drumMap.hihat], id: "3", barNumber: 0 },
+    { note: [drumMap.kick], id: "1", barNumber: 1 },
+    { note: [drumMap.snare], id: "2", barNumber: 1 },
+    { note: [drumMap.hihat], id: "3", barNumber: 1 },
   ];
   const drumSequence = getDrumPart(drums, bpm);
 
