@@ -6,8 +6,9 @@ import type { PartInfo } from "../../../interfaces/PartInfo";
 export function usePattern() {
   const getPartInfo = useCallback(
     (
-      notes: string | string[] | string[][],
-      id: string
+      notes: string[] | string[][],
+      id: string,
+      barNumber: number
     ): PartInfo | undefined => {
       const pattern = (patternsData as RhythmPattern[]).find(
         (p) => p.id === id
@@ -16,6 +17,7 @@ export function usePattern() {
       if (!pattern) return undefined;
 
       return {
+        barNumber,
         notes,
         pattern: pattern.pattern,
         accent: pattern.accent,

@@ -1,4 +1,5 @@
 export interface PatternBlock {
-  note: string | string[] | string[][];
+  note: string[] | string[][];
   id: string;
+  barNumber: number;
 }

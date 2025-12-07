@@ -3,7 +3,7 @@
     "id": "1",
     "name": "Four-on-the-floor",
     "totalBeats": 4,
-    "pattern": "x___x___x___x___",
+    "pattern": "x_x_x_x_",
     "accent": "x---",
     "tags": ["dance", "house", "disco"]
   },
@@ -11,7 +11,7 @@
     "id": "2",
     "name": "Delayed Four-on-the-floor",
     "totalBeats": 4,
-    "pattern": "--x_--x_--x_--x_",
+    "pattern": "-x-x-x-x",
     "accent": "x---",
     "tags": ["syncopation", "electronic", "reggae"]
   },
@@ -19,56 +19,8 @@
     "id": "3",
     "name": "Straight Eighths",
     "totalBeats": 8,
-    "pattern": "x_x_x_x_x_x_x_x_",
+    "pattern": "xxxxxxxx",
     "accent": "x---",
     "tags": ["rock", "pop", "march"]
-  },
-  {
-    "id": "4",
-    "name": "Offbeat Eighths",
-    "totalBeats": 8,
-    "pattern": "-x_x_x_x_x_x_x_x",
-    "accent": "x---",
-    "tags": ["ska", "reggae", "funk"]
-  },
-  {
-    "id": "5",
-    "name": "Offbeat Quarter Notes",
-    "totalBeats": 2,
-    "pattern": "x___-___x___-___",
-    "accent": "xx",
-    "tags": ["syncopation", "funk", "latin"]
-  },
-  {
-    "id": "6",
-    "name": "One Drop Variation",
-    "totalBeats": 2,
-    "pattern": "-___x_---___x_--",
-    "accent": "xx",
-    "tags": ["reggae", "dub"]
-  },
-  {
-    "id": "7",
-    "name": "Funk Syncopation",
-    "totalBeats": 2,
-    "pattern": "x___-______x_-___",
-    "accent": "xx",
-    "tags": ["funk", "groove", "syncopation"]
-  },
-  {
-    "id": "8",
-    "name": "Triplet Feel",
-    "totalBeats": 3,
-    "pattern": "x___-____x_x_-___",
-    "accent": "xx-",
-    "tags": ["jazz", "shuffle", "swing"]
-  },
-  {
-    "id": "9",
-    "name": "Polyrhythm 3:2",
-    "totalBeats": 6,
-    "pattern": "x__x_x__x__x_x__",
-    "accent": "x--x--",
-    "tags": ["african", "experimental", "world"]
   }
 ]

@@ -1,21 +1,16 @@
 import { useCallback } from "react";
 import { usePattern } from "./usePattern";
 import { usePartBuilder, type PartResult } from "./usePartBuilder";
+import type { PatternBlock } from "../patternBlock";
 
 export function useDrumPart() {
   const { getPart } = usePartBuilder();
   const { getPartInfo } = usePattern();
 
-  const getDefaultDrumPart = useCallback(
-    (bpm: number): PartResult | undefined => {
-      const instruments = [
-        { note: "C1", id: "1" },
-        { note: "D1", id: "2" },
-        { note: "F#1", id: "3" },
-      ];
-
+  const getDrumPart = useCallback(
+    (instruments: PatternBlock[], bpm: number): PartResult | undefined => {
       const infos = instruments
-        .map(({ note, id }) => getPartInfo(note, id))
+        .map(({ note, id, barNumber }) => getPartInfo(note, id, barNumber))
         .filter((r) => r !== undefined);
 
       if (infos.length !== instruments.length) {
@@ -33,5 +28,5 @@ export function useDrumPart() {
     [getPart, getPartInfo]
   );
 
-  return { getDefaultDrumPart };
+  return { getDrumPart };
 }

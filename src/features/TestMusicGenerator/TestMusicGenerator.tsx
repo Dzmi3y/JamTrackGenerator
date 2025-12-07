@@ -5,7 +5,7 @@ import { usePartCompose } from "../Track/usePartCompose";
 import { Tone } from "tone/build/esm/core/Tone";
 
 const TestMusicGenerator: React.FC = () => {
-  const bpm = 180;
+  const bpm = 120;
   const timeSignature: [number, number] = [4, 4];
   const parts = usePartCompose(bpm, timeSignature);
 

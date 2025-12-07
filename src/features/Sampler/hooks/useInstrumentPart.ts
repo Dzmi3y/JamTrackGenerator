@@ -8,18 +8,27 @@ export function useInstrumentPart() {
   const { getPartInfo } = usePattern();
 
   const getInstrumentPart = useCallback(
-    (patternBlock: PatternBlock[], bpm: number): PartResult | undefined => {
-      const partInfoArray = patternBlock.flatMap((p) => {
-        const info = getPartInfo(p.note, p.id);
-        return info ? [info] : [];
-      });
+    (patternBlocks: PatternBlock[], bpm: number): PartResult | undefined => {
+      const validPartInfo = patternBlocks
+        .map((patternBlock) =>
+          getPartInfo(
+            patternBlock.note,
+            patternBlock.id,
+            patternBlock.barNumber
+          )
+        )
+        .filter(
+          (partInfo): partInfo is NonNullable<typeof partInfo> =>
+            partInfo !== undefined
+        );
 
-      const part = getPart(partInfoArray, bpm);
+      if (validPartInfo.length === 0) {
+        return undefined;
+      }
 
-      return {
-        totalDuration: part.totalDuration,
-        part: part.part,
-      };
+      const partResult = getPart(validPartInfo, bpm);
+
+      return partResult;
     },
     [getPart, getPartInfo]
   );
