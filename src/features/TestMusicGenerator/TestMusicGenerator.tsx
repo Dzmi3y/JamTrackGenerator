@@ -1,7 +1,7 @@
 import React from "react";
 import { usePlayer } from "../Player/usePlayer";
 import PlayerScrollbar from "../Player/PlayerScrollbar";
-import { usePartCompose } from "../Track/usePartCompose";
+import { usePartCompose } from "../Sampler/hooks/usePartCompose";
 import { Tone } from "tone/build/esm/core/Tone";
 
 const TestMusicGenerator: React.FC = () => {
