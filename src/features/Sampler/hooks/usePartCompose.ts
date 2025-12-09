@@ -1,28 +1,17 @@
-import { useCallback, useState } from "react";
-import type { PartResult } from "./usePartBuilder";
+import { useCallback } from "react";
 import { useTonePart } from "./useTonePart";
-import { useChord } from "./useChord";
-import { useDrumPart } from "./useDrumPart";
-import { useInstrumentPart } from "./useInstrumentPart";
-import scribble from "scribbletune";
-import type { PatternBar } from "../patternBlock";
 import { drumMap } from "../Data/DrumNotes";
+import { Rhythms } from "../Data/Rhythms";
+import { getChord } from "../utils/chordUtils";
+import { instrumentPartService } from "../services/instrumentPartService";
 import {
   buildDrumPatternBars,
   buildPatternBars,
-  type BarInfo,
-} from "../services/buildPatternBars";
-import { Rhythms } from "../Data/Rhythms";
+} from "../utils/buildPatternBars";
 
 export function usePartCompose(bpm: number, timeSignature: [number, number]) {
-  const { getChord } = useChord();
-  //const [totalDuration, setTotalDuration] = useState<number>(60);
-
   const drumPart = useTonePart("drums");
   const pianoPart = useTonePart("piano");
-
-  const { getDrumPart } = useDrumPart();
-  const piano = useInstrumentPart();
 
   const dMinor7 = getChord("D", "m7", 3);
   const gDominant7 = getChord("G", "7th", 3);
@@ -42,7 +31,10 @@ export function usePartCompose(bpm: number, timeSignature: [number, number]) {
       rhythmSize: 4,
     },
   ]);
-  const instrumentSequence = piano.getInstrumentPart(instrumentBars, bpm);
+  const instrumentSequence = instrumentPartService.getInstrumentPart(
+    instrumentBars,
+    bpm
+  );
   //scribble.getChordsByProgression("C4 melodic minor", "ii V I I")
 
   const drumBars = buildDrumPatternBars([
@@ -58,7 +50,7 @@ export function usePartCompose(bpm: number, timeSignature: [number, number]) {
       { note: [drumMap.hihat], rhythm: Rhythms.basic, rhythmSize: 8 },
     ],
   ]);
-  const drumSequence = getDrumPart(drumBars, bpm);
+  const drumSequence = instrumentPartService.getDrumPart(drumBars, bpm);
 
   let totalDuration = Math.max(
     instrumentSequence?.totalDuration ?? 0,

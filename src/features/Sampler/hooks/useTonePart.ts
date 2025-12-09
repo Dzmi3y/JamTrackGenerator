@@ -1,14 +1,14 @@
 import { useCallback, useEffect, useState } from "react";
 import * as Tone from "tone";
-import { useSampler } from "./useSampler";
+
 import { usePreloader } from "../../../shared/components/PreloaderProvider";
 import type { SampleInstrument } from "../SampleInstrument";
-import type { PartResult } from "./usePartBuilder";
+import { samplerService } from "../services/samplerService";
+import type { PartResult } from "../services/partBuilderService";
 
 export function useTonePart(instrument: SampleInstrument) {
   const [sampler, setSampler] = useState<Tone.Sampler | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const { getSampler } = useSampler();
 
   const { hidePreloader, setPreloaderText } = usePreloader();
 
@@ -42,7 +42,7 @@ export function useTonePart(instrument: SampleInstrument) {
     const loadSampler = async () => {
       setIsLoading(true);
       setPreloaderText("Instrument is loading...");
-      const sampler = getSampler(instrument, () => {
+      const sampler = samplerService.getSampler(instrument, () => {
         setIsLoading(false);
       });
       hidePreloader();
