@@ -8,6 +8,7 @@ import {
   buildDrumPatternBars,
   buildPatternBars,
 } from "../utils/buildPatternBars";
+import { getDrumBarInfoById } from "../patterns/drumPatterns";
 
 export function usePartCompose(bpm: number, timeSignature: [number, number]) {
   const drumPart = useTonePart("drums");
@@ -36,19 +37,10 @@ export function usePartCompose(bpm: number, timeSignature: [number, number]) {
     bpm
   );
   //scribble.getChordsByProgression("C4 melodic minor", "ii V I I")
-
   const drumBars = buildDrumPatternBars([
-    [
-      { note: [drumMap.kick], rhythm: Rhythms.basic, rhythmSize: 4 },
-      { note: [drumMap.snare], rhythm: Rhythms.backbeat, rhythmSize: 4 },
-      { note: [drumMap.hihat], rhythm: Rhythms.basic, rhythmSize: 8 },
-    ],
+    getDrumBarInfoById("Basic_Rock_Beat"),
     null,
-    [
-      { note: [drumMap.kick], rhythm: Rhythms.basic, rhythmSize: 8 },
-      { note: [drumMap.snare], rhythm: Rhythms.backbeat, rhythmSize: 4 },
-      { note: [drumMap.hihat], rhythm: Rhythms.basic, rhythmSize: 8 },
-    ],
+    getDrumBarInfoById("Skank_Beat"),
   ]);
   const drumSequence = instrumentPartService.getDrumPart(drumBars, bpm);
 
