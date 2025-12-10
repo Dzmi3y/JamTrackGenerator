@@ -9,6 +9,7 @@ import {
   buildPatternBars,
 } from "../utils/buildPatternBars";
 import { getDrumBarInfoById } from "../patterns/drumPatterns";
+import * as scribble from "scribbletune";
 
 export function usePartCompose(bpm: number, timeSignature: [number, number]) {
   const drumPart = useTonePart("drums");
@@ -36,7 +37,15 @@ export function usePartCompose(bpm: number, timeSignature: [number, number]) {
     instrumentBars,
     bpm
   );
-  //scribble.getChordsByProgression("C4 melodic minor", "ii V I I")
+  try {
+    console.log(
+      "C4 : " + scribble.getChordsByProgression("C4 major", "1 2 3 4")
+    );
+    console.log("C4 ionian/major: " + scribble.scale("C4 major"));
+  } catch (error) {
+    console.error(error);
+  }
+
   const drumBars = buildDrumPatternBars([
     getDrumBarInfoById("Basic_Rock_Beat"),
     null,

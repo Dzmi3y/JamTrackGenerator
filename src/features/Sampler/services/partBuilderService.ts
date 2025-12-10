@@ -3,7 +3,7 @@ import type { ClipEvent } from "../../../interfaces/ClipEvent";
 import type { PartItem } from "../../../interfaces/Part";
 import type { PartInfo } from "../../../interfaces/PartInfo";
 import type { ClipEventBlock } from "../../../interfaces/ClipEventBlock";
-import { ticksToSeconds } from "../utils/timeConversionsю";
+import { ticksToSeconds } from "../utils/timeConversions";
 
 export interface PartResult {
   part: Array<PartItem>;
