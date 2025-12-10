@@ -10,6 +10,7 @@ import {
 } from "../utils/buildPatternBars";
 import { getDrumBarInfoById } from "../patterns/drumPatterns";
 import * as scribble from "scribbletune";
+import { getChordsForDegree } from "../utils/scales";
 
 export function usePartCompose(bpm: number, timeSignature: [number, number]) {
   const drumPart = useTonePart("drums");
@@ -38,9 +39,7 @@ export function usePartCompose(bpm: number, timeSignature: [number, number]) {
     bpm
   );
   try {
-    console.log(
-      "C4 : " + scribble.getChordsByProgression("C4 major", "1 2 3 4")
-    );
+    console.log(getChordsForDegree("dorian", 3));
     console.log("C4 ionian/major: " + scribble.scale("C4 major"));
   } catch (error) {
     console.error(error);
