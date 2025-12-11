@@ -1,16 +1,17 @@
-import React from "react";
 import { usePlayer } from "../Player/usePlayer";
 import PlayerScrollbar from "../Player/PlayerScrollbar";
 import { usePartCompose } from "../Sampler/hooks/usePartCompose";
-import { Tone } from "tone/build/esm/core/Tone";
 
 const TestMusicGenerator: React.FC = () => {
   const bpm = 60;
   const timeSignature: [number, number] = [4, 4];
-  const parts = usePartCompose(bpm, timeSignature);
+
+  const parts = usePartCompose(bpm);
 
   const handlePlayParts = async () => {
-    parts.playParts();
+    if (parts.playParts) {
+      parts.playParts();
+    }
   };
 
   const totalDuration = parts.totalDuration;
