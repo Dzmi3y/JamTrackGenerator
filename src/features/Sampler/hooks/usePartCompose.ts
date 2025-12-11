@@ -10,26 +10,27 @@ import {
 } from "../utils/buildPatternBars";
 import { getDrumBarInfoById } from "../patterns/drumPatterns";
 import * as scribble from "scribbletune";
-import { getChordsForDegree } from "../utils/scales";
+import { getChordsByProgression } from "../utils/progressionUtil";
 
-export function usePartCompose(bpm: number, timeSignature: [number, number]) {
+export function usePartCompose(bpm: number) {
   const drumPart = useTonePart("drums");
   const pianoPart = useTonePart("piano");
 
-  const dMinor7 = getChord("D", "m7", 3);
-  const gDominant7 = getChord("G", "7th", 3);
-  const cMajor7 = getChord("C", "maj7", 3);
-  const fMajor7 = getChord("F", "maj7", 3);
+
+  const notes1 =getChordsByProgression("C","ionian",
+       [{val:2,oct:4},{val:5,oct:4},{val:1,oct:4},{val:4,oct:4}]);
+  const notes2 =getChordsByProgression("C","ionian",
+       [{val:2,oct:4},{val:5,oct:4},{val:1,oct:4},{val:4,oct:4}]);     
 
   const instrumentBars = buildPatternBars([
     {
-      note: [dMinor7, gDominant7, cMajor7, fMajor7],
-      rhythm: Rhythms.basic,
+      note: notes1,
+      rhythm: Rhythms.backbeat,
       rhythmSize: 4,
     },
     null,
     {
-      note: [dMinor7, gDominant7, cMajor7, cMajor7],
+      note: notes2,
       rhythm: Rhythms.basic,
       rhythmSize: 4,
     },
@@ -39,8 +40,9 @@ export function usePartCompose(bpm: number, timeSignature: [number, number]) {
     bpm
   );
   try {
-    console.log(getChordsForDegree("dorian", 3));
-    console.log("C4 ionian/major: " + scribble.scale("C4 major"));
+     console.log(getChordsByProgression("C",4,"dorian",
+       [{val:2,oct:4},{val:5,oct:4},{val:1,oct:4},{val:4,oct:4}]));
+    // console.log("C4 ionian/major: " + scribble.scale("C4 major"));
   } catch (error) {
     console.error(error);
   }

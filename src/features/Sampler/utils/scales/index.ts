@@ -1,11 +1,11 @@
-import type { ScaleDegree } from "../../Data/ScaleDegree";
+import type { ChordPriority } from "../../Data/ScaleDegree";
 import type { ScaleMode } from "../../Data/ScaleMode";
 import { createMode } from "./createMode";
 
-export function getChordsForDegree(
+export function getChordForDegree(
   modeName: ScaleMode,
-  degree: number
-): ScaleDegree["chords"] {
+  degree: 1 | 2 | 3 | 4 | 5 | 6 | 7
+):ChordPriority {
   const mode = createMode(modeName);
   const degreeIndex = degree - 1;
 

@@ -1,10 +1,10 @@
 export const SCALE_MODES = [
-  "ionian/major",
+  "ionian",
   "dorian",
   "phrygian",
   "lydian",
   "mixolydian",
-  "aeolian/minor",
+  "aeolian",
   "locrian",
   "melodic minor",
   "harmonic minor",

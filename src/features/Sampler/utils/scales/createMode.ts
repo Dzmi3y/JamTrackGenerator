@@ -6,12 +6,12 @@ import { modeCorrections } from "./modeCorrections";
 import { rotateScale } from "./rotateScale";
 
 export const MODE_ROTATIONS: Record<ScaleMode, number> = {
-  "ionian/major": 1,
+  "ionian": 1,
   dorian: 2,
   phrygian: 3,
   lydian: 4,
   mixolydian: 5,
-  "aeolian/minor": 6,
+  "aeolian": 6,
   locrian: 7,
   "melodic minor": 9,
   "harmonic minor": 8,
