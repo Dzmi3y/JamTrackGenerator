@@ -1,26 +1,30 @@
 import { useCallback } from "react";
 import { useTonePart } from "./useTonePart";
-import { drumMap } from "../Data/DrumNotes";
 import { Rhythms } from "../Data/Rhythms";
-import { getChord } from "../utils/chordUtils";
 import { instrumentPartService } from "../services/instrumentPartService";
 import {
   buildDrumPatternBars,
   buildPatternBars,
 } from "../utils/buildPatternBars";
 import { getDrumBarInfoById } from "../patterns/drumPatterns";
-import * as scribble from "scribbletune";
 import { getChordsByProgression } from "../utils/progressionUtil";
 
 export function usePartCompose(bpm: number) {
   const drumPart = useTonePart("drums");
   const pianoPart = useTonePart("piano");
 
-
-  const notes1 =getChordsByProgression("C","ionian",
-       [{val:2,oct:4},{val:5,oct:4},{val:1,oct:4},{val:4,oct:4}]);
-  const notes2 =getChordsByProgression("C","ionian",
-       [{val:2,oct:4},{val:5,oct:4},{val:1,oct:4},{val:4,oct:4}]);     
+  const notes1 = getChordsByProgression("C", "ionian", [
+    { val: 2, oct: 4 },
+    { val: 5, oct: 4 },
+    { val: 1, oct: 4 },
+    { val: 4, oct: 4 },
+  ]);
+  const notes2 = getChordsByProgression("C", "ionian", [
+    { val: 2, oct: 4 },
+    { val: 5, oct: 4 },
+    { val: 1, oct: 4 },
+    { val: 4, oct: 4 },
+  ]);
 
   const instrumentBars = buildPatternBars([
     {
@@ -40,8 +44,9 @@ export function usePartCompose(bpm: number) {
     bpm
   );
   try {
-     console.log(getChordsByProgression("C",4,"dorian",
-       [{val:2,oct:4},{val:5,oct:4},{val:1,oct:4},{val:4,oct:4}]));
+    console.log(
+
+    );
     // console.log("C4 ionian/major: " + scribble.scale("C4 major"));
   } catch (error) {
     console.error(error);
@@ -54,7 +59,7 @@ export function usePartCompose(bpm: number) {
   ]);
   const drumSequence = instrumentPartService.getDrumPart(drumBars, bpm);
 
-  let totalDuration = Math.max(
+  const totalDuration = Math.max(
     instrumentSequence?.totalDuration ?? 0,
     drumSequence?.totalDuration ?? 0
   );
@@ -66,7 +71,7 @@ export function usePartCompose(bpm: number) {
     drumPart.playPart(drumSequence);
 
     return {};
-  }, [totalDuration, pianoPart, drumPart, instrumentSequence, drumSequence]);
+  }, [pianoPart, drumPart, instrumentSequence, drumSequence]);
 
   return {
     playParts,
