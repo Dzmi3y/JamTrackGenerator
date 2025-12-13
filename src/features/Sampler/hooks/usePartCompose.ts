@@ -8,6 +8,11 @@ import {
 } from "../utils/buildPatternBars";
 import { getDrumBarInfoById } from "../patterns/drumPatterns";
 import { getChordsByProgression } from "../utils/progressionUtil";
+import { useMusicStore } from "../../../store/musicStore";
+
+export const useBpm = () => useMusicStore((state) => state.bpm)
+export const useSetBpm = () => useMusicStore((state) => state.setBpm)
+//get bpm from store
 
 export interface Parts {
   playParts: (() => void) | undefined;
@@ -15,17 +20,12 @@ export interface Parts {
   isLoading: boolean;
 }
 
+//todo remove bpm
+//todo add bpm from store
 export function usePartCompose(bpm: number): Parts {
   const drumPart = useTonePart("drums");
   const pianoPart = useTonePart("piano");
-
-  // const notes1 = useMemo(() => 
-  //   getChordsByProgression("C", "ionian", [
-  //     { val: 2, oct: 4 },
-  //     { val: 5, oct: 4 },
-  //     { val: 1, oct: 4 },
-  //     { val: 4, oct: 4 },
-  //   ]), []);
+  
 
   const notes2 = useMemo(() => 
     getChordsByProgression("C", "ionian", [
@@ -69,8 +69,9 @@ export function usePartCompose(bpm: number): Parts {
 
   const playParts = useCallback(() => {
     if (!instrumentSequence || !drumSequence) return;
-
+    pianoPart.setVolume(20);
     pianoPart.playPart(instrumentSequence);
+    drumPart.setPan(100);
     drumPart.playPart(drumSequence);
   }, [pianoPart, drumPart, instrumentSequence, drumSequence]);
 

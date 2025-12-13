@@ -38,7 +38,7 @@ export function getDrumRhythmDisplayName(id: DrumRhythmId): string {
 }
 
 export function getDrumBarInfoById(id: DrumRhythmId): BarInfo[] | null {
-  let rhythm = DrumRhythms.find((rhythm) => rhythm.id === id);
+  const rhythm = DrumRhythms.find((rhythm) => rhythm.id === id);
 
   return rhythm ? rhythm.patterns : null;
 }
