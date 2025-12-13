@@ -8,6 +8,7 @@ export function usePlayer(
   timeSignature: [number, number]
 ) {
   const [transportTime, setTransportTime] = useState(0);
+  const [isLoop,setIsLoop] = useState<boolean>(false);
   const [transportPosition, setTransportPosition] =
     useState<Tone.Unit.Time>("0:0:0");
 
@@ -60,11 +61,16 @@ export function usePlayer(
       setTransportTime(Tone.Transport.seconds);
       setTransportPosition(Tone.Transport.position);
       if (Tone.Transport.seconds >= duration) {
-        stopPlayback();
+        if (isLoop) {
+          Tone.Transport.position = "0:1:0" // Fixes a bug in Tone.js when a -0 value is available
+          Tone.Transport.position = "0:0:0";
+        } else {
+          stopPlayback();
+        }
       }
     }, 100);
     return () => clearInterval(interval);
-  }, [duration]);
+  }, [duration,isLoop,stopPlayback]);
 
   return {
     togglePlayback,
@@ -72,5 +78,7 @@ export function usePlayer(
     setPlaybackPosition,
     transportTime,
     transportPosition,
+    isLoop,
+    setIsLoop
   };
 }

@@ -13,7 +13,7 @@ export function useTonePart(instrument: SampleInstrument) {
   const { hidePreloader, setPreloaderText } = usePreloader();
 
   const playPart = useCallback(
-    (partResult: PartResult | undefined, isLoop: Boolean = false) => {
+    (partResult: PartResult | undefined, isLoop: boolean = false) => {
       if (!sampler || !partResult) return;
 
       const part = new Tone.Part((time, event) => {
@@ -27,6 +27,7 @@ export function useTonePart(instrument: SampleInstrument) {
 
       if (isLoop) {
         part.loop = true;
+        part.loopStart = 0
         part.loopEnd = partResult.totalDuration;
       }
       part.start(0);
@@ -50,6 +51,6 @@ export function useTonePart(instrument: SampleInstrument) {
     };
 
     loadSampler();
-  }, [instrument]);
+  }, [instrument,hidePreloader,setPreloaderText]);
   return { playPart, isLoading };
 }

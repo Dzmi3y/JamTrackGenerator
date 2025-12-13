@@ -19,13 +19,13 @@ export function usePartCompose(bpm: number): Parts {
   const drumPart = useTonePart("drums");
   const pianoPart = useTonePart("piano");
 
-  const notes1 = useMemo(() => 
-    getChordsByProgression("C", "ionian", [
-      { val: 2, oct: 4 },
-      { val: 5, oct: 4 },
-      { val: 1, oct: 4 },
-      { val: 4, oct: 4 },
-    ]), []);
+  // const notes1 = useMemo(() => 
+  //   getChordsByProgression("C", "ionian", [
+  //     { val: 2, oct: 4 },
+  //     { val: 5, oct: 4 },
+  //     { val: 1, oct: 4 },
+  //     { val: 4, oct: 4 },
+  //   ]), []);
 
   const notes2 = useMemo(() => 
     getChordsByProgression("C", "ionian", [
@@ -38,17 +38,11 @@ export function usePartCompose(bpm: number): Parts {
   const instrumentBars = useMemo(() => 
     buildPatternBars([
       {
-        note: notes1,
-        rhythm: Rhythms.backbeat,
-        rhythmSize: 4,
-      },
-      null,
-      {
         note: notes2,
         rhythm: Rhythms.basic,
         rhythmSize: 4,
       },
-    ]), [notes1, notes2]);
+    ]), [notes2]);
 
   const instrumentSequence = useMemo(() => 
     instrumentPartService.getInstrumentPart(instrumentBars, bpm),
@@ -58,8 +52,6 @@ export function usePartCompose(bpm: number): Parts {
   const drumBars = useMemo(() => 
     buildDrumPatternBars([
       getDrumBarInfoById("Basic_Rock_Beat"),
-      null,
-      getDrumBarInfoById("Skank_Beat"),
     ]), []);
 
   const drumSequence = useMemo(() => 

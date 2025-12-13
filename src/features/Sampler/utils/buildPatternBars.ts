@@ -14,7 +14,7 @@ export type BarInfo = {
 export const buildPatternBars = (
   barArray: Array<BarInfo | null>
 ): PatternBar[] => {
-  let res: PatternBar[] = [];
+  const res: PatternBar[] = [];
 
   barArray.forEach((b, i) => {
     if (b) {
@@ -32,7 +32,7 @@ export const buildPatternBars = (
 export const buildDrumPatternBars = (
   barArray: Array<BarInfo[] | null>
 ): PatternBar[] => {
-  let res: PatternBar[] = [];
+  const res: PatternBar[] = [];
 
   barArray.forEach((b, i) => {
     if (b) {

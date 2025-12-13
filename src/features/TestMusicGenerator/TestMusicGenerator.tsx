@@ -25,6 +25,9 @@ const TestMusicGenerator: React.FC = () => {
   const scrollbarHandleChangePosition = (pos: number) => {
     player.setPlaybackPosition(pos);
   };
+    const isLoopToggle = () => {
+      player.setIsLoop(!player.isLoop);
+  };
 
   return (
     <div>
@@ -33,6 +36,9 @@ const TestMusicGenerator: React.FC = () => {
       </button>
       <button onClick={player.stopPlayback} disabled={parts.isLoading}>
         {parts.isLoading ? "Loading Instruments..." : "Stop"}
+      </button>
+      <button onClick={isLoopToggle} disabled={parts.isLoading}>
+        {player.isLoop ? "Unloop" : "Loop"}
       </button>
 
       <div style={{ marginTop: "1rem" }}>
