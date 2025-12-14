@@ -1,7 +1,7 @@
 import { usePlayer } from "../Player/usePlayer";
 import PlayerScrollbar from "../Player/PlayerScrollbar";
-import { usePartCompose } from "../Sampler/hooks/usePartCompose";
 import { useMusicStore } from "../../store/musicStore";
+import { useInitInstruments } from "../Sampler/hooks/useInitInstruments";
 
 const useBpm = () => useMusicStore((state) => state.bpm);
 const useSetBpm = () => useMusicStore((state) => state.setBpm);
@@ -9,19 +9,9 @@ const useSetBpm = () => useMusicStore((state) => state.setBpm);
 const TestMusicGenerator: React.FC = () => {
   const bpm = useBpm();
   const setBpm = useSetBpm();
-  const timeSignature: [number, number] = [4, 4];
-
-  const parts = usePartCompose();
-
-  const handlePlayParts = async () => {
-    if (parts.playParts) {
-      parts.playParts();
-    }
-  };
-
-  const totalDuration = parts.totalDuration;
-
-  const player = usePlayer(handlePlayParts, totalDuration, timeSignature);
+  const init = useInitInstruments();
+  const player = usePlayer();
+  const totalDuration = player.getDuration();
 
   const handlePlayClick = async () => {
     player.togglePlayback();
@@ -43,13 +33,13 @@ const TestMusicGenerator: React.FC = () => {
 
   return (
     <div>
-      <button onClick={handlePlayClick} disabled={parts.isLoading}>
-        {parts.isLoading ? "Loading Instruments..." : "▶ Play with Instruments"}
+      <button onClick={handlePlayClick} disabled={init.isLoading}>
+        {init.isLoading ? "Loading Instruments..." : "▶ Play with Instruments"}
       </button>
-      <button onClick={player.stopPlayback} disabled={parts.isLoading}>
-        {parts.isLoading ? "Loading Instruments..." : "Stop"}
+      <button onClick={player.stopPlayback} disabled={init.isLoading}>
+        {init.isLoading ? "Loading Instruments..." : "Stop"}
       </button>
-      <button onClick={isLoopToggle} disabled={parts.isLoading}>
+      <button onClick={isLoopToggle} disabled={init.isLoading}>
         {player.isLoop ? "Unloop" : "Loop"}
       </button>
 

@@ -1,11 +1,10 @@
 import type { SampleInstrument } from "../features/Sampler/SampleInstrument";
 import type { PartResult } from "../features/Sampler/services/partBuilderService";
+import type { Instrument } from "./Instrument";
 
-export interface TrackPart {
-  instrument: SampleInstrument;
-  part: PartResult | undefined;
-  gain: number;
-  pan: number;
-  isHidden: boolean;
+export interface InstrumentTrack {
+  instrumentName: SampleInstrument;
+  instrument: Instrument;
+  track: PartResult | undefined;
   id: string;
 }

@@ -4,7 +4,8 @@ import { persist } from "zustand/middleware";
 
 const initialState: MusicState = {
   bpm: 120,
-  parts: [],
+  timeSignature: [4, 4],
+  instrumentTracks: [],
 };
 
 export const useMusicStore = create<MusicStore>()(
@@ -19,37 +20,50 @@ export const useMusicStore = create<MusicStore>()(
           set({ bpm: clampedBpm });
         }
       },
+      setTimeSignature: (newTimeSignature: [number, number]) => {
+        const currentTimeSignature = get().timeSignature;
+        if (newTimeSignature !== currentTimeSignature) {
+          set({ timeSignature: newTimeSignature });
+        }
+      },
 
-      setParts: (parts) => set({ parts }),
+      setInstrumentTracks: (instrumentTracks) => set({ instrumentTracks }),
 
-      addPart: (newPart) => {
+      addInstrumentTrack: (instrumentTrack) => {
         const id = crypto.randomUUID();
         set((state) => ({
-          parts: [...state.parts, { ...newPart, id }],
+          instrumentTracks: [
+            ...state.instrumentTracks,
+            { ...instrumentTrack, id },
+          ],
         }));
       },
 
-      updatePart: (id, updates) => {
+      updateInstrumentTrack: (id, updates) => {
         set((state) => ({
-          parts: state.parts.map((part) =>
-            part.id === id ? { ...part, ...updates } : part
+          instrumentTracks: state.instrumentTracks.map((instrumentTrack) =>
+            instrumentTrack.id === id
+              ? { ...instrumentTrack, ...updates }
+              : instrumentTrack
           ),
         }));
       },
 
-      removePart: (id) => {
+      removeInstrumentTrack: (id) => {
         set((state) => ({
-          parts: state.parts.filter((part) => part.id !== id),
+          instrumentTracks: state.instrumentTracks.filter(
+            (instrumentTrack) => instrumentTrack.id !== id
+          ),
         }));
       },
 
-      clearParts: () => set({ parts: [] }),
+      clearInstrumentTracks: () => set({ instrumentTracks: [] }),
     }),
     {
       name: "music-storage",
       partialize: (state) => ({
         bpm: state.bpm,
-        parts: state.parts,
+        parts: state.instrumentTracks,
       }),
     }
   )

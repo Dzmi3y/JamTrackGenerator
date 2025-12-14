@@ -3,17 +3,36 @@ import * as Tone from "tone";
 import { useMusicStore } from "../../store/musicStore";
 
 const useBpm = () => useMusicStore((state) => state.bpm);
+const useTimeSignature = () => useMusicStore((state) => state.timeSignature);
+const useInstrumentTracks = () =>
+  useMusicStore((state) => state.instrumentTracks);
 
-export function usePlayer(
-  partCallback: () => void,
-  duration: number,
-  timeSignature: [number, number]
-) {
+export function usePlayer() {
   const [transportTime, setTransportTime] = useState(0);
   const [isLoop, setIsLoop] = useState<boolean>(false);
   const [transportPosition, setTransportPosition] =
     useState<Tone.Unit.Time>("0:0:0");
   const bpm = useBpm();
+  const instrumentTracks = useInstrumentTracks();
+  const timeSignature: [number, number] = useTimeSignature();
+
+  const playParts = useCallback(() => {
+    instrumentTracks.forEach((t) => {
+      if (t.instrument && t.track) {
+        if (t.track.part.length > 0) {
+          t.instrument.playPart(t.track);
+        }
+      }
+    });
+  }, [instrumentTracks]);
+
+  const getDuration = useCallback((): number => {
+    const durationArray = instrumentTracks.map(
+      (i) => i.track?.totalDuration ?? 0
+    );
+
+    return Math.max(...durationArray);
+  }, [instrumentTracks]);
 
   const startPlayback = useCallback(async () => {
     Tone.Transport.timeSignature = timeSignature;
@@ -22,10 +41,10 @@ export function usePlayer(
       Tone.Transport.position = "0:1:0"; // Fixes a bug in Tone.js when a -0 value is available
       Tone.Transport.position = "0:0:0";
       Tone.Transport.bpm.value = bpm;
-      partCallback();
+      playParts();
     }
     Tone.Transport.start();
-  }, [timeSignature, bpm, partCallback]);
+  }, [timeSignature, bpm, playParts]);
 
   const pausePlayback = useCallback(() => {
     Tone.Transport.pause();
@@ -63,7 +82,7 @@ export function usePlayer(
     const interval = setInterval(() => {
       setTransportTime(Tone.Transport.seconds);
       setTransportPosition(Tone.Transport.position);
-      if (Tone.Transport.seconds >= duration) {
+      if (Tone.Transport.seconds >= getDuration()) {
         if (isLoop) {
           Tone.Transport.position = "0:1:0"; // Fixes a bug in Tone.js when a -0 value is available
           Tone.Transport.position = "0:0:0";
@@ -73,7 +92,7 @@ export function usePlayer(
       }
     }, 100);
     return () => clearInterval(interval);
-  }, [duration, isLoop, stopPlayback]);
+  }, [getDuration, isLoop, stopPlayback]);
 
   useEffect(() => {
     stopPlayback();
@@ -87,5 +106,6 @@ export function usePlayer(
     transportPosition,
     isLoop,
     setIsLoop,
+    getDuration,
   };
 }

@@ -5,14 +5,16 @@ import { usePreloader } from "../../../shared/components/PreloaderProvider";
 import type { SampleInstrument } from "../SampleInstrument";
 import { samplerService } from "../services/samplerService";
 import type { PartResult } from "../services/partBuilderService";
+import type { Instrument } from "../../../interfaces/Instrument";
 
-export function useTonePart(instrument: SampleInstrument) {
-  const [sampler, setSampler] = useState<Tone.Sampler | null>(null);
+export function useInstrument(instrument: SampleInstrument): Instrument {
+
   const [isLoading, setIsLoading] = useState(false);
-  
+
+  const samplerRef = useRef<Tone.Sampler | null>(null);
   const samplerGainRef = useRef<Tone.Gain | null>(null);
   const samplerPannerRef = useRef<Tone.Panner | null>(null);
-  
+
   const [gain, setGain] = useState(100);
   const [panner, setPanner] = useState(0);
 
@@ -21,7 +23,6 @@ export function useTonePart(instrument: SampleInstrument) {
   useEffect(() => {
     samplerGainRef.current = new Tone.Gain(1);
     samplerPannerRef.current = new Tone.Panner(0);
-    
 
     return () => {
       samplerGainRef.current?.dispose();
@@ -31,10 +32,10 @@ export function useTonePart(instrument: SampleInstrument) {
 
   const playPart = useCallback(
     (partResult: PartResult | undefined, isLoop: boolean = false) => {
-      if (!sampler || !partResult) return;
+      if (!samplerRef.current || !partResult) return;
 
       const part = new Tone.Part((time, event) => {
-        sampler.triggerAttackRelease(
+        samplerRef.current?.triggerAttackRelease(
           event.event.note,
           event.event.duration,
           time,
@@ -53,23 +54,22 @@ export function useTonePart(instrument: SampleInstrument) {
         part.stop(`+${partResult.totalDuration}`);
       }
     },
-    [sampler]
+    []
   );
-
 
   useEffect(() => {
     if (!samplerGainRef.current) return;
 
     const normalizedGain = Math.min(Math.max(gain, 0), 100) / 100;
-    
+
     samplerGainRef.current.gain.value = +normalizedGain.toFixed(2);
   }, [gain]);
 
   useEffect(() => {
     if (!samplerPannerRef.current) return;
-    
+
     const normalizedPan = Math.min(Math.max(panner, -100), 100) / 100;
-    
+
     samplerPannerRef.current.pan.value = +normalizedPan.toFixed(2);
   }, [panner]);
 
@@ -85,33 +85,33 @@ export function useTonePart(instrument: SampleInstrument) {
     const loadSampler = async () => {
       setIsLoading(true);
       setPreloaderText("Instrument is loading...");
-      
+
       const sampler = samplerService.getSampler(instrument, () => {
         setIsLoading(false);
       });
-      
+
       hidePreloader();
 
       sampler.disconnect();
-      
+
       if (samplerGainRef.current && samplerPannerRef.current) {
         sampler.connect(samplerGainRef.current);
         samplerGainRef.current.connect(samplerPannerRef.current);
         samplerPannerRef.current.toDestination();
       }
-      
-      setSampler(sampler);
+
+      samplerRef.current = sampler;
     };
 
     loadSampler();
   }, [instrument, hidePreloader, setPreloaderText]);
 
-  return { 
-    playPart, 
+  return {
+    playPart,
     isLoading,
     gain,
     panner,
     setVolume,
-    setPan
+    setPan,
   };
 }

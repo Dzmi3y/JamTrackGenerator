@@ -1,17 +1,21 @@
-import type { TrackPart } from "../interfaces/TrackPart";
+import type { InstrumentTrack } from "../interfaces/TrackPart";
 
 export interface MusicState {
   bpm: number;
-  parts: TrackPart[];
+  timeSignature: [number, number];
+  instrumentTracks: InstrumentTrack[];
 }
 
 export interface MusicActions {
   setBpm: (bpm: number) => void;
-  setParts: (parts: TrackPart[]) => void;
-  addPart: (part: Omit<TrackPart, "id">) => void;
-  updatePart: (id: string, updates: Partial<TrackPart>) => void;
-  removePart: (id: string) => void;
-  clearParts: () => void;
+  setInstrumentTracks: (parts: InstrumentTrack[]) => void;
+  addInstrumentTrack: (part: Omit<InstrumentTrack, "id">) => void;
+  updateInstrumentTrack: (
+    id: string,
+    updates: Partial<InstrumentTrack>
+  ) => void;
+  removeInstrumentTrack: (id: string) => void;
+  clearInstrumentTracks: () => void;
 }
 
 export type MusicStore = MusicState & MusicActions;
