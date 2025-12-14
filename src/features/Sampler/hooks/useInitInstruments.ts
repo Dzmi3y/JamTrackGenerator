@@ -64,15 +64,15 @@ export function useInitInstruments(): { isLoading: boolean } {
   );
 
   const isLoading = useMemo(
-    () => drumPart.isLoading && pianoPart.isLoading,
-    [drumPart.isLoading, pianoPart.isLoading]
+    () => drumPart.getIsLoading() && pianoPart.getIsLoading(),
+    [drumPart, pianoPart]
   );
 
   useEffect(() => {
     if (isInitializedRef.current) return;
 
     isInitializedRef.current = true;
-    
+
     addInstrumentTrack({
       instrument: drumPart,
       instrumentName: "drums",
@@ -83,8 +83,6 @@ export function useInitInstruments(): { isLoading: boolean } {
       instrumentName: "piano",
       track: pianoSequence,
     });
-
-   
   }, [
     addInstrumentTrack,
     drumPart,

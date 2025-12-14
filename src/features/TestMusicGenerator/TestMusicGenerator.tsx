@@ -2,9 +2,12 @@ import { usePlayer } from "../Player/usePlayer";
 import PlayerScrollbar from "../Player/PlayerScrollbar";
 import { useMusicStore } from "../../store/musicStore";
 import { useInitInstruments } from "../Sampler/hooks/useInitInstruments";
+import { useState } from "react";
 
 const useBpm = () => useMusicStore((state) => state.bpm);
 const useSetBpm = () => useMusicStore((state) => state.setBpm);
+const useInstrumentTracks = () =>
+  useMusicStore((state) => state.instrumentTracks);
 
 const TestMusicGenerator: React.FC = () => {
   const bpm = useBpm();
@@ -12,6 +15,8 @@ const TestMusicGenerator: React.FC = () => {
   const init = useInitInstruments();
   const player = usePlayer();
   const totalDuration = player.getDuration();
+  const instrumentTracks = useInstrumentTracks();
+  const [pan, setPan] = useState<number>(0);
 
   const handlePlayClick = async () => {
     player.togglePlayback();
@@ -31,6 +36,13 @@ const TestMusicGenerator: React.FC = () => {
     }
   };
 
+  const click = () => {
+    if (instrumentTracks[0]) {
+      instrumentTracks[0].instrument.setPan(100);
+      setPan(100);
+    }
+  };
+
   return (
     <div>
       <button onClick={handlePlayClick} disabled={init.isLoading}>
@@ -42,6 +54,9 @@ const TestMusicGenerator: React.FC = () => {
       <button onClick={isLoopToggle} disabled={init.isLoading}>
         {player.isLoop ? "Unloop" : "Loop"}
       </button>
+      <div>
+        <button onClick={click}>{pan}</button>
+      </div>
 
       <input type="number" onChange={changeBpm} value={bpm} />
 

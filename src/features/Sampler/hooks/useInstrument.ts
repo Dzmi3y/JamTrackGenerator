@@ -8,15 +8,10 @@ import type { PartResult } from "../services/partBuilderService";
 import type { Instrument } from "../../../interfaces/Instrument";
 
 export function useInstrument(instrument: SampleInstrument): Instrument {
-
   const [isLoading, setIsLoading] = useState(false);
-
   const samplerRef = useRef<Tone.Sampler | null>(null);
   const samplerGainRef = useRef<Tone.Gain | null>(null);
   const samplerPannerRef = useRef<Tone.Panner | null>(null);
-
-  const [gain, setGain] = useState(100);
-  const [panner, setPanner] = useState(0);
 
   const { hidePreloader, setPreloaderText } = usePreloader();
 
@@ -57,28 +52,32 @@ export function useInstrument(instrument: SampleInstrument): Instrument {
     []
   );
 
-  useEffect(() => {
-    if (!samplerGainRef.current) return;
+  const getIsLoading = useCallback((): boolean => {
+    return isLoading;
+  }, [isLoading]);
 
-    const normalizedGain = Math.min(Math.max(gain, 0), 100) / 100;
+  const getVolume = useCallback((): number => {
+    const res = samplerGainRef.current?.gain.value ?? 0;
+    return res * 100;
+  }, [samplerGainRef]);
 
-    samplerGainRef.current.gain.value = +normalizedGain.toFixed(2);
-  }, [gain]);
-
-  useEffect(() => {
-    if (!samplerPannerRef.current) return;
-
-    const normalizedPan = Math.min(Math.max(panner, -100), 100) / 100;
-
-    samplerPannerRef.current.pan.value = +normalizedPan.toFixed(2);
-  }, [panner]);
+  const getPan = useCallback((): number => {
+    const res = samplerPannerRef.current?.pan.value ?? 0;
+    return res * 100;
+  }, [samplerPannerRef]);
 
   const setVolume = useCallback((value: number) => {
-    setGain(Math.min(Math.max(value, 0), 100));
+    if (!samplerGainRef.current) return;
+
+    const normalizedGain = Math.min(Math.max(value, 0), 100) / 100;
+    samplerGainRef.current.gain.value = +normalizedGain.toFixed(2);
   }, []);
 
   const setPan = useCallback((value: number) => {
-    setPanner(Math.min(Math.max(value, -100), 100));
+    if (!samplerPannerRef.current) return;
+
+    const normalizedPan = Math.min(Math.max(value, -100), 100) / 100;
+    samplerPannerRef.current.pan.value = +normalizedPan.toFixed(2);
   }, []);
 
   useEffect(() => {
@@ -108,9 +107,9 @@ export function useInstrument(instrument: SampleInstrument): Instrument {
 
   return {
     playPart,
-    isLoading,
-    gain,
-    panner,
+    getIsLoading,
+    getVolume,
+    getPan,
     setVolume,
     setPan,
   };
