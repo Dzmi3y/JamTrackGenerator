@@ -1,6 +1,6 @@
 import * as Tone from "tone";
-import type { SampleInstrument } from "../SampleInstrument";
-import { instrumentConfigs } from "../instrumentConfigs";
+import type { SampleInstrument } from "../types/SampleInstrument";
+import { instrumentConfigs } from "../Data/instrumentConfigs";
 
 export const samplerService = {
   getSampler(instrument: SampleInstrument, onLoad: () => void): Tone.Sampler {

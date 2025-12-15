@@ -1,4 +1,4 @@
-import type { PatternBar } from "../patternBlock";
+import type { PatternBar } from "../types/patternBlock";
 import { getPartInfo } from "../utils/patternUtils";
 import { partBuilderService, type PartResult } from "./partBuilderService";
 

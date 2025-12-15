@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState, useRef } from "react";
 import * as Tone from "tone";
 
 import { usePreloader } from "../../../shared/components/PreloaderProvider";
-import type { SampleInstrument } from "../SampleInstrument";
+import type { SampleInstrument } from "../types/SampleInstrument";
 import { samplerService } from "../services/samplerService";
 import type { PartResult } from "../services/partBuilderService";
 import type { Instrument } from "../../../interfaces/Instrument";

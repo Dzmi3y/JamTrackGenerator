@@ -1,4 +1,4 @@
-import type { SampleInstrument } from "../features/Sampler/SampleInstrument";
+import type { SampleInstrument } from "../features/Sampler/types/SampleInstrument";
 import type { PartResult } from "../features/Sampler/services/partBuilderService";
 import type { Instrument } from "./Instrument";
 

@@ -1,5 +1,5 @@
 import patternsData from "../patterns/patterns.json";
-import type { RhythmPattern } from "../rhythmPattern";
+import type { RhythmPattern } from "../types/rhythmPattern";
 import type { PartInfo } from "../../../interfaces/PartInfo";
 
 export function getPartInfo(

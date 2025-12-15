@@ -1,4 +1,4 @@
-import type { SampleInstrument } from "./SampleInstrument";
+import type { SampleInstrument } from "../types/SampleInstrument";
 
 export const instrumentConfigs: Record<
   SampleInstrument,

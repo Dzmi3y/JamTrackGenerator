@@ -1,5 +1,3 @@
-import type { NoteType } from "./Notes";
-
 export type DrumName =
   | "kick"
   | "snare"

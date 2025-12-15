@@ -1,4 +1,4 @@
-import type { PatternBar } from "../patternBlock";
+import type { PatternBar } from "../types/patternBlock";
 import {
   getRhythmName,
   type RhythmSize,

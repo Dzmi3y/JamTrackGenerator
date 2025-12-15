@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import * as Tone from "tone";
-import { useMusicStore } from "../../store/musicStore";
+import { useMusicStore } from "../../../store/musicStore";
 
 const useBpm = () => useMusicStore((state) => state.bpm);
 const useTimeSignature = () => useMusicStore((state) => state.timeSignature);
