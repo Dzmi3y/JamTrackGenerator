@@ -13,8 +13,8 @@ import StopIcon from "/src/assets/images/player/stop-icon.png";
 
 const useBpm = () => useMusicStore((state) => state.bpm);
 const useSetBpm = () => useMusicStore((state) => state.setBpm);
-const useInstrumentTracks = () =>
-  useMusicStore((state) => state.instrumentTracks);
+// const useInstrumentTracks = () =>
+//   useMusicStore((state) => state.instrumentTracks);
 
 const Player: React.FC = () => {
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
@@ -25,8 +25,7 @@ const Player: React.FC = () => {
   const init = useInitInstruments();
   const playerCore = usePlayer(setIsPlaying);
   const totalDuration = playerCore.getDuration();
-  const instrumentTracks = useInstrumentTracks();
-  const [pan, setPan] = useState<number>(0);
+  //const instrumentTracks = useInstrumentTracks();
 
   const handlePlayClick = async () => {
     playerCore.togglePlayback();
@@ -48,13 +47,6 @@ const Player: React.FC = () => {
     const value = +e.currentTarget.value;
     if (!isNaN(value)) {
       setBpm(value);
-    }
-  };
-
-  const click = () => {
-    if (instrumentTracks[0]) {
-      instrumentTracks[0].instrument.setPan(100);
-      setPan(100);
     }
   };
 
@@ -95,24 +87,25 @@ const Player: React.FC = () => {
           <img src={RepeatIcon} alt="repeat-icon" />
         </button>
         <div>
-          <label htmlFor="bpm" className={playerStyles['bpm-label']}>BPM</label>
-        <input
-          id="bpm"
-          className={playerInputStyles["player-input"]}
-          style={{width:"70px",textAlign:"center",fontWeight:"700"}}
-          type="number"
-          onChange={changeBpm}
-          value={bpm}
-        />
+          <label htmlFor="bpm" className={playerStyles["bpm-label"]}>
+            BPM
+          </label>
+          <input
+            id="bpm"
+            className={playerInputStyles["player-input"]}
+            style={{ width: "70px", textAlign: "center", fontWeight: "700" }}
+            type="number"
+            onChange={changeBpm}
+            value={bpm}
+          />
+        </div>
       </div>
-      </div>
+      {/* //todo add total volume */}
       <div>
-        <button onClick={click}>{pan}</button>
-      </div>
-
-      <div style={{ marginTop: "1rem" }}>
-        <p>Transport time: {playerCore.transportTime.toFixed(2)}s</p>
-        <p>Position: {playerCore.transportPosition.toString()}</p>
+        <div className={playerStyles['time-panel']}>
+          <div>Time: {+playerCore.transportTime.toFixed(2)}s</div>
+          <div>Position: {playerCore.transportPosition.toString()}</div>
+        </div>
         <PlayerScrollbar
           duration={totalDuration}
           changePosition={scrollbarHandleChangePosition}
