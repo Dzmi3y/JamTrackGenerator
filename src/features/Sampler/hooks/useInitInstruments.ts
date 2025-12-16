@@ -46,7 +46,7 @@ export function useInitInstruments(): { isLoading: boolean } {
       ]),
     [defaultPianoNotes]
   );
-
+  //todo fix bpm update bug
   const pianoSequence = useMemo(
     () => instrumentPartService.getInstrumentPart(defaultPianoBars, bpm),
 

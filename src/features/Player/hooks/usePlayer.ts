@@ -7,7 +7,7 @@ const useTimeSignature = () => useMusicStore((state) => state.timeSignature);
 const useInstrumentTracks = () =>
   useMusicStore((state) => state.instrumentTracks);
 
-export function usePlayer() {
+export function usePlayer(setPlaybackState:(isPlaying:boolean)=>void) {
   const [transportTime, setTransportTime] = useState(0);
   const [isLoop, setIsLoop] = useState<boolean>(false);
   const [transportPosition, setTransportPosition] =
@@ -17,7 +17,7 @@ export function usePlayer() {
   const timeSignature: [number, number] = useTimeSignature();
 
   const playParts = useCallback(() => {
-    instrumentTracks.forEach((t) => {
+    return instrumentTracks.forEach((t) => {
       if (t.instrument && t.track) {
         if (t.track.part.length > 0) {
           t.instrument.playPart(t.track);
@@ -36,6 +36,7 @@ export function usePlayer() {
 
   const startPlayback = useCallback(async () => {
     Tone.Transport.timeSignature = timeSignature;
+      setPlaybackState(true);
 
     if (Tone.Transport.state === "stopped") {
       Tone.Transport.position = "0:1:0"; // Fixes a bug in Tone.js when a -0 value is available
@@ -44,16 +45,18 @@ export function usePlayer() {
       playParts();
     }
     Tone.Transport.start();
-  }, [timeSignature, bpm, playParts]);
+  }, [timeSignature, bpm, playParts,setPlaybackState]);
 
   const pausePlayback = useCallback(() => {
+    setPlaybackState(false);
     Tone.Transport.pause();
-  }, []);
+  }, [setPlaybackState]);
 
   const stopPlayback = useCallback(() => {
+    setPlaybackState(false);
     Tone.Transport.cancel();
     Tone.Transport.stop();
-  }, []);
+  }, [setPlaybackState]);
 
   const togglePlayback = useCallback(async () => {
     if (Tone.Transport.state !== "started") {

@@ -1,0 +1,13 @@
+.control-panel {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.bpm-label {
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 1.5;
+  margin-right: 10px;
+}
