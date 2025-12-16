@@ -1,9 +1,28 @@
 import type { PatternBar } from "../types/patternBlock";
+import type { SampleInstrument } from "../types/SampleInstrument";
 import { getPartInfo } from "../utils/patternUtils";
 import { partBuilderService, type PartResult } from "./partBuilderService";
 
 class InstrumentPartService {
-  getInstrumentPart(
+  getPart(
+    instrumentName: SampleInstrument,
+    patternBlocks: PatternBar[] | undefined,
+    bpm: number
+  ): PartResult | undefined {
+    if (!patternBlocks) return undefined;
+
+    switch (instrumentName) {
+      case "drums":
+        return this.getDrumPart(patternBlocks, bpm);
+      case "piano":
+        return this.getInstrumentPart(patternBlocks, bpm);
+
+      default:
+        return undefined;
+    }
+  }
+
+  private getInstrumentPart(
     patternBlocks: PatternBar[],
     bpm: number
   ): PartResult | undefined {
@@ -23,7 +42,10 @@ class InstrumentPartService {
     return partBuilderService.getPart(validPartInfo, bpm);
   }
 
-  getDrumPart(instruments: PatternBar[], bpm: number): PartResult | undefined {
+  private getDrumPart(
+    instruments: PatternBar[],
+    bpm: number
+  ): PartResult | undefined {
     const infos = instruments
       .map(({ note, id, barNumber }) => getPartInfo(note, id, barNumber))
       .filter((r) => r !== undefined);

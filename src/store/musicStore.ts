@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import type { MusicState, MusicStore } from "./types";
 import { persist } from "zustand/middleware";
+import { instrumentPartService } from "../features/Sampler/services/instrumentPartService";
 
 const initialState: MusicState = {
   bpm: 120,
@@ -13,11 +14,26 @@ export const useMusicStore = create<MusicStore>()(
     (set, get) => ({
       ...initialState,
 
-      setBpm: (newBpm) => {
+       setBpm: (newBpm) => {
         const currentBpm = get().bpm;
         if (newBpm !== currentBpm) {
           const clampedBpm = Math.max(Math.min(newBpm, 300), 0);
-          set({ bpm: clampedBpm });
+          
+          const updatedInstrumentTracks = get().instrumentTracks.map(
+            (it) => ({
+              ...it,
+              track: instrumentPartService.getPart(
+                it.instrumentName,
+                it.bars,
+                clampedBpm
+              )
+            })
+          );
+          
+          set({ 
+            bpm: clampedBpm, 
+            instrumentTracks: updatedInstrumentTracks 
+          });
         }
       },
       setTimeSignature: (newTimeSignature: [number, number]) => {

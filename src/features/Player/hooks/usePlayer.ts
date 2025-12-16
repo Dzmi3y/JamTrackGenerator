@@ -21,6 +21,8 @@ export function usePlayer(setPlaybackState:(isPlaying:boolean)=>void) {
       if (t.instrument && t.track) {
         if (t.track.part.length > 0) {
           t.instrument.playPart(t.track);
+
+       
         }
       }
     });

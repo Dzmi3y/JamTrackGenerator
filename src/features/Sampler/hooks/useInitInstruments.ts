@@ -48,7 +48,7 @@ export function useInitInstruments(): { isLoading: boolean } {
   );
   //todo fix bpm update bug
   const pianoSequence = useMemo(
-    () => instrumentPartService.getInstrumentPart(defaultPianoBars, bpm),
+    () => instrumentPartService.getPart("piano", defaultPianoBars, bpm),
 
     [defaultPianoBars, bpm]
   );
@@ -59,7 +59,7 @@ export function useInitInstruments(): { isLoading: boolean } {
   );
 
   const drumSequence = useMemo(
-    () => instrumentPartService.getDrumPart(defaultDrumBars, bpm),
+    () => instrumentPartService.getPart("drums", defaultDrumBars, bpm),
     [defaultDrumBars, bpm]
   );
 
@@ -77,11 +77,13 @@ export function useInitInstruments(): { isLoading: boolean } {
       instrument: drumPart,
       instrumentName: "drums",
       track: drumSequence,
+      bars: defaultDrumBars,
     });
     addInstrumentTrack({
       instrument: pianoPart,
       instrumentName: "piano",
       track: pianoSequence,
+      bars: defaultPianoBars,
     });
   }, [
     addInstrumentTrack,
@@ -90,6 +92,8 @@ export function useInitInstruments(): { isLoading: boolean } {
     instrumentTracks,
     drumSequence,
     pianoSequence,
+    defaultPianoBars,
+    defaultDrumBars,
   ]);
 
   return {
