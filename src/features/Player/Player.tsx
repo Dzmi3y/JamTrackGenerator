@@ -10,11 +10,12 @@ import PlayIcon from "/src/assets/images/player/play-icon.png";
 import PauseIcon from "/src/assets/images/player/pause-icon.png";
 import RepeatIcon from "/src/assets/images/player/repeat-icon.png";
 import StopIcon from "/src/assets/images/player/stop-icon.png";
+import PlayerTrack from "./components/PlayerTrack/PlayerTrack";
 
 const useBpm = () => useMusicStore((state) => state.bpm);
 const useSetBpm = () => useMusicStore((state) => state.setBpm);
-// const useInstrumentTracks = () =>
-//   useMusicStore((state) => state.instrumentTracks);
+const useInstrumentTracks = () =>
+  useMusicStore((state) => state.instrumentTracks);
 
 const Player: React.FC = () => {
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
@@ -25,7 +26,7 @@ const Player: React.FC = () => {
   const init = useInitInstruments();
   const playerCore = usePlayer(setIsPlaying);
   const totalDuration = playerCore.getDuration();
-  //const instrumentTracks = useInstrumentTracks();
+  const instrumentTracks = useInstrumentTracks();
 
   const handlePlayClick = async () => {
     playerCore.togglePlayback();
@@ -102,7 +103,7 @@ const Player: React.FC = () => {
       </div>
       {/* //todo add total volume */}
       <div>
-        <div className={playerStyles['time-panel']}>
+        <div className={playerStyles["time-panel"]}>
           <div>Time: {+playerCore.transportTime.toFixed(2)}s</div>
           <div>Position: {playerCore.transportPosition.toString()}</div>
         </div>
@@ -110,6 +111,11 @@ const Player: React.FC = () => {
           duration={totalDuration}
           changePosition={scrollbarHandleChangePosition}
         />
+      </div>
+      <div>
+        {instrumentTracks.map((t) => (
+          <PlayerTrack key={t.id} prop={t} />
+        ))}
       </div>
     </div>
   );
