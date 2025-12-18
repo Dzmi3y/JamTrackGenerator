@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import styles from "./AnimatedContainer.module.css";
+import styles from "./CollapsibleContainer.module.css";
 
 interface AnimatedContainerProps {
   isOpen: boolean;
