@@ -1,8 +1,12 @@
 import type { MusicStore, SetState } from "../types";
 import type { PatternBar } from "../../../features/Sampler/types/patternBlock";
 import { instrumentPartService } from "../../../features/Sampler/services/instrumentPartService";
+import type { ScaleNotesInfo } from "../../../features/Sampler/types/scaleNotesInfo";
 
-export const createTrackActions = (set: SetState): Pick<MusicStore, 
+export const createTrackActions = (
+  set: SetState
+): Pick<
+  MusicStore,
   | "updateInstrumentTrackBars"
   | "setInstrumentTracks"
   | "addInstrumentTrack"
@@ -10,7 +14,11 @@ export const createTrackActions = (set: SetState): Pick<MusicStore,
   | "removeInstrumentTrack"
   | "clearInstrumentTracks"
 > => ({
-  updateInstrumentTrackBars: (id: string, newBars: PatternBar[]) => {
+  updateInstrumentTrackBars: (
+    id: string,
+    newBars: PatternBar[],
+    scaleNotesInfo?: ScaleNotesInfo
+  ) => {
     set((state) => {
       if (!id) return state;
 
@@ -20,6 +28,7 @@ export const createTrackActions = (set: SetState): Pick<MusicStore,
         return {
           ...it,
           bars: newBars,
+          scaleNotesInfo: scaleNotesInfo,
           track: instrumentPartService.getPart(
             it.instrumentName,
             newBars,

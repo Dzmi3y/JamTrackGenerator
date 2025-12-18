@@ -9,6 +9,7 @@ import { getDrumBarInfoById } from "../patterns/drumPatterns";
 import { getChordsByProgression } from "../utils/progressionUtil";
 import { useMusicStore } from "../../../store/musicStore";
 import { useInstrument } from "./useInstrument";
+import type { ScaleNotesInfo } from "../types/scaleNotesInfo";
 
 const useBpm = () => useMusicStore((state) => state.bpm);
 const useAddInstrumentTrack = () =>
@@ -24,15 +25,22 @@ export function useInitInstruments(): { isLoading: boolean } {
   const addInstrumentTrack = useAddInstrumentTrack();
   const isInitializedRef = useRef<boolean>(false);
 
-  const defaultPianoNotes = useMemo(
-    () =>
-      getChordsByProgression("C", "ionian", [
+  const pianoScaleNotesInfo = useMemo((): ScaleNotesInfo => {
+    return {
+      note: "C",
+      scaleMode: "ionian",
+      degrees: [
         { val: 2, oct: 4 },
         { val: 5, oct: 4 },
         { val: 1, oct: 4 },
         { val: 4, oct: 4 },
-      ]),
-    []
+      ],
+    };
+  }, []);
+
+  const defaultPianoNotes = useMemo(
+    () => getChordsByProgression(pianoScaleNotesInfo),
+    [pianoScaleNotesInfo]
   );
 
   const defaultPianoBars = useMemo(
@@ -46,7 +54,7 @@ export function useInitInstruments(): { isLoading: boolean } {
       ]),
     [defaultPianoNotes]
   );
-  //todo fix bpm update bug
+
   const pianoSequence = useMemo(
     () => instrumentPartService.getPart("piano", defaultPianoBars, bpm),
 
@@ -78,12 +86,14 @@ export function useInitInstruments(): { isLoading: boolean } {
       instrumentName: "drums",
       track: drumSequence,
       bars: defaultDrumBars,
+      scaleNotesInfo: undefined,
     });
     addInstrumentTrack({
       instrument: pianoPart,
       instrumentName: "piano",
       track: pianoSequence,
       bars: defaultPianoBars,
+      scaleNotesInfo: pianoScaleNotesInfo
     });
   }, [
     addInstrumentTrack,
@@ -94,6 +104,7 @@ export function useInitInstruments(): { isLoading: boolean } {
     pianoSequence,
     defaultPianoBars,
     defaultDrumBars,
+    pianoScaleNotesInfo
   ]);
 
   return {

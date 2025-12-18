@@ -111,7 +111,12 @@ const Player: React.FC = () => {
       </div>
       <div>
         {instrumentTracks.map((t) => (
-          <PlayerTrack key={t.id} prop={t} />
+          <div style={{ display: "flex" }}>
+            <PlayerTrack key={t.id} prop={t} />
+            <div>
+              {(t.scaleNotesInfo)? `${t.scaleNotesInfo?.note} ${t.scaleNotesInfo?.scaleMode} (${t.scaleNotesInfo?.degrees.map(n=> n.val).join(' ')})`:"" } 
+            </div>
+          </div>
         ))}
       </div>
     </div>
