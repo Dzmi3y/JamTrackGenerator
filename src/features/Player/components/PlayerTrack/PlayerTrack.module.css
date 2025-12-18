@@ -1,27 +1,142 @@
-.volume {
+.track {
+  background: var(--color-surface);
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  width: 200px;
+}
+
+.trackName {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.controlGroup {
+  margin-bottom: 20px;
+}
+
+.controlLabel {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.labelText {
+  font-size: 14px;
+  color: var(--color-pastel-cream);
+}
+
+.inputContainer {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.numberInput {
+  width: 60px;
+  padding: 4px 8px;
+  background: var(--color-background);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  color: var(--color-text);
+  font-size: 14px;
+  text-align: center;
+  font-weight: 600;
+}
+
+.numberInput:focus {
+  outline: none;
+  border-color: var(--color-pastel-cream);
+  box-shadow: 0 0 0 2px rgba(60, 110, 113, 0.3);
+}
+
+.numberInput::-webkit-outer-spin-button,
+.numberInput::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.numberInput[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.percentSign {
+  font-size: 14px;
+  color: var(--color-pastel-cream);
+  font-weight: 600;
+}
+
+.sliderContainer {
+  position: relative;
+  height: 24px;
+  display: flex;
+  align-items: center;
+}
+
+.sliderInput {
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  position: absolute;
+  z-index: 10;
+  cursor: pointer;
+  margin: 0;
+}
+
+.sliderTrack {
+  position: absolute;
+  width: 100%;
+  height: 6px;
+  background: var(--color-background);
+  border-radius: 3px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.sliderProgress {
+  position: absolute;
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.1s ease;
+}
+
+.sliderThumb {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 16px;
+  height: 16px;
+  background: var(--color-text);
+  border-radius: 50%;
+  border: 2px solid var(--color-accent);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  pointer-events: none;
+  z-index: 5;
+}
+
+.volumeSlider .sliderProgress {
+  background: var(--color-accent);
+}
+
+.panSlider .sliderTrack {
+  background: linear-gradient(
+    to right,
+    var(--color-secondary) 0%,
+    var(--color-surface) 50%,
+    var(--color-success) 100%
+  );
+}
+
+.panSlider .sliderProgress {
+  background: transparent;
   width: 100%;
 }
 
-.pan {
-  width: 100%;
-  height: 6px;
-  background:
-    linear-gradient(
-      to right,
-      transparent 0%,
-      transparent 50%,
-      var(--color-surface) 50%,
-      var(--color-surface) 100%
-    ),
-    linear-gradient(
-      to left,
-      transparent 0%,
-      transparent 50%,
-      var(--color-error) 50%,
-      var(--color-error) 100%
-    );
-  background-blend-mode: overlay;
-  border-radius: 3px;
-  outline: "none";
-  -webkit-appearance: none;
+.sliderContainer:hover .sliderThumb {
+  transform: translate(-50%, -50%) scale(1.1);
 }

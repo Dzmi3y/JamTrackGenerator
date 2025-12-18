@@ -103,10 +103,7 @@ const Player: React.FC = () => {
       </div>
       {/* //todo add total volume */}
       <div>
-        <div className={playerStyles["time-panel"]}>
-          <div>Time: {+playerCore.transportTime.toFixed(2)}s</div>
-          <div>Position: {playerCore.transportPosition.toString()}</div>
-        </div>
+        <div>Position: {playerCore.transportPosition.toString()}</div>
         <PlayerScrollbar
           duration={totalDuration}
           changePosition={scrollbarHandleChangePosition}
