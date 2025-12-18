@@ -15,14 +15,14 @@ const PlayerScrollbar: React.FC<PlayerScrollbarProps> = ({
   const [isDragging, setIsDragging] = useState(false);
   const sliderRef = useRef<HTMLDivElement>(null);
 
-const formatTime = (seconds: number) => {
-  const mins = Math.floor(seconds / 60);
-  const secs = Math.floor(seconds % 60);
-  const ms = Math.floor((seconds % 1) * 1000);
-  const msDisplay = Math.floor(ms / 10);
-  
-  return `${mins}:${secs < 10 ? "0" : ""}${secs}.${msDisplay < 10 ? "0" : ""}${msDisplay}`;
-};
+  const formatTime = (seconds: number) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+    const ms = Math.floor((seconds % 1) * 1000);
+    const msDisplay = Math.floor(ms / 10);
+
+    return `${mins}:${secs < 10 ? "0" : ""}${secs}.${msDisplay < 10 ? "0" : ""}${msDisplay}`;
+  };
 
   useEffect(() => {
     if (isDragging) return;
