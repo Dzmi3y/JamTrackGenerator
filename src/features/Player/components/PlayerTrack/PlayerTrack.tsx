@@ -5,8 +5,12 @@ import ToggleIconButton from "../../../../shared/components/buttons/ToggleIconBu
 import CollapsibleContainer from "../../../../shared/components/CollapsibleContainer/CollapsibleContainer";
 
 const PlayerTrack: React.FC<{ prop: InstrumentTrack }> = ({ prop }) => {
-  const [volume, setVolume] = useState<number>(prop.instrument.getVolume());
-  const [pan, setPan] = useState<number>(prop.instrument.getPan());
+  const defaultVolume = prop.instrument.getVolume
+    ? prop.instrument.getVolume()
+    : 100;
+  const defaultPan = prop.instrument.getPan ? prop.instrument.getPan() : 0;
+  const [volume, setVolume] = useState<number>(defaultVolume);
+  const [pan, setPan] = useState<number>(defaultPan);
   const [isDetailOpen, setIsDetailOpen] = useState<boolean>(false);
 
   const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {

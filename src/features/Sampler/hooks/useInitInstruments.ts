@@ -77,6 +77,7 @@ export function useInitInstruments(): { isLoading: boolean } {
   );
 
   useEffect(() => {
+    if (instrumentTracks.length > 0) return;
     if (isInitializedRef.current) return;
 
     isInitializedRef.current = true;
@@ -93,7 +94,7 @@ export function useInitInstruments(): { isLoading: boolean } {
       instrumentName: "piano",
       track: pianoSequence,
       bars: defaultPianoBars,
-      scaleNotesInfo: pianoScaleNotesInfo
+      scaleNotesInfo: pianoScaleNotesInfo,
     });
   }, [
     addInstrumentTrack,
@@ -104,7 +105,7 @@ export function useInitInstruments(): { isLoading: boolean } {
     pianoSequence,
     defaultPianoBars,
     defaultDrumBars,
-    pianoScaleNotesInfo
+    pianoScaleNotesInfo,
   ]);
 
   return {

@@ -28,6 +28,8 @@ const Player: React.FC = () => {
   const totalDuration = playerCore.getDuration();
   const instrumentTracks = useInstrumentTracks();
 
+
+
   const handlePlayClick = async () => {
     playerCore.togglePlayback();
   };
@@ -50,6 +52,8 @@ const Player: React.FC = () => {
       setBpm(value);
     }
   };
+
+
 
   return (
     <div>
@@ -111,10 +115,12 @@ const Player: React.FC = () => {
       </div>
       <div>
         {instrumentTracks.map((t) => (
-          <div style={{ display: "flex" }}>
+          <div key={t.id}  style={{ display: "flex" }}>
             <PlayerTrack key={t.id} prop={t} />
             <div>
-              {(t.scaleNotesInfo)? `${t.scaleNotesInfo?.note} ${t.scaleNotesInfo?.scaleMode} (${t.scaleNotesInfo?.degrees.map(n=> n.val).join(' ')})`:"" } 
+              {t.scaleNotesInfo
+                ? `${t.scaleNotesInfo?.note} ${t.scaleNotesInfo?.scaleMode} (${t.scaleNotesInfo?.degrees.map((n) => n.val).join(" ")})`
+                : ""}
             </div>
           </div>
         ))}

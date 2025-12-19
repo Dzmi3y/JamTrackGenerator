@@ -1,6 +1,7 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useMemo, useCallback } from "react";
 import * as Tone from "tone";
 import styles from "./PlayerScrollbar.module.css";
+import { useInstrumentTracks } from "../../../../store/musicStore";
 
 type PlayerScrollbarProps = {
   changePosition: (newPosition: number) => void;
@@ -14,41 +15,43 @@ const PlayerScrollbar: React.FC<PlayerScrollbarProps> = ({
   const [position, setPosition] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
   const sliderRef = useRef<HTMLDivElement>(null);
+  const instrumentTracks = useInstrumentTracks();
 
-  const formatTime = (seconds: number) => {
+  const formatTime = useCallback((seconds: number) => {
     const mins = Math.floor(seconds / 60);
     const secs = Math.floor(seconds % 60);
-    const ms = Math.floor((seconds % 1) * 1000);
-    const msDisplay = Math.floor(ms / 10);
-
-    return `${mins}:${secs < 10 ? "0" : ""}${secs}.${msDisplay < 10 ? "0" : ""}${msDisplay}`;
-  };
+    const ms = Math.floor((seconds % 1) * 100);
+    return `${mins}:${secs.toString().padStart(2, '0')}.${ms.toString().padStart(2, '0')}`;
+  }, []);
 
   useEffect(() => {
     if (isDragging) return;
 
     const interval = setInterval(() => {
-      setPosition(Tone.Transport.seconds * 100);
+      const newPos = Tone.Transport.seconds * 100;
+      if (Math.abs(newPos - position) > 1) {
+        setPosition(newPos);
+      }
     }, 200);
 
     return () => clearInterval(interval);
-  }, [isDragging]);
+  }, [isDragging, position]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const newPos = Number(e.target.value);
     setPosition(newPos);
-  };
+  }, []);
 
-  const handleMouseDown = () => {
+  const handleMouseDown = useCallback(() => {
     setIsDragging(true);
-  };
+  }, []);
 
-  const handleMouseUp = () => {
+  const handleMouseUp = useCallback(() => {
     changePosition(position / 100);
     setIsDragging(false);
-  };
+  }, [position, changePosition]);
 
-  const handleTrackClick = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleTrackClick = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
     if (sliderRef.current && !isDragging) {
       const rect = sliderRef.current.getBoundingClientRect();
       const clickX = e.clientX - rect.left;
@@ -57,10 +60,37 @@ const PlayerScrollbar: React.FC<PlayerScrollbarProps> = ({
       setPosition(newPosition);
       changePosition(newPosition / 100);
     }
-  };
+  }, [isDragging, duration, changePosition]);
 
   const fillPercentage = duration > 0 ? (position / (duration * 100)) * 100 : 0;
   const clampedPercentage = Math.min(100, Math.max(0, fillPercentage));
+
+  const GetNotesTime = useMemo(() => {
+    if (!instrumentTracks[1]) return undefined;
+    const track = instrumentTracks[1].track;
+    if (!track) return undefined;
+    return track.part.map((p, i) => {
+      const finish =
+        track.part.length - 1 === i
+          ? track.totalDuration
+          : track.part[i + 1].time;
+      return { note: p.event.note, timeStart: +p.time, timeFinish: +finish };
+    });
+  }, [instrumentTracks]);
+
+  const GetCurrentNote = useMemo(() => {
+    const pos = position / 100;
+    const notes = GetNotesTime;
+    if (!notes?.length) return "";
+    
+    for (let i = 0; i < notes.length; i++) {
+      const note = notes[i];
+      if (note.timeStart <= pos && pos < note.timeFinish) {
+        return note.note ? note.note.join(" ") : "";
+      }
+    }
+    return "";
+  }, [GetNotesTime, position]);
 
   return (
     <div className={styles.container}>
@@ -98,6 +128,7 @@ const PlayerScrollbar: React.FC<PlayerScrollbarProps> = ({
           style={{ left: `${clampedPercentage}%` }}
         ></div>
       </div>
+      <div className={styles.notes}>{GetCurrentNote}</div>
     </div>
   );
 };

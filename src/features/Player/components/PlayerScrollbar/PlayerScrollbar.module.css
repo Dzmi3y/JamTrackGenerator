@@ -5,6 +5,13 @@
   border-radius: 10px;
   margin: 12px 0;
 }
+.notes{
+  margin-top: 15px;
+  text-align: center;
+  color: var(--color-pastel-mint);
+  font-size: 30px;
+  font-family: var(--font-family-title);
+}
 
 .timeDisplay {
   display: flex;
@@ -15,7 +22,7 @@
 }
 
 .currentTime {
-  color: var(--color-pastel-mint);
+  color: var(--color-pastel-teal);
   font-weight: 600;
 }
 
