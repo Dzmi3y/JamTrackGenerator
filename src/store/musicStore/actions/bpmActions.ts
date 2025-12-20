@@ -4,7 +4,7 @@ import { instrumentPartService } from "../../../features/Sampler/services/instru
 export const createBpmActions = (set: SetState): Pick<MusicStore, "setBpm"> => ({
   setBpm: (newBpm) => {
     set((state) => {
-      const clampedBpm = Math.max(Math.min(newBpm, 300), 0);
+      const clampedBpm = Math.max(Math.min(newBpm, 300), 1);
       if (clampedBpm === state.bpm) return state;
 
       const instrumentTracks = state.instrumentTracks.map((it) => ({

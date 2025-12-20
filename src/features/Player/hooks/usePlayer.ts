@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, useRef } from "react";
 import * as Tone from "tone";
 import { useMusicStore } from "../../../store/musicStore";
 
@@ -7,58 +7,73 @@ const useTimeSignature = () => useMusicStore((state) => state.timeSignature);
 const useInstrumentTracks = () =>
   useMusicStore((state) => state.instrumentTracks);
 
-export function usePlayer(setPlaybackState:(isPlaying:boolean)=>void) {
+export function usePlayer(setPlaybackState: (isPlaying: boolean) => void) {
   const [transportTime, setTransportTime] = useState(0);
   const [isLoop, setIsLoop] = useState<boolean>(false);
-  const [transportPosition, setTransportPosition] =
-    useState<Tone.Unit.Time>("0:0:0");
+  const [transportPosition, setTransportPosition] = useState<Tone.Unit.Time>("0:0:0");
+  
   const bpm = useBpm();
   const instrumentTracks = useInstrumentTracks();
   const timeSignature: [number, number] = useTimeSignature();
+  
+  const playbackStateRef = useRef(setPlaybackState);
+  const isLoopRef = useRef(isLoop);
+  
+  useEffect(() => {
+    playbackStateRef.current = setPlaybackState;
+  }, [setPlaybackState]);
+  
+  useEffect(() => {
+    isLoopRef.current = isLoop;
+  }, [isLoop]);
 
   const playParts = useCallback(() => {
-    return instrumentTracks.forEach((t) => {
-      if (t.instrument && t.track) {
-        if (t.track.part.length > 0) {
-          t.instrument.playPart(t.track);
-
-       
-        }
+    instrumentTracks.forEach((t) => {
+      if (t.instrument && t.track?.part.length) {
+        t.instrument.playPart(t.track);
       }
     });
   }, [instrumentTracks]);
 
   const getDuration = useCallback((): number => {
-    const durationArray = instrumentTracks.map(
-      (i) => i.track?.totalDuration ?? 0
-    );
-
-    return Math.max(...durationArray);
+    let maxDuration = 0;
+    for (let i = 0; i < instrumentTracks.length; i++) {
+      const duration = instrumentTracks[i].track?.totalDuration ?? 0;
+      if (duration > maxDuration) maxDuration = duration;
+    }
+    return maxDuration;
   }, [instrumentTracks]);
 
   const startPlayback = useCallback(async () => {
     Tone.Transport.timeSignature = timeSignature;
-      setPlaybackState(true);
+    playbackStateRef.current(true);
 
     if (Tone.Transport.state === "stopped") {
-      Tone.Transport.position = "0:1:0"; // Fixes a bug in Tone.js when a -0 value is available
       Tone.Transport.position = "0:0:0";
       Tone.Transport.bpm.value = bpm;
       playParts();
     }
-    Tone.Transport.start();
-  }, [timeSignature, bpm, playParts,setPlaybackState]);
+    
+    if (Tone.Transport.state !== "started") {
+      Tone.Transport.start();
+    }
+  }, [timeSignature, bpm, playParts]);
 
   const pausePlayback = useCallback(() => {
-    setPlaybackState(false);
-    Tone.Transport.pause();
-  }, [setPlaybackState]);
+    playbackStateRef.current(false);
+    if (Tone.Transport.state === "started") {
+      Tone.Transport.pause();
+    }
+  }, []);
 
   const stopPlayback = useCallback(() => {
-    setPlaybackState(false);
-    Tone.Transport.cancel();
-    Tone.Transport.stop();
-  }, [setPlaybackState]);
+    playbackStateRef.current(false);
+    if (Tone.Transport.state !== "stopped") {
+      Tone.Transport.cancel();
+      Tone.Transport.stop();
+       Tone.Transport.position = "0:0:0";
+    }
+  }, []);
 
   const togglePlayback = useCallback(async () => {
     if (Tone.Transport.state !== "started") {
@@ -70,10 +85,13 @@ export function usePlayer(setPlaybackState:(isPlaying:boolean)=>void) {
 
   const setPlaybackPosition = useCallback(
     async (pos: Tone.Unit.Time | number) => {
-      if (Tone.Transport.state === "stopped") {
+      const wasStopped = Tone.Transport.state === "stopped";
+      
+      if (wasStopped) {
         await startPlayback();
         pausePlayback();
       }
+      
       if (typeof pos === "number") {
         Tone.Transport.seconds = pos;
       } else {
@@ -84,24 +102,45 @@ export function usePlayer(setPlaybackState:(isPlaying:boolean)=>void) {
   );
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setTransportTime(Tone.Transport.seconds);
-      setTransportPosition(Tone.Transport.position);
-      if (Tone.Transport.seconds >= getDuration()) {
-        if (isLoop) {
-          Tone.Transport.position = "0:1:0"; // Fixes a bug in Tone.js when a -0 value is available
-          Tone.Transport.position = "0:0:0";
-        } else {
-          stopPlayback();
+    let animationFrameId: number;
+    let lastUpdate = 0;
+    const UPDATE_INTERVAL = 100; 
+
+    const updateTransport = (timestamp: number) => {
+      if (timestamp - lastUpdate >= UPDATE_INTERVAL) {
+        setTransportTime(Tone.Transport.seconds);
+        setTransportPosition(Tone.Transport.position);
+
+        const duration = getDuration();
+        if (Tone.Transport.seconds >= duration-0.01) {
+          if (isLoopRef.current) {
+            Tone.Transport.position = "0:0:0";
+          } else {
+            stopPlayback();
+          }
         }
+        lastUpdate = timestamp;
       }
-    }, 100);
-    return () => clearInterval(interval);
-  }, [getDuration, isLoop, stopPlayback]);
+      animationFrameId = requestAnimationFrame(updateTransport);
+    };
+
+    animationFrameId = requestAnimationFrame(updateTransport);
+    return () => cancelAnimationFrame(animationFrameId);
+  }, [getDuration, stopPlayback]); 
 
   useEffect(() => {
-    stopPlayback();
-  }, [bpm, stopPlayback]);
+    return () => {
+      if (Tone.Transport.state !== "stopped") {
+        stopPlayback();
+      }
+    };
+  }, [stopPlayback]);
+
+  useEffect(() => {
+    if (Tone.Transport.state !== "stopped") {
+      Tone.Transport.bpm.value = bpm;
+    }
+  }, [bpm]);
 
   return {
     togglePlayback,
