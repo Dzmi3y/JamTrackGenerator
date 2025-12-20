@@ -9,6 +9,7 @@ export interface DrumRhythm {
 
 export const DrumRhythmIds = {
   Basic_Rock_Beat: "Basic Rock Beat",
+  Grove_Basic_Rock_Beat:"Grove Basic Rock Beat",
   Skank_Beat: "Skank Beat",
   Funk_Disco_Beat: "Funk_Disco_Beat",
   Half_Time_Shuffle: "Half_Time_Shuffle",
@@ -27,6 +28,14 @@ export const DrumRhythms: DrumRhythm[] = [
     id: "Basic_Rock_Beat",
     patterns: [
       { note: [drumMap.kick], rhythm: Rhythms.basic, rhythmSize: 2 },
+      { note: [drumMap.snare], rhythm: Rhythms.backbeat, rhythmSize: 2 },
+      { note: [drumMap.hihat], rhythm: Rhythms.basic, rhythmSize: 8 },
+    ],
+  },
+  {
+    id: "Grove_Basic_Rock_Beat",
+    patterns: [
+      { note: [drumMap.kick], rhythm: Rhythms.basicGrouve, rhythmSize: 2 },
       { note: [drumMap.snare], rhythm: Rhythms.backbeat, rhythmSize: 2 },
       { note: [drumMap.hihat], rhythm: Rhythms.basic, rhythmSize: 8 },
     ],

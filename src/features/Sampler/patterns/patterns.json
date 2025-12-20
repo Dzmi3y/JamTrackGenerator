@@ -11,6 +11,12 @@
     "pattern": "x___x___",
     "accent": "x---"
   },
+    {
+    "id": "basicGrouve_2",
+    "totalBeats": 2,
+    "pattern": "x____x__",
+    "accent": "x---"
+  },
   {
     "id": "basic_4",
     "totalBeats": 4,

@@ -38,66 +38,126 @@ export function useInitInstruments(): { isLoading: boolean } {
     };
   }, []);
 
-  const defaultPianoNotes = useMemo(
-    () => getChordsByProgression(pianoScaleNotesInfo),
-    [pianoScaleNotesInfo]
-  );
+  // const defaultPianoNotes = useMemo(
+  //   () => getChordsByProgression(pianoScaleNotesInfo),
+  //   [pianoScaleNotesInfo]
+  // );
 
   const defaultPianoBars = useMemo(
     () =>
       buildPatternBars([
         {
-          note: defaultPianoNotes,
+          note: getChordsByProgression({
+            note: "C",
+            scaleMode: "ionian",
+            degrees: [{ val: 1, oct: 4 }],
+            
+          }),
           rhythm: Rhythms.basic,
-          rhythmSize: 4,
+          rhythmSize: 1,
+          
         },
         {
-          note: defaultPianoNotes,
+          note: getChordsByProgression({
+            note: "C",
+            scaleMode: "ionian",
+            degrees: [{ val: 6, oct: 4 }],
+          }),
           rhythm: Rhythms.basic,
-          rhythmSize: 4,
+          rhythmSize: 1,
         },
         {
-          note: defaultPianoNotes,
+          note: getChordsByProgression({
+            note: "C",
+            scaleMode: "ionian",
+            degrees: [{ val: 4, oct: 4 }],
+          }),
           rhythm: Rhythms.basic,
-          rhythmSize: 4,
+          rhythmSize: 1,
         },
         {
-          note: defaultPianoNotes,
+          note: getChordsByProgression({
+            note: "C",
+            scaleMode: "ionian",
+            degrees: [{ val: 5, oct: 4 }],
+          }),
           rhythm: Rhythms.basic,
-          rhythmSize: 4,
+          rhythmSize: 1,
         },
         {
-          note: defaultPianoNotes,
+          note: getChordsByProgression({
+            note: "C",
+            scaleMode: "ionian",
+            degrees: [{ val: 1, oct: 4 }],
+          }),
           rhythm: Rhythms.basic,
-          rhythmSize: 4,
+          rhythmSize: 1,
         },
         {
-          note: defaultPianoNotes,
+          note: getChordsByProgression({
+            note: "C",
+            scaleMode: "ionian",
+            degrees: [{ val: 5, oct: 4 }],
+          }),
           rhythm: Rhythms.basic,
-          rhythmSize: 4,
+          rhythmSize: 1,
         },
         {
-          note: defaultPianoNotes,
+          note: getChordsByProgression({
+            note: "C",
+            scaleMode: "ionian",
+            degrees: [{ val: 6, oct: 4 }],
+          }),
           rhythm: Rhythms.basic,
-          rhythmSize: 4,
+          rhythmSize: 1,
         },
         {
-          note: defaultPianoNotes,
+          note: getChordsByProgression({
+            note: "C",
+            scaleMode: "ionian",
+            degrees: [{ val: 4, oct: 4 }],
+          }),
           rhythm: Rhythms.basic,
-          rhythmSize: 4,
+          rhythmSize: 1,
         },
         {
-          note: defaultPianoNotes,
+          note: getChordsByProgression({
+            note: "C",
+            scaleMode: "ionian",
+            degrees: [{ val: 2, oct: 4 }],
+          }),
           rhythm: Rhythms.basic,
-          rhythmSize: 4,
+          rhythmSize: 1,
         },
         {
-          note: defaultPianoNotes,
+          note: getChordsByProgression({
+            note: "C",
+            scaleMode: "ionian",
+            degrees: [{ val: 5, oct: 4 }],
+          }),
           rhythm: Rhythms.basic,
-          rhythmSize: 4,
+          rhythmSize: 1,
+        },
+        {
+          note: getChordsByProgression({
+            note: "C",
+            scaleMode: "ionian",
+            degrees: [{ val: 1, oct: 4 }],
+          }),
+          rhythm: Rhythms.basic,
+          rhythmSize: 1,
+        },
+        {
+          note: getChordsByProgression({
+            note: "C",
+            scaleMode: "ionian",
+            degrees: [{ val: 5, oct: 4 }],
+          }),
+          rhythm: Rhythms.basic,
+          rhythmSize: 1,
         },
       ]),
-    [defaultPianoNotes]
+    []
   );
 
   const pianoSequence = useMemo(
@@ -110,15 +170,17 @@ export function useInitInstruments(): { isLoading: boolean } {
     () =>
       buildDrumPatternBars([
         getDrumBarInfoById("Basic_Rock_Beat"),
-        getDrumBarInfoById("Half_Time_Shuffle"),
-        getDrumBarInfoById("Funk_Disco_Beat"),
-        getDrumBarInfoById("Trap_Boom_Bap"),
-        getDrumBarInfoById("DnB_Jungle"),
-        getDrumBarInfoById("Simple_Hip_Hop"),
-        getDrumBarInfoById("Double_Bass_Metal"),
-        getDrumBarInfoById("Reggaeton_Dembow"),
-        getDrumBarInfoById("Skank_Beat"),
-        getDrumBarInfoById("Blues_Shuffle"),
+        getDrumBarInfoById("Grove_Basic_Rock_Beat"),
+        getDrumBarInfoById("Basic_Rock_Beat"),
+        getDrumBarInfoById("Grove_Basic_Rock_Beat"),
+        getDrumBarInfoById("Basic_Rock_Beat"),
+        getDrumBarInfoById("Grove_Basic_Rock_Beat"),
+        getDrumBarInfoById("Basic_Rock_Beat"),
+        getDrumBarInfoById("Grove_Basic_Rock_Beat"),
+        getDrumBarInfoById("Basic_Rock_Beat"),
+        getDrumBarInfoById("Grove_Basic_Rock_Beat"),
+        getDrumBarInfoById("Basic_Rock_Beat"),
+        getDrumBarInfoById("Grove_Basic_Rock_Beat"),
       ]),
     []
   );
