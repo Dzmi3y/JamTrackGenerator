@@ -29,6 +29,12 @@
     "pattern": "[xx][xx][xx][xx][xx][xx][xx][xx]",
     "accent": "x---"
   },
+    {
+    "id": "basic_32",
+    "totalBeats": 32,
+    "pattern": "[[xx][xx]][[xx][xx]][[xx][xx]][[xx][xx]][[xx][xx]][[xx][xx]][[xx][xx]][[xx][xx]]",
+    "accent": "x---"
+  },
   {
     "id": "backbeat_1",
     "totalBeats": 1,
@@ -57,6 +63,12 @@
     "id": "backbeat_16",
     "totalBeats": 16,
     "pattern": "[-x-x][-x-x][-x-x][-x-x][-x-x][-x-x][-x-x][-x-x]",
+    "accent": "x---"
+  },
+  {
+    "id": "backbeat_32",
+    "totalBeats": 32,
+    "pattern": "[[-x-x][-x-x]][[-x-x][-x-x]][[-x-x][-x-x]][[-x-x][-x-x]][[-x-x][-x-x]][[-x-x][-x-x]][[-x-x][-x-x]][[-x-x][-x-x]]",
     "accent": "x---"
   }
 ]

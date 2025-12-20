@@ -51,6 +51,51 @@ export function useInitInstruments(): { isLoading: boolean } {
           rhythm: Rhythms.basic,
           rhythmSize: 4,
         },
+        {
+          note: defaultPianoNotes,
+          rhythm: Rhythms.basic,
+          rhythmSize: 4,
+        },
+        {
+          note: defaultPianoNotes,
+          rhythm: Rhythms.basic,
+          rhythmSize: 4,
+        },
+        {
+          note: defaultPianoNotes,
+          rhythm: Rhythms.basic,
+          rhythmSize: 4,
+        },
+        {
+          note: defaultPianoNotes,
+          rhythm: Rhythms.basic,
+          rhythmSize: 4,
+        },
+        {
+          note: defaultPianoNotes,
+          rhythm: Rhythms.basic,
+          rhythmSize: 4,
+        },
+        {
+          note: defaultPianoNotes,
+          rhythm: Rhythms.basic,
+          rhythmSize: 4,
+        },
+        {
+          note: defaultPianoNotes,
+          rhythm: Rhythms.basic,
+          rhythmSize: 4,
+        },
+        {
+          note: defaultPianoNotes,
+          rhythm: Rhythms.basic,
+          rhythmSize: 4,
+        },
+        {
+          note: defaultPianoNotes,
+          rhythm: Rhythms.basic,
+          rhythmSize: 4,
+        },
       ]),
     [defaultPianoNotes]
   );
@@ -62,7 +107,19 @@ export function useInitInstruments(): { isLoading: boolean } {
   );
 
   const defaultDrumBars = useMemo(
-    () => buildDrumPatternBars([getDrumBarInfoById("Basic_Rock_Beat")]),
+    () =>
+      buildDrumPatternBars([
+        getDrumBarInfoById("Basic_Rock_Beat"),
+        getDrumBarInfoById("Half_Time_Shuffle"),
+        getDrumBarInfoById("Funk_Disco_Beat"),
+        getDrumBarInfoById("Trap_Boom_Bap"),
+        getDrumBarInfoById("DnB_Jungle"),
+        getDrumBarInfoById("Simple_Hip_Hop"),
+        getDrumBarInfoById("Double_Bass_Metal"),
+        getDrumBarInfoById("Reggaeton_Dembow"),
+        getDrumBarInfoById("Skank_Beat"),
+        getDrumBarInfoById("Blues_Shuffle"),
+      ]),
     []
   );
 
