@@ -5,12 +5,14 @@ import type { NoteType } from "../Data/Notes";
 export function getChord(
   rootNote: NoteType,
   chordType: ChordType,
-  octave: number = 4
+  octave?: number
 ): string[] {
+  octave ??= 4;
   if (chordType === "mMaj7") {
     return scribble
       .scale(`${rootNote}${octave} melodic minor`)
       .filter((_: any, i: number) => [0, 2, 4, 6].includes(i));
   }
-  return scribble.chord(`${rootNote}${chordType}`, String(octave));
+  const res =scribble.chord(`${rootNote}${octave} ${chordType}`);
+  return  res;
 }

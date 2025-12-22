@@ -4,19 +4,22 @@ import { getChordForDegree } from "./scales";
 import * as scribble from "scribbletune";
 
 export type Degree = {
-  val: 1 | 2 | 3 | 4 | 5 | 6 | 7;
-  oct: number;
+  value: 1 | 2 | 3 | 4 | 5 | 6 | 7;
+  octave: number;
 };
 
-export const getChordsByProgression = (
-  info:ScaleNotesInfo
-):string[][] => {
- const scale =scribble.scale(`${info.note}0 ${info.scaleMode}`);
-  const res = info.degrees.map(d=>{
-    const chord = getChordForDegree(info.scaleMode, d.val);
-    
-    const currentNote= scale[d.val-1].replace("0","");
-    return getChord(currentNote, chord.primary[0], d.oct);
-  })
-  return res;
+export type ChordBar = string[][];
+
+export const getChordBarsFromProgression = (
+  scaleInfo: ScaleNotesInfo
+): ChordBar[] => {
+  const scale = scribble.scale(`${scaleInfo.note}0 ${scaleInfo.scaleMode}`);
+  
+  return scaleInfo.degrees.map(bar => 
+    bar?.map(degree => {
+      const chordInfo = getChordForDegree(scaleInfo.scaleMode, degree.value);
+      const currentNote = scale[degree.value - 1].replace("0", "");
+       return getChord(currentNote, chordInfo.primary[0], degree.octave); //TODO: add different chord types
+    }) ?? []
+  );
 };

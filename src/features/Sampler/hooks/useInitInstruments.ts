@@ -1,15 +1,13 @@
 import { useEffect, useMemo, useRef } from "react";
-import { Rhythms } from "../Data/Rhythms";
 import { instrumentPartService } from "../services/instrumentPartService";
 import {
   buildDrumPatternBars,
   buildPatternBars,
 } from "../utils/buildPatternBars";
 import { getDrumBarInfoById } from "../patterns/drumPatterns";
-import { getChordsByProgression } from "../utils/progressionUtil";
 import { useMusicStore } from "../../../store/musicStore";
 import { useInstrument } from "./useInstrument";
-import type { ScaleNotesInfo } from "../types/scaleNotesInfo";
+import { getBarInfoArray } from "../utils/getBarInfoArray";
 
 const useBpm = () => useMusicStore((state) => state.bpm);
 const useAddInstrumentTrack = () =>
@@ -25,18 +23,18 @@ export function useInitInstruments(): { isLoading: boolean } {
   const addInstrumentTrack = useAddInstrumentTrack();
   const isInitializedRef = useRef<boolean>(false);
 
-  const pianoScaleNotesInfo = useMemo((): ScaleNotesInfo => {
-    return {
-      note: "C",
-      scaleMode: "ionian",
-      degrees: [
-        { val: 2, oct: 4 },
-        { val: 5, oct: 4 },
-        { val: 1, oct: 4 },
-        { val: 4, oct: 4 },
-      ],
-    };
-  }, []);
+  // const pianoScaleNotesInfo = useMemo((): ScaleNotesInfo => {
+  //   return {
+  //     note: "C",
+  //     scaleMode: "ionian",
+  //     degrees: [
+  //       { val: 2, oct: 4 },
+  //       { val: 5, oct: 4 },
+  //       { val: 1, oct: 4 },
+  //       { val: 4, oct: 4 },
+  //     ],
+  //   };
+  // }, []);
 
   // const defaultPianoNotes = useMemo(
   //   () => getChordsByProgression(pianoScaleNotesInfo),
@@ -45,118 +43,7 @@ export function useInitInstruments(): { isLoading: boolean } {
 
   const defaultPianoBars = useMemo(
     () =>
-      buildPatternBars([
-        {
-          note: getChordsByProgression({
-            note: "C",
-            scaleMode: "ionian",
-            degrees: [{ val: 1, oct: 4 }],
-            
-          }),
-          rhythm: Rhythms.basic,
-          rhythmSize: 1,
-          
-        },
-        {
-          note: getChordsByProgression({
-            note: "C",
-            scaleMode: "ionian",
-            degrees: [{ val: 6, oct: 4 }],
-          }),
-          rhythm: Rhythms.basic,
-          rhythmSize: 1,
-        },
-        {
-          note: getChordsByProgression({
-            note: "C",
-            scaleMode: "ionian",
-            degrees: [{ val: 4, oct: 4 }],
-          }),
-          rhythm: Rhythms.basic,
-          rhythmSize: 1,
-        },
-        {
-          note: getChordsByProgression({
-            note: "C",
-            scaleMode: "ionian",
-            degrees: [{ val: 5, oct: 4 }],
-          }),
-          rhythm: Rhythms.basic,
-          rhythmSize: 1,
-        },
-        {
-          note: getChordsByProgression({
-            note: "C",
-            scaleMode: "ionian",
-            degrees: [{ val: 1, oct: 4 }],
-          }),
-          rhythm: Rhythms.basic,
-          rhythmSize: 1,
-        },
-        {
-          note: getChordsByProgression({
-            note: "C",
-            scaleMode: "ionian",
-            degrees: [{ val: 5, oct: 4 }],
-          }),
-          rhythm: Rhythms.basic,
-          rhythmSize: 1,
-        },
-        {
-          note: getChordsByProgression({
-            note: "C",
-            scaleMode: "ionian",
-            degrees: [{ val: 6, oct: 4 }],
-          }),
-          rhythm: Rhythms.basic,
-          rhythmSize: 1,
-        },
-        {
-          note: getChordsByProgression({
-            note: "C",
-            scaleMode: "ionian",
-            degrees: [{ val: 4, oct: 4 }],
-          }),
-          rhythm: Rhythms.basic,
-          rhythmSize: 1,
-        },
-        {
-          note: getChordsByProgression({
-            note: "C",
-            scaleMode: "ionian",
-            degrees: [{ val: 2, oct: 4 }],
-          }),
-          rhythm: Rhythms.basic,
-          rhythmSize: 1,
-        },
-        {
-          note: getChordsByProgression({
-            note: "C",
-            scaleMode: "ionian",
-            degrees: [{ val: 5, oct: 4 }],
-          }),
-          rhythm: Rhythms.basic,
-          rhythmSize: 1,
-        },
-        {
-          note: getChordsByProgression({
-            note: "C",
-            scaleMode: "ionian",
-            degrees: [{ val: 1, oct: 4 }],
-          }),
-          rhythm: Rhythms.basic,
-          rhythmSize: 1,
-        },
-        {
-          note: getChordsByProgression({
-            note: "C",
-            scaleMode: "ionian",
-            degrees: [{ val: 5, oct: 4 }],
-          }),
-          rhythm: Rhythms.basic,
-          rhythmSize: 1,
-        },
-      ]),
+      buildPatternBars(getBarInfoArray("C","ionian")),
     []
   );
 
@@ -213,7 +100,7 @@ export function useInitInstruments(): { isLoading: boolean } {
       instrumentName: "piano",
       track: pianoSequence,
       bars: defaultPianoBars,
-      scaleNotesInfo: pianoScaleNotesInfo,
+      scaleNotesInfo: undefined,  // TODO: REMOVE
     });
   }, [
     addInstrumentTrack,
@@ -224,7 +111,6 @@ export function useInitInstruments(): { isLoading: boolean } {
     pianoSequence,
     defaultPianoBars,
     defaultDrumBars,
-    pianoScaleNotesInfo,
   ]);
 
   return {

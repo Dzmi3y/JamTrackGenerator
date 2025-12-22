@@ -5,5 +5,5 @@ import type { Degree } from "../utils/progressionUtil";
 export interface ScaleNotesInfo {
   note: NoteType;
   scaleMode: ScaleMode;
-  degrees: Degree[];
+  degrees: (Degree[]|undefined)[];
 }
