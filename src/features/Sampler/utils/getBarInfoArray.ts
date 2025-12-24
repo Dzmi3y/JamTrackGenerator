@@ -4,7 +4,7 @@ import type { ScaleMode } from "../Data/ScaleMode";
 import type { BarInfo } from "./buildPatternBars";
 import { getChordBarsFromProgression, type ChordBar } from "./progressionUtil";
 
-export const getBarInfoArray = (
+export const getBarInfoFromScaleDegrees = (
   rootNote: NoteType,
   scaleMode: ScaleMode
 ): Array<BarInfo> => {

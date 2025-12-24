@@ -7,7 +7,7 @@ import {
 import { getDrumBarInfoById } from "../patterns/drumPatterns";
 import { useMusicStore } from "../../../store/musicStore";
 import { useInstrument } from "./useInstrument";
-import { getBarInfoArray } from "../utils/getBarInfoArray";
+import { getBarInfoFromScaleDegrees } from "../utils/getBarInfoArray";
 
 const useBpm = () => useMusicStore((state) => state.bpm);
 const useAddInstrumentTrack = () =>
@@ -43,7 +43,7 @@ export function useInitInstruments(): { isLoading: boolean } {
 
   const defaultPianoBars = useMemo(
     () =>
-      buildPatternBars(getBarInfoArray("C","ionian")),
+      buildPatternBars(getBarInfoFromScaleDegrees("C","ionian")),
     []
   );
 
