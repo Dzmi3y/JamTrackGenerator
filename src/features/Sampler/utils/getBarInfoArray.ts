@@ -17,7 +17,7 @@ export const getBarInfoArray = (
     scaleMode: scaleMode,
     degrees: [
       [{ value: 1, octave: 4 }],
-      [{ value: 6, octave: 4 }],
+      [{ value: 6, octave: 4, chordType:"7th"}],
       [{ value: 4, octave: 4 }],
       [{ value: 5, octave: 4 }],
       [{ value: 1, octave: 4 }],
@@ -27,7 +27,7 @@ export const getBarInfoArray = (
       [{ value: 2, octave: 4 }],
       [{ value: 5, octave: 4 }],
       [{ value: 1, octave: 4 }],
-      [{ value: 5, octave: 4 }],
+      [{ value: 5, octave: 4, chordType:"7th" }],
     ],
   });
 
