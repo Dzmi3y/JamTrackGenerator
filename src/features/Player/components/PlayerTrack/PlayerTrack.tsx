@@ -62,7 +62,9 @@ const PlayerTrack: React.FC<{ prop: InstrumentTrack }> = ({ prop }) => {
       <div>
         <ToggleIconButton onChange={handleToggleIconButtonClick} />
       </div>
-      <div className={styles.trackName}>{prop.instrumentName}</div>
+      <div className={styles.trackName}>
+        {prop.instrument.getInstrumentName()}
+      </div>
       <CollapsibleContainer isOpen={isDetailOpen}>
         <div className={styles.controlGroup}>
           <div className={styles.controlLabel}>

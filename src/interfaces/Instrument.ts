@@ -7,4 +7,6 @@ export interface Instrument {
   getPan: () => number;
   setVolume: (value: number) => void;
   setPan: (value: number) => void;
+  setInstrumentName: (newName: string) => void;
+  getInstrumentName: () => string;
 }

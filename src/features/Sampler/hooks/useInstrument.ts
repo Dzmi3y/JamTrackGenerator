@@ -7,13 +7,25 @@ import { samplerService } from "../services/samplerService";
 import type { PartResult } from "../services/partBuilderService";
 import type { Instrument } from "../../../interfaces/Instrument";
 
-export function useInstrument(instrument: SampleInstrument): Instrument {
+export function useInstrument(
+  instrumentType: SampleInstrument,
+  instrumentName: string
+): Instrument {
   const [isLoading, setIsLoading] = useState(false);
   const samplerRef = useRef<Tone.Sampler | null>(null);
   const samplerGainRef = useRef<Tone.Gain | null>(null);
   const samplerPannerRef = useRef<Tone.Panner | null>(null);
+  const instrumentNameRef = useRef<string>(instrumentName);
 
   const { hidePreloader, setPreloaderText } = usePreloader();
+
+  const getInstrumentName = useCallback(
+    (): string => instrumentNameRef.current,
+    []
+  );
+  const setInstrumentName = useCallback((newName: string) => {
+    instrumentNameRef.current = newName;
+  }, []);
 
   useEffect(() => {
     samplerGainRef.current = new Tone.Gain(1);
@@ -85,7 +97,7 @@ export function useInstrument(instrument: SampleInstrument): Instrument {
       setIsLoading(true);
       setPreloaderText("Instrument is loading...");
 
-      const sampler = samplerService.getSampler(instrument, () => {
+      const sampler = samplerService.getSampler(instrumentType, () => {
         setIsLoading(false);
       });
 
@@ -103,7 +115,7 @@ export function useInstrument(instrument: SampleInstrument): Instrument {
     };
 
     loadSampler();
-  }, [instrument, hidePreloader, setPreloaderText]);
+  }, [instrumentType, hidePreloader, setPreloaderText]);
 
   return {
     playPart,
@@ -112,5 +124,7 @@ export function useInstrument(instrument: SampleInstrument): Instrument {
     getPan,
     setVolume,
     setPan,
+    setInstrumentName,
+    getInstrumentName,
   };
 }

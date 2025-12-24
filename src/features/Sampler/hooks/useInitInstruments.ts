@@ -16,34 +16,16 @@ const useInstrumentTracks = () =>
   useMusicStore((state) => state.instrumentTracks);
 
 export function useInitInstruments(): { isLoading: boolean } {
-  const drumPart = useInstrument("drums");
-  const pianoPart = useInstrument("piano");
+  const drumPart = useInstrument("drums", "Drums");
+  const pianoPart = useInstrument("piano", "Piano1");
+  const pianoPart2 = useInstrument("piano", "Piano2");
   const bpm = useBpm();
   const instrumentTracks = useInstrumentTracks();
   const addInstrumentTrack = useAddInstrumentTrack();
   const isInitializedRef = useRef<boolean>(false);
 
-  // const pianoScaleNotesInfo = useMemo((): ScaleNotesInfo => {
-  //   return {
-  //     note: "C",
-  //     scaleMode: "ionian",
-  //     degrees: [
-  //       { val: 2, oct: 4 },
-  //       { val: 5, oct: 4 },
-  //       { val: 1, oct: 4 },
-  //       { val: 4, oct: 4 },
-  //     ],
-  //   };
-  // }, []);
-
-  // const defaultPianoNotes = useMemo(
-  //   () => getChordsByProgression(pianoScaleNotesInfo),
-  //   [pianoScaleNotesInfo]
-  // );
-
   const defaultPianoBars = useMemo(
-    () =>
-      buildPatternBars(getBarInfoFromScaleDegrees("C","ionian")),
+    () => buildPatternBars(getBarInfoFromScaleDegrees("C", "ionian")),
     []
   );
 
@@ -78,8 +60,11 @@ export function useInitInstruments(): { isLoading: boolean } {
   );
 
   const isLoading = useMemo(
-    () => drumPart.getIsLoading() && pianoPart.getIsLoading(),
-    [drumPart, pianoPart]
+    () =>
+      drumPart.getIsLoading() &&
+      pianoPart.getIsLoading() &&
+      pianoPart2.getIsLoading(),
+    [drumPart, pianoPart, pianoPart2]
   );
 
   useEffect(() => {
@@ -90,22 +75,27 @@ export function useInitInstruments(): { isLoading: boolean } {
 
     addInstrumentTrack({
       instrument: drumPart,
-      instrumentName: "drums",
       track: drumSequence,
       bars: defaultDrumBars,
       scaleNotesInfo: undefined,
     });
     addInstrumentTrack({
       instrument: pianoPart,
-      instrumentName: "piano",
       track: pianoSequence,
       bars: defaultPianoBars,
-      scaleNotesInfo: undefined,  // TODO: REMOVE
+      scaleNotesInfo: undefined, // TODO: REMOVE
+    });
+    addInstrumentTrack({
+      instrument: pianoPart2,
+      track: undefined,
+      bars: undefined,
+      scaleNotesInfo: undefined,
     });
   }, [
     addInstrumentTrack,
     drumPart,
     pianoPart,
+    pianoPart2,
     instrumentTracks,
     drumSequence,
     pianoSequence,

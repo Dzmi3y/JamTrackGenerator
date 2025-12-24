@@ -118,7 +118,7 @@ const Player: React.FC = () => {
             <PlayerTrack key={t.id} prop={t} />
             <div>
               {t.scaleNotesInfo
-                ? `${t.scaleNotesInfo?.note} ${t.scaleNotesInfo?.scaleMode} (${t.scaleNotesInfo?.degrees.map((n) => n.val).join(" ")})`
+                ? `${t.scaleNotesInfo?.note} ${t.scaleNotesInfo?.scaleMode} (${t.scaleNotesInfo?.degrees.map((n) => n).join(" ")})`
                 : ""}
             </div>
           </div>
