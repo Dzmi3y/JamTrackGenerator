@@ -9,7 +9,8 @@ export type FixedChordType =
   | "add13"
   | "sus2"
   | "sus4"
-  | "7sus4";
+  | "7sus4"
+  | "mMaj7";
 
 export type ScaleDegree = {
   degree: number;
@@ -29,6 +30,7 @@ export const IonianScaleDegrees: ScaleDegree[] = [
       sus2: "sus2",
       sus4: "sus4",
       "7sus4": "7sus4",
+      mMaj7: "M",
     },
   },
   {
@@ -43,6 +45,7 @@ export const IonianScaleDegrees: ScaleDegree[] = [
       sus2: "sus2",
       sus4: "sus4",
       "7sus4": "7sus4",
+      mMaj7: "m",
     },
   },
   {
@@ -57,6 +60,7 @@ export const IonianScaleDegrees: ScaleDegree[] = [
       sus2: "sus2",
       sus4: "sus4",
       "7sus4": "7sus4",
+      mMaj7: "m",
     },
   },
   {
@@ -71,6 +75,7 @@ export const IonianScaleDegrees: ScaleDegree[] = [
       sus2: "sus2",
       sus4: "sus4",
       "7sus4": "7sus4",
+      mMaj7: "M",
     },
   },
   {
@@ -85,6 +90,7 @@ export const IonianScaleDegrees: ScaleDegree[] = [
       sus2: "sus2",
       sus4: "sus4",
       "7sus4": "7sus4",
+      mMaj7: "M",
     },
   },
   {
@@ -99,6 +105,7 @@ export const IonianScaleDegrees: ScaleDegree[] = [
       sus2: "sus2",
       sus4: "sus4",
       "7sus4": "7sus4",
+      mMaj7: "m",
     },
   },
   {
@@ -113,6 +120,7 @@ export const IonianScaleDegrees: ScaleDegree[] = [
       sus2: "dim",
       sus4: "dim",
       "7sus4": "dim",
+      mMaj7: "dim",
     },
   },
 ];

@@ -11,8 +11,10 @@ export const modeCorrections: Record<
       ...corrected[0],
       chords: {
         ...corrected[0].chords,
-        primary: ["m", "m7", "m6"],
-        all: Array.from(new Set([...corrected[0].chords.all, "m6", "mMaj7"])),
+        basic: "m",
+        "7th": "m7",
+        add6: "m6",
+        mMaj7: "mMaj7",
       },
     };
 
@@ -25,7 +27,7 @@ export const modeCorrections: Record<
       ...corrected[0],
       chords: {
         ...corrected[0].chords,
-        secondary: [...corrected[0].chords.secondary, "sus4"],
+        sus4: "sus4",
       },
     };
 
@@ -38,10 +40,16 @@ export const modeCorrections: Record<
     corrected[6] = {
       ...corrected[6],
       chords: {
-        primary: ["M", "7th"],
-        secondary: ["9th", "sus4"],
-        alternative: ["13th", "7b9"],
-        all: ["M", "7th", "9th", "13th", "7b9", "sus4", "7sus4"],
+        basic: "M",
+        "7th": "7th",
+        add9: "9th",
+        sus4: "sus4",
+        add13: "13th",
+        "7sus4": "7sus4",
+        add11: "M",
+        add6: "M",
+        mMaj7: "mMaj7",
+        sus2: "sus2",
       },
     };
 
@@ -54,10 +62,16 @@ export const modeCorrections: Record<
     corrected[0] = {
       ...corrected[0],
       chords: {
-        primary: ["dim", "m7b5"],
-        secondary: ["dim7"],
-        alternative: [],
-        all: ["dim", "dim7", "m7b5"],
+        basic: "dim",
+        add6: "dim",
+        "7th": "dim7",
+        add9: "dim",
+        add11: "dim",
+        add13: "dim",
+        sus2: "dim",
+        sus4: "dim",
+        "7sus4": "dim",
+        mMaj7: "dim",
       },
     };
 
