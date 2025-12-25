@@ -76,5 +76,26 @@
     "totalBeats": 32,
     "pattern": "[[-x-x][-x-x]][[-x-x][-x-x]][[-x-x][-x-x]][[-x-x][-x-x]][[-x-x][-x-x]][[-x-x][-x-x]][[-x-x][-x-x]][[-x-x][-x-x]]",
     "accent": "x---"
+  },
+  {
+    "id": "bossanovaRH1_4",
+    "totalBeats": 33,
+    "pattern": "x_x__x_x",
+    "accent": "x---"
+  },
+  {
+    "id": "bossanovaRH2_4",
+    "totalBeats": 34,
+    "pattern": "-x_x__x_",
+    "accent": "x---"
+  },
+  {
+    "id": "bossanovaLH1_4",
+    "totalBeats": 35,
+    "pattern": "x__xx__x",
+    "accent": "x---"
   }
+
+
+
 ]

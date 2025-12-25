@@ -1,7 +1,10 @@
 export const Rhythms = {
   basic: "basic",
   backbeat: "backbeat",
-  basicGrouve:"basicGrouve"
+  basicGrouve: "basicGrouve",
+  bossanovaRH1: "bossanovaRH1",
+  bossanovaRH2: "bossanovaRH2",
+  bossanovaLH1: "bossanovaLH1",
 } as const;
 
 export type RhythmType = keyof typeof Rhythms;

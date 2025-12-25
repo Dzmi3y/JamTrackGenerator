@@ -9,7 +9,7 @@ export interface DrumRhythm {
 
 export const DrumRhythmIds = {
   Basic_Rock_Beat: "Basic Rock Beat",
-  Grove_Basic_Rock_Beat:"Grove Basic Rock Beat",
+  Grove_Basic_Rock_Beat: "Grove Basic Rock Beat",
   Skank_Beat: "Skank Beat",
   Funk_Disco_Beat: "Funk_Disco_Beat",
   Half_Time_Shuffle: "Half_Time_Shuffle",
@@ -19,6 +19,8 @@ export const DrumRhythmIds = {
   Blues_Shuffle: "Blues_Shuffle",
   DnB_Jungle: "DnB_Jungle",
   Trap_Boom_Bap: "Trap_Boom_Bap",
+  Bossanova_part1: "Bossanova_part1",
+  Bossanova_part2: "Bossanova_part2",
 } as const;
 
 export type DrumRhythmId = keyof typeof DrumRhythmIds;
@@ -91,15 +93,15 @@ export const DrumRhythms: DrumRhythm[] = [
     ],
   },
   {
-  id: "Trap_Boom_Bap",
-  patterns: [
-    { note: [drumMap.kick], rhythm: Rhythms.basic, rhythmSize: 16 },
-    { note: [drumMap.rimshot], rhythm: Rhythms.backbeat, rhythmSize: 8 },
-    { note: [drumMap.snare], rhythm: Rhythms.backbeat, rhythmSize: 4 },
-    { note: [drumMap.hihat], rhythm: Rhythms.basic, rhythmSize: 16 },
-    { note: [drumMap.highTom], rhythm: Rhythms.basic, rhythmSize: 32 },    
-  ],
-},
+    id: "Trap_Boom_Bap",
+    patterns: [
+      { note: [drumMap.kick], rhythm: Rhythms.basic, rhythmSize: 16 },
+      { note: [drumMap.rimshot], rhythm: Rhythms.backbeat, rhythmSize: 8 },
+      { note: [drumMap.snare], rhythm: Rhythms.backbeat, rhythmSize: 4 },
+      { note: [drumMap.hihat], rhythm: Rhythms.basic, rhythmSize: 16 },
+      { note: [drumMap.highTom], rhythm: Rhythms.basic, rhythmSize: 32 },
+    ],
+  },
   {
     id: "DnB_Jungle",
     patterns: [
@@ -130,10 +132,26 @@ export const DrumRhythms: DrumRhythm[] = [
       { note: [drumMap.snare], rhythm: Rhythms.backbeat, rhythmSize: 8 },
       { note: [drumMap.hihat], rhythm: Rhythms.basic, rhythmSize: 16 },
       {
-        note: [drumMap.ride ],
+        note: [drumMap.ride],
         rhythm: Rhythms.backbeat,
         rhythmSize: 8,
       },
+    ],
+  },
+  {
+    id: "Bossanova_part1",
+    patterns: [
+      { note: [drumMap.kick], rhythm: Rhythms.bossanovaLH1, rhythmSize: 4 },
+      { note: [drumMap.rimshot], rhythm: Rhythms.bossanovaRH1, rhythmSize: 4 },
+      { note: [drumMap.hihat], rhythm: Rhythms.basic, rhythmSize: 8 },
+    ],
+  },
+  {
+    id: "Bossanova_part2",
+    patterns: [
+      { note: [drumMap.kick], rhythm: Rhythms.bossanovaLH1, rhythmSize: 4 },
+      { note: [drumMap.rimshot], rhythm: Rhythms.bossanovaRH2, rhythmSize: 4 },
+      { note: [drumMap.hihat], rhythm: Rhythms.basic, rhythmSize: 8 },
     ],
   },
 ];
