@@ -1,6 +1,5 @@
-import type { NoteType } from "../Data/Notes";
+import type { ChordType } from "../Data/Chords";
 import type { FixedChordType } from "../Data/ScaleDegree";
-import type { ScaleMode } from "../Data/ScaleMode";
 import type { ScaleNotesInfo } from "../types/scaleNotesInfo";
 import { getChord } from "./chordUtils";
 import { getChordForDegree } from "./scales";
@@ -9,9 +8,8 @@ import * as scribble from "scribbletune";
 export type Degree = {
   value: 1 | 2 | 3 | 4 | 5 | 6 | 7;
   octave: number;
-  chordType?: FixedChordType;
-  rootNote?: NoteType;
-  scaleMode?: ScaleMode;
+  generalChordType?: FixedChordType;
+  concreteChordType?: ChordType;
 };
 
 export type ChordBar = string[][];
@@ -19,19 +17,27 @@ export type ChordBar = string[][];
 export const getChordBarsFromProgression = (
   scaleInfo: ScaleNotesInfo
 ): ChordBar[] => {
-  let scale = scribble.scale(`${scaleInfo.note}0 ${scaleInfo.scaleMode}`);
+  const scale = scribble.scale(`${scaleInfo.note}0 ${scaleInfo.scaleMode}`);
 
   return scaleInfo.degrees.map(
     (bar) =>
       bar?.map((degree) => {
-        if (degree.scaleMode && degree.rootNote) {
-          scale = scribble.scale(`${degree.rootNote}0 ${degree.scaleMode}`);
-        }
+        const currentNote = scale[degree.value - 1]
+          .replace("0", "")
+          .replace("1", "")
+          .replace("2", "")
+          .replace("-1", "");
 
-        const chordInfo = getChordForDegree(scaleInfo.scaleMode, degree.value);
-        const currentNote = scale[degree.value - 1].replace("0", "");
-        const chordType: FixedChordType = degree.chordType ?? "basic";
-        return getChord(currentNote, chordInfo[chordType], degree.octave);
+        if (degree.concreteChordType) {
+          return getChord(currentNote, degree.concreteChordType, degree.octave);
+        } else {
+          const chordInfo = getChordForDegree(
+            scaleInfo.scaleMode,
+            degree.value
+          );
+          const chordType: FixedChordType = degree.generalChordType ?? "basic";
+          return getChord(currentNote, chordInfo[chordType], degree.octave);
+        }
       }) ?? []
   );
 };
