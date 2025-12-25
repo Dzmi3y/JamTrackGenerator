@@ -7,7 +7,6 @@ import {
 import { getDrumBarInfoById } from "../patterns/drumPatterns";
 import { useMusicStore } from "../../../store/musicStore";
 import { useInstrument } from "./useInstrument";
-//import { getBarInfoFromScaleDegrees } from "../utils/getBarInfoArray";
 import { MinorBossaNova } from "../Data/InstrumentPatterns/BossaNova";
 
 const useBpm = () => useMusicStore((state) => state.bpm);
@@ -26,10 +25,9 @@ export function useInitInstruments(): { isLoading: boolean } {
   const isInitializedRef = useRef<boolean>(false);
 
   const defaultPianoBars = useMemo(() => {
-     const bossaPattern = MinorBossaNova();
-     const barsForA = bossaPattern.PianoHigh("A");
-     return buildPatternBars(barsForA);
-    //return buildPatternBars(getBarInfoFromScaleDegrees("C", "ionian"));
+    const bossaPattern = MinorBossaNova();
+    const barsForA = bossaPattern.PianoHigh("A");
+    return buildPatternBars(barsForA);
   }, []);
 
   const pianoSequence = useMemo(
@@ -80,18 +78,21 @@ export function useInitInstruments(): { isLoading: boolean } {
       track: drumSequence,
       bars: defaultDrumBars,
       scaleNotesInfo: undefined,
+      instrumentType: "drums",
     });
     addInstrumentTrack({
       instrument: pianoPart,
       track: pianoSequence,
       bars: defaultPianoBars,
       scaleNotesInfo: undefined, // TODO: REMOVE
+      instrumentType: "piano",
     });
     addInstrumentTrack({
       instrument: pianoPart2,
       track: pianoSequence,
       bars: defaultPianoBars,
       scaleNotesInfo: undefined,
+      instrumentType: "piano",
     });
   }, [
     addInstrumentTrack,

@@ -10,7 +10,7 @@ export const createBpmActions = (set: SetState): Pick<MusicStore, "setBpm"> => (
       const instrumentTracks = state.instrumentTracks.map((it) => ({
         ...it,
         track: instrumentPartService.getPart(
-          it.instrumentName,
+          it.instrumentType,
           it.bars,
           clampedBpm
         ),

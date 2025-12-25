@@ -5,13 +5,13 @@ import { partBuilderService, type PartResult } from "./partBuilderService";
 
 class InstrumentPartService {
   getPart(
-    instrumentName: SampleInstrument,
+    instrumentType: SampleInstrument,
     patternBlocks: PatternBar[] | undefined,
     bpm: number
   ): PartResult | undefined {
     if (!patternBlocks) return undefined;
 
-    switch (instrumentName) {
+    switch (instrumentType) {
       case "drums":
         return this.getDrumPart(patternBlocks, bpm);
       case "piano":
