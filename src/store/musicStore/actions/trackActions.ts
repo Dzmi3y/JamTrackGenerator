@@ -30,7 +30,7 @@ export const createTrackActions = (
           bars: newBars,
           scaleNotesInfo: scaleNotesInfo,
           track: instrumentPartService.getPart(
-            it.instrumentName,
+            it.instrumentType,
             newBars,
             state.bpm
           ),

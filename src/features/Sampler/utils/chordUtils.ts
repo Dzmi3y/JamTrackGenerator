@@ -25,8 +25,8 @@ export function getInterval(
   octave: number,
   scaleMode: ScaleMode
 ): string[] {
-  const currentDegre: number = Math.min(Math.max(degre, 7), 1);
-  const currentInterval: number = Math.min(Math.max(interval, 8), 2);
+  const currentDegre: number = Math.min(Math.max(degre, 1), 7);
+  const currentInterval: number = Math.min(Math.max(interval, 2), 8);
 
   const scale1 = scribble.scale(`${rootNote}${octave} ${scaleMode}`);
   const scale2 = scribble.scale(`${rootNote}${octave + 1} ${scaleMode}`);
@@ -39,8 +39,4 @@ export function getInterval(
   }
 
   return [currentNote, scales[currentDegre + interval - 2]];
-
-  return scribble
-    .scale(`${rootNote}${octave} ${scaleMode}`)
-    .filter((_: any, i: number) => [0, 2, 4, 6].includes(i));
 }
