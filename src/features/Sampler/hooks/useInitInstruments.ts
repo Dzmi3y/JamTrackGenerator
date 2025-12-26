@@ -4,7 +4,6 @@ import {
   buildDrumPatternBars,
   buildPatternBars,
 } from "../utils/buildPatternBars";
-import { getDrumBarInfoById } from "../patterns/drumPatterns";
 import { useMusicStore } from "../../../store/musicStore";
 import { useInstrument } from "./useInstrument";
 import { MinorBossaNova } from "../Data/InstrumentPatterns/BossaNova";
@@ -30,29 +29,27 @@ export function useInitInstruments(): { isLoading: boolean } {
     return buildPatternBars(barsForA);
   }, []);
 
+  const defaultLowPianoBars = useMemo(() => {
+    const bossaPattern = MinorBossaNova();
+    const barsForA = bossaPattern.PianoLow("A");
+    return buildPatternBars(barsForA);
+  }, []);
+
   const pianoSequence = useMemo(
     () => instrumentPartService.getPart("piano", defaultPianoBars, bpm),
     [defaultPianoBars, bpm]
   );
 
-  const defaultDrumBars = useMemo(
-    () =>
-      buildDrumPatternBars([
-        getDrumBarInfoById("Basic_Rock_Beat"),
-        getDrumBarInfoById("Grove_Basic_Rock_Beat"),
-        getDrumBarInfoById("Basic_Rock_Beat"),
-        getDrumBarInfoById("Grove_Basic_Rock_Beat"),
-        getDrumBarInfoById("Basic_Rock_Beat"),
-        getDrumBarInfoById("Grove_Basic_Rock_Beat"),
-        getDrumBarInfoById("Basic_Rock_Beat"),
-        getDrumBarInfoById("Grove_Basic_Rock_Beat"),
-        getDrumBarInfoById("Basic_Rock_Beat"),
-        getDrumBarInfoById("Grove_Basic_Rock_Beat"),
-        getDrumBarInfoById("Basic_Rock_Beat"),
-        getDrumBarInfoById("Grove_Basic_Rock_Beat"),
-      ]),
-    []
+  const lowpianoSequence = useMemo(
+    () => instrumentPartService.getPart("piano", defaultLowPianoBars, bpm),
+    [defaultLowPianoBars, bpm]
   );
+
+  const defaultDrumBars = useMemo(() => {
+    const bossaPattern = MinorBossaNova();
+    const bars = bossaPattern.Drums();
+    return buildDrumPatternBars(bars);
+  }, []);
 
   const drumSequence = useMemo(
     () => instrumentPartService.getPart("drums", defaultDrumBars, bpm),
@@ -89,8 +86,8 @@ export function useInitInstruments(): { isLoading: boolean } {
     });
     addInstrumentTrack({
       instrument: pianoPart2,
-      track: pianoSequence,
-      bars: defaultPianoBars,
+      track: lowpianoSequence,
+      bars: defaultLowPianoBars,
       scaleNotesInfo: undefined,
       instrumentType: "piano",
     });
@@ -104,6 +101,8 @@ export function useInitInstruments(): { isLoading: boolean } {
     pianoSequence,
     defaultPianoBars,
     defaultDrumBars,
+    lowpianoSequence,
+    defaultLowPianoBars,
   ]);
 
   return {

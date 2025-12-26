@@ -94,6 +94,12 @@
     "totalBeats": 35,
     "pattern": "x__xx__x",
     "accent": "x---"
+  },
+    {
+    "id": "bossanovaLH2_4",
+    "totalBeats": 35,
+    "pattern": "x______x",
+    "accent": "x---"
   }
 
 

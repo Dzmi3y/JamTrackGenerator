@@ -5,6 +5,7 @@ export const Rhythms = {
   bossanovaRH1: "bossanovaRH1",
   bossanovaRH2: "bossanovaRH2",
   bossanovaLH1: "bossanovaLH1",
+  bossanovaLH2: "bossanovaLH2",
 } as const;
 
 export type RhythmType = keyof typeof Rhythms;
