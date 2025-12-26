@@ -9,7 +9,9 @@ import type { Instrument } from "../../../interfaces/Instrument";
 
 export function useInstrument(
   instrumentType: SampleInstrument,
-  instrumentName: string
+  instrumentName: string,
+  defaultVolume?: number,
+  defaultPan?: number
 ): Instrument {
   const [isLoading, setIsLoading] = useState(false);
   const samplerRef = useRef<Tone.Sampler | null>(null);
@@ -27,15 +29,27 @@ export function useInstrument(
     instrumentNameRef.current = newName;
   }, []);
 
+  const gainNormalization = useCallback((value: number) => {
+    const normalizedGain = Math.min(Math.max(value, 0), 100) / 100;
+    return +normalizedGain.toFixed(2);
+  }, []);
+
+  const panNormalization = useCallback((value: number) => {
+    const normalizedPan = Math.min(Math.max(value, -100), 100) / 100;
+    return +normalizedPan.toFixed(2);
+  }, []);
+
   useEffect(() => {
-    samplerGainRef.current = new Tone.Gain(1);
-    samplerPannerRef.current = new Tone.Panner(0);
+    const gain = defaultVolume ? gainNormalization(defaultVolume) : 1;
+    const pan = defaultPan ? panNormalization(defaultPan) : 0;
+    samplerGainRef.current = new Tone.Gain(gain);
+    samplerPannerRef.current = new Tone.Panner(pan);
 
     return () => {
       samplerGainRef.current?.dispose();
       samplerPannerRef.current?.dispose();
     };
-  }, []);
+  }, [gainNormalization, panNormalization, defaultPan, defaultVolume]);
 
   const playPart = useCallback(
     (partResult: PartResult | undefined, isLoop: boolean = false) => {
@@ -78,19 +92,23 @@ export function useInstrument(
     return res * 100;
   }, [samplerPannerRef]);
 
-  const setVolume = useCallback((value: number) => {
-    if (!samplerGainRef.current) return;
+  const setVolume = useCallback(
+    (value: number) => {
+      if (!samplerGainRef.current) return;
 
-    const normalizedGain = Math.min(Math.max(value, 0), 100) / 100;
-    samplerGainRef.current.gain.value = +normalizedGain.toFixed(2);
-  }, []);
+      samplerGainRef.current.gain.value = panNormalization(value);
+    },
+    [panNormalization]
+  );
 
-  const setPan = useCallback((value: number) => {
-    if (!samplerPannerRef.current) return;
+  const setPan = useCallback(
+    (value: number) => {
+      if (!samplerPannerRef.current) return;
 
-    const normalizedPan = Math.min(Math.max(value, -100), 100) / 100;
-    samplerPannerRef.current.pan.value = +normalizedPan.toFixed(2);
-  }, []);
+      samplerPannerRef.current.pan.value = gainNormalization(value);
+    },
+    [gainNormalization]
+  );
 
   useEffect(() => {
     const loadSampler = async () => {

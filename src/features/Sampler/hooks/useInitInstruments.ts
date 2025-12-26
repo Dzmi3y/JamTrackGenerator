@@ -16,8 +16,8 @@ const useInstrumentTracks = () =>
 
 export function useInitInstruments(): { isLoading: boolean } {
   const drumPart = useInstrument("drums", "Drums");
-  const pianoPart = useInstrument("piano", "Piano1");
-  const pianoPart2 = useInstrument("piano", "Piano2");
+  const pianoPart = useInstrument("piano", "Piano High", 80, 30);
+  const pianoPart2 = useInstrument("piano", "Piano Low", 70, -30);
   const bpm = useBpm();
   const instrumentTracks = useInstrumentTracks();
   const addInstrumentTrack = useAddInstrumentTrack();
