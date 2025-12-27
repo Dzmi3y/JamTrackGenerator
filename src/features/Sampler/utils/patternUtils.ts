@@ -1,20 +1,18 @@
-import patternsData from "../patterns/patterns.json";
-import type { RhythmPattern } from "../types/rhythmPattern";
 import type { PartInfo } from "../../../interfaces/PartInfo";
+import { rhythmPatterns } from "../Data/patterns/rhythmPatterns";
 
 export function getPartInfo(
   notes: string[] | string[][],
   id: string,
   barNumber: number
 ): PartInfo | undefined {
-  const pattern = (patternsData as RhythmPattern[]).find((p) => p.id === id);
-
+  const pattern = rhythmPatterns.get(id);
   if (!pattern) return undefined;
 
   return {
     barNumber,
     notes,
     pattern: pattern.pattern,
-    accent: pattern.accent,
+    accent: pattern.accent ?? "x---",
   };
 }

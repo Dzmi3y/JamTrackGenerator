@@ -32,7 +32,7 @@ class PartBuilderService {
       clipEvents: scribble.clip({
         notes: part.notes,
         pattern: part.pattern,
-        accent: part.accent,
+        accent: part.accent ?? "x---",
         amp: DEFAULT_AMP,
         accentLow: DEFAULT_ACCENT_LOW,
         subdiv: DEFAULT_SUBDIVISION,

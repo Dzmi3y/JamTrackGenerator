@@ -4,9 +4,9 @@ import {
   type ChordBar,
 } from "../../utils/progressionUtil";
 import type { NoteType } from "../Notes";
-import { Rhythms, type RhythmSize, type RhythmType } from "../Rhythms";
-import { getDrumBarInfoById } from "../../patterns/drumPatterns";
+import { getDrumBarInfoById } from "../../Data/patterns/drumPatterns";
 import { getInterval } from "../../utils/chordUtils";
+import { Rhythms } from "../Rhythms";
 
 export const MinorBossaNova = () => {
   const PianoHigh = (rootNote: NoteType): Array<BarInfo> => {
@@ -33,14 +33,21 @@ export const MinorBossaNova = () => {
 
     return bars
       .map((b, i) => {
-        const rhythm: RhythmType =
-          i % 2 === 0 ? Rhythms.bossanovaRH1 : Rhythms.bossanovaRH2;
-        const rhythmSize: RhythmSize = 4;
-        return {
-          note: b,
-          rhythm: rhythm,
-          rhythmSize: rhythmSize,
-        };
+        if (i % 2 === 0) {
+          return {
+            note: b,
+            rhythm: Rhythms.bossanova,
+            version: 1,
+            noteCount: 4,
+          };
+        } else {
+          return {
+            note: b,
+            rhythm: Rhythms.bossanova,
+            version: 2,
+            noteCount: 3,
+          };
+        }
       })
       .flat();
   };
@@ -49,65 +56,77 @@ export const MinorBossaNova = () => {
     return [
       {
         note: [getInterval(rootNote, 1, 8, 2, "dorian")],
-        rhythm: "bossanovaLH2",
-        rhythmSize: 4,
+        rhythm: "bossanova",
+        version: 4,
+        noteCount: 2,
       },
       {
         note: [getInterval(rootNote, 1, 8, 2, "dorian")],
         rhythm: "basic",
-        rhythmSize: 1,
+        version: 1,
+        noteCount: 1,
       },
       {
         note: [getInterval(rootNote, 4, 8, 2, "dorian")],
-        rhythm: "bossanovaLH2",
-        rhythmSize: 4,
+        rhythm: "bossanova",
+        version: 4,
+        noteCount: 2,
       },
       {
         note: [getInterval(rootNote, 5, 8, 2, "dorian")],
         rhythm: "basic",
-        rhythmSize: 1,
+        version: 1,
+        noteCount: 1,
       },
 
       {
         note: [getInterval(rootNote, 1, 8, 2, "dorian")],
-        rhythm: "bossanovaLH2",
-        rhythmSize: 4,
+        rhythm: "bossanova",
+        version: 4,
+        noteCount: 2,
       },
       {
         note: [getInterval(rootNote, 1, 8, 2, "dorian")],
         rhythm: "basic",
-        rhythmSize: 1,
+        version: 1,
+        noteCount: 1,
       },
       {
         note: [getInterval(rootNote, 2, 8, 2, "dorian")],
-        rhythm: "bossanovaLH2",
-        rhythmSize: 4,
+        rhythm: "bossanova",
+        version: 4,
+        noteCount: 2,
       },
       {
         note: [getInterval(rootNote, 5, 8, 2, "dorian")],
         rhythm: "basic",
-        rhythmSize: 1,
+        version: 1,
+        noteCount: 1,
       },
 
       {
         note: [getInterval(rootNote, 4, 8, 2, "dorian")],
-        rhythm: "bossanovaLH2",
-        rhythmSize: 4,
+        rhythm: "bossanova",
+        version: 4,
+        noteCount: 2,
       },
       {
         note: [getInterval(rootNote, 2, 8, 2, "dorian")],
         rhythm: "basic",
-        rhythmSize: 1,
+        version: 1,
+        noteCount: 1,
       },
       {
         note: [getInterval(rootNote, 5, 8, 2, "dorian")],
-        rhythm: "bossanovaLH2",
-        rhythmSize: 4,
+        rhythm: "bossanova",
+        version: 4,
+        noteCount: 2,
       },
       {
         note: [getInterval(rootNote, 5, 8, 2, "dorian")],
         rhythm: "basic",
-        rhythmSize: 1,
+        version: 1,
+        noteCount: 1,
       },
     ];
   };
