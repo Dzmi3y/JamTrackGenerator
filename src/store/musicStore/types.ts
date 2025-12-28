@@ -1,6 +1,6 @@
 import type { StoreApi } from "zustand";
 import type { PatternBar } from "../../features/Sampler/types/patternBlock";
-import type { InstrumentTrack } from "../../interfaces/TrackPart";
+import type { InstrumentTrack } from "../../interfaces/InstrumentTrack";
 import type { ScaleNotesInfo } from "../../features/Sampler/types/scaleNotesInfo";
 
 export interface MusicState {

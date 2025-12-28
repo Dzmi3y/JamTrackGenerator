@@ -1,10 +1,11 @@
 import type { PartResult } from "../features/Sampler/services/partBuilderService";
-import type { Instrument } from "./Instrument";
 import type { PatternBar } from "../features/Sampler/types/patternBlock";
 import type { SampleInstrument } from "../features/Sampler/types/SampleInstrument";
 
 export interface InstrumentTrack {
-  instrument: Instrument;
+  instrumentName: string;
+  defaultVolume?: number;
+  defaultPan?: number;
   track: PartResult | undefined;
   bars: PatternBar[] | undefined;
   instrumentType: SampleInstrument;

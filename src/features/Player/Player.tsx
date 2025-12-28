@@ -11,22 +11,25 @@ import PauseIcon from "/src/assets/images/player/pause-icon.png";
 import RepeatIcon from "/src/assets/images/player/repeat-icon.png";
 import StopIcon from "/src/assets/images/player/stop-icon.png";
 import PlayerTrack from "./components/PlayerTrack/PlayerTrack";
+import { useInstruments } from "./hooks/useInstruments";
 
 const useBpm = () => useMusicStore((state) => state.bpm);
 const useSetBpm = () => useMusicStore((state) => state.setBpm);
-const useInstrumentTracks = () =>
-  useMusicStore((state) => state.instrumentTracks);
+// const useInstrumentTracks = () =>
+//   useMusicStore((state) => state.instrumentTracks);
 
 const Player: React.FC = () => {
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [isLooping, setIsLooping] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const instruments = useInstruments(setIsLoading);
 
   const bpm = useBpm();
   const setBpm = useSetBpm();
-  const init = useInitInstruments();
-  const playerCore = usePlayer(setIsPlaying);
+  useInitInstruments();
+  const playerCore = usePlayer(instruments, setIsPlaying);
   const totalDuration = playerCore.getDuration();
-  const instrumentTracks = useInstrumentTracks();
+  //const instrumentTracks = useInstrumentTracks();
 
   const handlePlayClick = async () => {
     playerCore.togglePlayback();
@@ -36,8 +39,9 @@ const Player: React.FC = () => {
   };
 
   const handleLoopClick = () => {
-    setIsLooping(!isLooping);
-    playerCore.setIsLoop(!playerCore.isLoop);
+    const newLoopState = !isLooping;
+    setIsLooping(newLoopState);
+    playerCore.setIsLoop(newLoopState);
   };
 
   const scrollbarHandleChangePosition = (pos: number) => {
@@ -61,7 +65,7 @@ const Player: React.FC = () => {
               : buttonStyles["player-button"]
           }
           onClick={handlePlayClick}
-          disabled={init.isLoading}
+          disabled={isLoading}
         >
           {isPlaying ? (
             <img src={PauseIcon} alt="pause-icon" />
@@ -72,7 +76,7 @@ const Player: React.FC = () => {
         <button
           className={buttonStyles["player-button"]}
           onClick={handleStopClick}
-          disabled={init.isLoading}
+          disabled={isLoading}
         >
           <img src={StopIcon} alt="stop-icon" />
         </button>
@@ -83,7 +87,7 @@ const Player: React.FC = () => {
               : buttonStyles["player-button"]
           }
           onClick={handleLoopClick}
-          disabled={init.isLoading}
+          disabled={isLoading}
         >
           <img src={RepeatIcon} alt="repeat-icon" />
         </button>
@@ -97,7 +101,11 @@ const Player: React.FC = () => {
               e.currentTarget.value = e.currentTarget.valueAsNumber.toString();
             }}
             className={playerInputStyles["player-input"]}
-            style={{ width: "70px", textAlign: "center", fontWeight: "700" }}
+            style={{
+              width: "70px",
+              textAlign: "center",
+              fontWeight: "700",
+            }}
             type="number"
             onChange={changeBpm}
             value={bpm}
@@ -113,14 +121,10 @@ const Player: React.FC = () => {
         />
       </div>
       <div>
-        {instrumentTracks.map((t) => (
-          <div key={t.id} style={{ display: "flex" }}>
-            <PlayerTrack key={t.id} prop={t} />
-            <div>
-              {t.scaleNotesInfo
-                ? `${t.scaleNotesInfo?.note} ${t.scaleNotesInfo?.scaleMode} (${t.scaleNotesInfo?.degrees.map((n) => n).join(" ")})`
-                : ""}
-            </div>
+        {[...instruments.values()].map((instr) => (
+          <div key={instr.id} style={{ display: "flex" }}>
+            <PlayerTrack key={instr.id} instrument={instr} />
+            <div></div>
           </div>
         ))}
       </div>

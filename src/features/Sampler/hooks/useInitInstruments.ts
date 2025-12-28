@@ -5,7 +5,6 @@ import {
   buildPatternBars,
 } from "../utils/buildPatternBars";
 import { useMusicStore } from "../../../store/musicStore";
-import { useInstrument } from "./useInstrument";
 import { MinorBossaNova } from "../Data/InstrumentPatterns/BossaNova";
 
 const useBpm = () => useMusicStore((state) => state.bpm);
@@ -14,10 +13,7 @@ const useAddInstrumentTrack = () =>
 const useInstrumentTracks = () =>
   useMusicStore((state) => state.instrumentTracks);
 
-export function useInitInstruments(): { isLoading: boolean } {
-  const drumPart = useInstrument("drums", "Drums");
-  const pianoPart = useInstrument("piano", "Piano High", 80, 30);
-  const pianoPart2 = useInstrument("piano", "Piano Low", 70, -30);
+export function useInitInstruments() {
   const bpm = useBpm();
   const instrumentTracks = useInstrumentTracks();
   const addInstrumentTrack = useAddInstrumentTrack();
@@ -56,14 +52,6 @@ export function useInitInstruments(): { isLoading: boolean } {
     [defaultDrumBars, bpm]
   );
 
-  const isLoading = useMemo(
-    () =>
-      drumPart.getIsLoading() &&
-      pianoPart.getIsLoading() &&
-      pianoPart2.getIsLoading(),
-    [drumPart, pianoPart, pianoPart2]
-  );
-
   useEffect(() => {
     if (instrumentTracks.length > 0) return;
     if (isInitializedRef.current) return;
@@ -71,28 +59,31 @@ export function useInitInstruments(): { isLoading: boolean } {
     isInitializedRef.current = true;
 
     addInstrumentTrack({
-      instrument: drumPart,
+      instrumentName: "Drums",
+      defaultPan: 0,
+      defaultVolume: 100,
       track: drumSequence,
       bars: defaultDrumBars,
       instrumentType: "drums",
     });
     addInstrumentTrack({
-      instrument: pianoPart,
+      instrumentName: "Piano High",
+      defaultPan: 30,
+      defaultVolume: 80,
       track: pianoSequence,
       bars: defaultPianoBars,
       instrumentType: "piano",
     });
     addInstrumentTrack({
-      instrument: pianoPart2,
+      instrumentName: "Piano Low",
+      defaultPan: -30,
+      defaultVolume: 70,
       track: lowpianoSequence,
       bars: defaultLowPianoBars,
       instrumentType: "piano",
     });
   }, [
     addInstrumentTrack,
-    drumPart,
-    pianoPart,
-    pianoPart2,
     instrumentTracks,
     drumSequence,
     pianoSequence,
@@ -101,8 +92,4 @@ export function useInitInstruments(): { isLoading: boolean } {
     lowpianoSequence,
     defaultLowPianoBars,
   ]);
-
-  return {
-    isLoading,
-  };
 }

@@ -1,14 +1,12 @@
 import React, { useState } from "react";
-import type { InstrumentTrack } from "../../../../interfaces/TrackPart";
 import styles from "./PlayerTrack.module.css";
 import ToggleIconButton from "../../../../shared/components/buttons/ToggleIconButton/ToggleIconButton";
 import CollapsibleContainer from "../../../../shared/components/CollapsibleContainer/CollapsibleContainer";
+import type { Instrument } from "../../../../interfaces/Instrument";
 
-const PlayerTrack: React.FC<{ prop: InstrumentTrack }> = ({ prop }) => {
-  const defaultVolume = prop.instrument.getVolume
-    ? prop.instrument.getVolume()
-    : 100;
-  const defaultPan = prop.instrument.getPan ? prop.instrument.getPan() : 0;
+const PlayerTrack: React.FC<{ instrument: Instrument }> = ({ instrument }) => {
+  const defaultVolume = instrument.getVolume ?? 100;
+  const defaultPan = instrument.getPan ?? 0;
   const [volume, setVolume] = useState<number>(defaultVolume);
   const [pan, setPan] = useState<number>(defaultPan);
   const [isDetailOpen, setIsDetailOpen] = useState<boolean>(false);
@@ -16,7 +14,7 @@ const PlayerTrack: React.FC<{ prop: InstrumentTrack }> = ({ prop }) => {
   const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = +e.currentTarget.value;
     setVolume(newValue);
-    prop.instrument.setVolume(newValue);
+    instrument.setVolume(newValue);
   };
 
   const handlePanDoubleClick = () => {
@@ -30,7 +28,7 @@ const PlayerTrack: React.FC<{ prop: InstrumentTrack }> = ({ prop }) => {
 
   const changePanValue = (newValue: number) => {
     setPan(newValue);
-    prop.instrument.setPan(newValue);
+    instrument.setPan(newValue);
   };
 
   const handleVolumeInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -38,7 +36,7 @@ const PlayerTrack: React.FC<{ prop: InstrumentTrack }> = ({ prop }) => {
     if (isNaN(newValue)) newValue = 50;
     newValue = Math.min(100, Math.max(0, newValue));
     setVolume(newValue);
-    prop.instrument.setVolume(newValue);
+    instrument.setVolume(newValue);
   };
 
   const handlePanInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -46,7 +44,7 @@ const PlayerTrack: React.FC<{ prop: InstrumentTrack }> = ({ prop }) => {
     if (isNaN(newValue)) newValue = 0;
     newValue = Math.min(100, Math.max(-100, newValue));
     setPan(newValue);
-    prop.instrument.setPan(newValue);
+    instrument.setPan(newValue);
   };
 
   const handleToggleIconButtonClick = () => {
@@ -62,9 +60,7 @@ const PlayerTrack: React.FC<{ prop: InstrumentTrack }> = ({ prop }) => {
       <div>
         <ToggleIconButton onChange={handleToggleIconButtonClick} />
       </div>
-      <div className={styles.trackName}>
-        {prop.instrument.getInstrumentName()}
-      </div>
+      <div className={styles.trackName}>{instrument.getName()}</div>
       <CollapsibleContainer isOpen={isDetailOpen}>
         <div className={styles.controlGroup}>
           <div className={styles.controlLabel}>

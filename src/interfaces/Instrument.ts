@@ -1,12 +1,14 @@
 import type { PartResult } from "../features/Sampler/services/partBuilderService";
 
 export interface Instrument {
-  playPart: (partResult: PartResult | undefined, isLoop?: boolean) => void;
-  getIsLoading: () => boolean;
+  id: string;
+  getName: () => string;
+  setName: (newValue: string) => void;
   getVolume: () => number;
+  setVolume: (newValue: number) => void;
   getPan: () => number;
-  setVolume: (value: number) => void;
-  setPan: (value: number) => void;
-  setInstrumentName: (newName: string) => void;
-  getInstrumentName: () => string;
+  setPan: (newValue: number) => void;
+  playPart: (partResult: PartResult | undefined, isLoop?: boolean) => void;
+  stopAll: () => void;
+  dispose: () => void;
 }

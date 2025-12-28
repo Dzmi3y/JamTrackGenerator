@@ -1,19 +1,6 @@
-import React, { createContext, useContext, type ReactNode } from "react";
-import { preloaderManager } from "../Utility/PreloaderManager";
-
-interface PreloaderContextType {
-  showPreloader: () => void;
-  hidePreloader: () => void;
-  removePreloader: () => void;
-  setPreloaderText: (text: string) => void;
-  clearPreloaderText: () => void;
-
-  isPreloaderVisible: boolean;
-}
-
-const PreloaderContext = createContext<PreloaderContextType | undefined>(
-  undefined
-);
+import React, {type ReactNode } from "react";
+import { preloaderManager } from "../../Utility/PreloaderManager";
+import { PreloaderContext } from "./PreloaderContext";
 
 export const PreloaderProvider: React.FC<{ children: ReactNode }> = ({
   children,
@@ -54,12 +41,4 @@ export const PreloaderProvider: React.FC<{ children: ReactNode }> = ({
       {children}
     </PreloaderContext.Provider>
   );
-};
-
-export const usePreloader = (): PreloaderContextType => {
-  const context = useContext(PreloaderContext);
-  if (context === undefined) {
-    throw new Error("usePreloader must be used within a PreloaderProvider");
-  }
-  return context;
 };
