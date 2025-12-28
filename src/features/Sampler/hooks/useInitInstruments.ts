@@ -74,21 +74,18 @@ export function useInitInstruments(): { isLoading: boolean } {
       instrument: drumPart,
       track: drumSequence,
       bars: defaultDrumBars,
-      scaleNotesInfo: undefined,
       instrumentType: "drums",
     });
     addInstrumentTrack({
       instrument: pianoPart,
       track: pianoSequence,
       bars: defaultPianoBars,
-      scaleNotesInfo: undefined, // TODO: REMOVE
       instrumentType: "piano",
     });
     addInstrumentTrack({
       instrument: pianoPart2,
       track: lowpianoSequence,
       bars: defaultLowPianoBars,
-      scaleNotesInfo: undefined,
       instrumentType: "piano",
     });
   }, [
