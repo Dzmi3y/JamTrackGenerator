@@ -6,6 +6,7 @@ import {
 } from "../utils/buildPatternBars";
 import { useMusicStore } from "../../../store/musicStore";
 import { MinorBossaNova } from "../Data/InstrumentPatterns/BossaNova";
+import type { PartGenerationParams } from "../types/partGenerationParams";
 
 const useBpm = () => useMusicStore((state) => state.bpm);
 const useAddInstrumentTrack = () =>
@@ -21,13 +22,25 @@ export function useInitInstruments() {
 
   const defaultPianoBars = useMemo(() => {
     const bossaPattern = MinorBossaNova();
-    const barsForA = bossaPattern.PianoHigh("A");
+    const part: PartGenerationParams = {
+      isMinor: true,
+      rootNote: "A",
+      chordPhrasesTypes: ["simple", "calm", "tense"],
+      rhythmPhrasesTypes: ["simple", "simple", "simple"],
+    };
+    const barsForA = bossaPattern.PianoHighResult(part);
     return buildPatternBars(barsForA);
   }, []);
 
   const defaultLowPianoBars = useMemo(() => {
     const bossaPattern = MinorBossaNova();
-    const barsForA = bossaPattern.PianoLow("A");
+    const part: PartGenerationParams = {
+      isMinor: true,
+      rootNote: "A",
+      chordPhrasesTypes: ["simple", "calm", "tense"],
+      rhythmPhrasesTypes: ["simple", "simple", "simple"],
+    };
+    const barsForA = bossaPattern.PianoLowResult(part);
     return buildPatternBars(barsForA);
   }, []);
 

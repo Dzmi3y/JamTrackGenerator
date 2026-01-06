@@ -1,5 +1,5 @@
 import * as Tone from "tone";
-import type { SampleInstrument } from "../types/SampleInstrument";
+import type { SampleInstrument } from "../types/sampleInstrument";
 import { samplerService } from "../services/samplerService";
 import type { PartResult } from "../services/partBuilderService";
 import type { Instrument } from "../../../interfaces/Instrument";
@@ -30,7 +30,6 @@ export function createSamplerInstrument(
   const samplerGain: Tone.Gain = new Tone.Gain(gain);
   const samplerPanner: Tone.Panner = new Tone.Panner(pan);
   let activeParts: Tone.Part[] = [];
-
   const loadSampler = async () => {
     if (isLoadingHandler) isLoadingHandler(true, id, name);
 

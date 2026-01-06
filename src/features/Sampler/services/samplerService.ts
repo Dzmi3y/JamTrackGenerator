@@ -1,5 +1,5 @@
 import * as Tone from "tone";
-import type { SampleInstrument } from "../types/SampleInstrument";
+import type { SampleInstrument } from "../types/sampleInstrument";
 import { instrumentConfigs } from "../Data/instrumentConfigs";
 
 export const samplerService = {

@@ -1,5 +1,5 @@
 import type { PatternBar } from "../types/patternBlock";
-import type { SampleInstrument } from "../types/SampleInstrument";
+import type { SampleInstrument } from "../types/sampleInstrument";
 import { getPartInfo } from "../utils/patternUtils";
 import { partBuilderService, type PartResult } from "./partBuilderService";
 
