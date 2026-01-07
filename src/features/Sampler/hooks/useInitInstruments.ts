@@ -25,8 +25,8 @@ export function useInitInstruments() {
     const part: PartGenerationParams = {
       isMinor: true,
       rootNote: "A",
-      chordPhrasesTypes: ["simple", "calm", "tense"],
-      rhythmPhrasesTypes: ["simple", "simple", "simple"],
+      chordPhrasesTypes: ["simple", "calm", "bright"],
+      rhythmPhrasesTypes: ["complex", "complex", "complex"],
     };
     const barsForA = bossaPattern.PianoHighResult(part);
     return buildPatternBars(barsForA);
@@ -37,8 +37,8 @@ export function useInitInstruments() {
     const part: PartGenerationParams = {
       isMinor: true,
       rootNote: "A",
-      chordPhrasesTypes: ["simple", "calm", "tense"],
-      rhythmPhrasesTypes: ["simple", "simple", "simple"],
+      chordPhrasesTypes: ["simple", "calm", "bright"],
+      rhythmPhrasesTypes: ["moderate", "moderate", "moderate"],
     };
     const barsForA = bossaPattern.PianoLowResult(part);
     return buildPatternBars(barsForA);

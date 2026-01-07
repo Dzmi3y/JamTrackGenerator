@@ -14,3 +14,11 @@ export const getRhythmName = (
 ): string => {
   return `${[rType]}_v${version}_n${noteCount}`;
 };
+
+
+
+export type RhythmInfo = {
+  rType: RhythmType,
+  version: number,
+  noteCount: number
+}

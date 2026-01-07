@@ -5,55 +5,56 @@ import {
 } from "../../../utils/progressionUtil";
 import { getDrumBarInfoById } from "../../patterns/drumPatterns";
 import { getInterval } from "../../../utils/chordUtils";
-import { Rhythms } from "../../Rhythms";
 import type { PartGenerationParams } from "../../../types/partGenerationParams";
-import { pianoHigh } from "./PianoHigh";
+import { pianoHigh, pianoHighRhythm } from "./PianoHigh";
 import { PianoLow } from "./PianoLow";
+import type { RhythmInfo } from "../../Rhythms";
 
 export const MinorBossaNova = () => {
+
+  const defaultRhythm: RhythmInfo = {
+    noteCount: 1,
+    rType: "basic",
+    version: 1,
+  };
+
   const PianoHighResult = (part: PartGenerationParams): Array<BarInfo> => {
+    const degres = part.chordPhrasesTypes
+      .map((t) => pianoHigh.get(t) ?? [undefined, undefined, undefined])
+      .flat();
+
+    const rhythms = part.rhythmPhrasesTypes
+      .map((t) => pianoHighRhythm.get(t))
+      .flat();
+
     const bars: ChordBar[] = getChordBarsFromProgression({
       note: part.rootNote,
       scaleMode: "dorian",
-      degrees: [
-        ...(pianoHigh.get(part.chordPhrasesTypes[0]) ?? [
-          undefined,
-          undefined,
-          undefined,
-        ]),
-        ...(pianoHigh.get(part.chordPhrasesTypes[1]) ?? [
-          undefined,
-          undefined,
-          undefined,
-        ]),
-        ...(pianoHigh.get(part.chordPhrasesTypes[2]) ?? [
-          undefined,
-          undefined,
-          undefined,
-        ]),
-      ],
+      degrees: degres,
     });
 
     return bars
       .map((b, i) => {
-        if (i % 2 === 0) {
+        const currentRhythm = rhythms[i];
+        if (currentRhythm) {
           return {
             note: b,
-            rhythm: Rhythms.bossanova,
-            version: 1,
-            noteCount: 4,
+            rhythm: currentRhythm.rType,
+            version: currentRhythm.version,
+            noteCount: currentRhythm.noteCount,
           };
         } else {
           return {
             note: b,
-            rhythm: Rhythms.bossanova,
-            version: 2,
-            noteCount: 3,
+            rhythm: defaultRhythm.rType,
+            version: defaultRhythm.version,
+            noteCount: defaultRhythm.noteCount,
           };
         }
       })
       .flat();
   };
+
 
   const PianoLowResult = (part: PartGenerationParams): Array<BarInfo> => {
     const partInfo = [
@@ -62,15 +63,28 @@ export const MinorBossaNova = () => {
       ...(PianoLow.get(part.chordPhrasesTypes[2]) ?? []),
     ];
 
+     const rhythms = part.rhythmPhrasesTypes
+      .map((t) => pianoHighRhythm.get(t))
+      .flat();
+
     return partInfo.flatMap((v, i) => {
-      return {
-        note: [
-          getInterval(part.rootNote, v.value, v.interval, v.octave, "dorian"),
-        ],
-        rhythm: i % 2 === 0 ? "bossanova" : "basic",
-        version: i % 2 === 0 ? 4 : 1,
-        noteCount: i % 2 === 0 ? 2 : 1,
-      };
+      const currentRhythm = rhythms[i];
+      const note = getInterval(part.rootNote, v.value, v.interval, v.octave, "dorian");
+      if (currentRhythm) {
+          return {
+            note: [note],
+            rhythm: currentRhythm.rType,
+            version: currentRhythm.version,
+            noteCount: currentRhythm.noteCount,
+          };
+        } else {
+          return {
+            note: [note],
+            rhythm: defaultRhythm.rType,
+            version: defaultRhythm.version,
+            noteCount: defaultRhythm.noteCount,
+          };
+        }
     });
   };
 
