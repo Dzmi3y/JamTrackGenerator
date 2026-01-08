@@ -13,66 +13,72 @@ export const PianoLow: Map<
       { value: 4, octave: 2, interval: 8 },
       { value: 5, octave: 2, interval: 8 },
       { value: 1, octave: 2, interval: 8 },
+
+      { value: 2, octave: 2, interval: 8 },
+      { value: 5, octave: 2, interval: 8 },
+      { value: 1, octave: 2, interval: 8 },
+      { value: 4, octave: 2, interval: 8 },
+
+      { value: 2, octave: 2, interval: 8 },
+      { value: 5, octave: 2, interval: 8 },
+      { value: 6, octave: 2, interval: 8 },
+      { value: 2, octave: 2, interval: 8 },
     ],
   ],
-
   [
-    "calm",
+    "moderate",
     [
-      { value: 1, octave: 2, interval: 8 },
+      { value: 6, octave: 2, interval: 8 },
       { value: 2, octave: 2, interval: 8 },
       { value: 4, octave: 2, interval: 8 },
       { value: 5, octave: 2, interval: 8 },
-    ],
-  ],
 
-  [
-    "tense",
-    [
       { value: 1, octave: 2, interval: 8 },
+      { value: 3, octave: 2, interval: 8 },
+      { value: 6, octave: 2, interval: 8 },
+      { value: 2, octave: 2, interval: 8 },
+
       { value: 4, octave: 2, interval: 8 },
-      { value: 5, octave: 2, interval: 8 },
-      { value: 1, octave: 2, interval: 8 },
+      { value: 7, octave: 2, interval: 8 },
+      { value: 3, octave: 2, interval: 8 },
+      { value: 6, octave: 2, interval: 8 },
     ],
   ],
-
-  [
-    "bright",
-    [
-      { value: 1, octave: 2, interval: 8 },
-      { value: 4, octave: 2, interval: 8 },
-      { value: 5, octave: 2, interval: 8 },
-      { value: 1, octave: 3, interval: 8 },
-    ],
-  ],
-
-  [
-    "dark",
-    [
-      { value: 1, octave: 2, interval: 8 },
-      { value: 4, octave: 2, interval: 8 },
-      { value: 5, octave: 2, interval: 8 },
-      { value: 1, octave: 2, interval: 8 },
-    ],
-  ],
-
   [
     "complex",
     [
+      { value: 3, octave: 2, interval: 8 },
+      { value: 6, octave: 2, interval: 8 },
+      { value: 2, octave: 2, interval: 8 },
+      { value: 5, octave: 2, interval: 8 },
+
       { value: 1, octave: 2, interval: 8 },
       { value: 4, octave: 2, interval: 8 },
+      { value: 7, octave: 2, interval: 8 },
+      { value: 3, octave: 2, interval: 8 },
+
+      { value: 6, octave: 2, interval: 8 },
+      { value: 2, octave: 2, interval: 8 },
       { value: 5, octave: 2, interval: 8 },
-      { value: 2, octave: 3, interval: 8 },
+      { value: 1, octave: 2, interval: 8 },
     ],
   ],
 ]);
 
-
-
 export const pianoLowRhythm: Map<RhythmTraitType, RhythmInfo[]> = new Map([
- [
+  [
     "simple",
     [
+      { rType: "basic", version: 1, noteCount: 1 },
+      { rType: "basic", version: 1, noteCount: 1 },
+      { rType: "basic", version: 1, noteCount: 1 },
+      { rType: "basic", version: 1, noteCount: 1 },
+
+      { rType: "basic", version: 1, noteCount: 1 },
+      { rType: "basic", version: 1, noteCount: 1 },
+      { rType: "basic", version: 1, noteCount: 1 },
+      { rType: "basic", version: 1, noteCount: 1 },
+
       { rType: "basic", version: 1, noteCount: 1 },
       { rType: "basic", version: 1, noteCount: 1 },
       { rType: "basic", version: 1, noteCount: 1 },
@@ -86,6 +92,16 @@ export const pianoLowRhythm: Map<RhythmTraitType, RhythmInfo[]> = new Map([
       { rType: "basic", version: 1, noteCount: 1 },
       { rType: "bossanova", version: 4, noteCount: 2 },
       { rType: "basic", version: 1, noteCount: 1 },
+
+      { rType: "bossanova", version: 4, noteCount: 2 },
+      { rType: "basic", version: 1, noteCount: 1 },
+      { rType: "bossanova", version: 4, noteCount: 2 },
+      { rType: "basic", version: 1, noteCount: 1 },
+
+      { rType: "bossanova", version: 4, noteCount: 2 },
+      { rType: "basic", version: 1, noteCount: 1 },
+      { rType: "bossanova", version: 4, noteCount: 2 },
+      { rType: "basic", version: 1, noteCount: 1 },
     ],
   ],
   [
@@ -95,6 +111,16 @@ export const pianoLowRhythm: Map<RhythmTraitType, RhythmInfo[]> = new Map([
       { rType: "bossanova", version: 3, noteCount: 4 },
       { rType: "bossanova", version: 3, noteCount: 4 },
       { rType: "bossanova", version: 3, noteCount: 4 },
+
+      { rType: "bossanova", version: 3, noteCount: 4 },
+      { rType: "bossanova", version: 3, noteCount: 4 },
+      { rType: "bossanova", version: 3, noteCount: 4 },
+      { rType: "bossanova", version: 3, noteCount: 4 },
+
+      { rType: "bossanova", version: 3, noteCount: 4 },
+      { rType: "bossanova", version: 3, noteCount: 4 },
+      { rType: "bossanova", version: 3, noteCount: 4 },
+      { rType: "bossanova", version: 3, noteCount: 4 },
     ],
   ],
-])
+]);

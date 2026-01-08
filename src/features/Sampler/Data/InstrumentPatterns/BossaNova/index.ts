@@ -11,7 +11,6 @@ import { PianoLow } from "./PianoLow";
 import type { RhythmInfo } from "../../Rhythms";
 
 export const MinorBossaNova = () => {
-
   const defaultRhythm: RhythmInfo = {
     noteCount: 1,
     rType: "basic",
@@ -19,13 +18,8 @@ export const MinorBossaNova = () => {
   };
 
   const PianoHighResult = (part: PartGenerationParams): Array<BarInfo> => {
-    const degres = part.chordPhrasesTypes
-      .map((t) => pianoHigh.get(t) ?? [undefined, undefined, undefined])
-      .flat();
-
-    const rhythms = part.rhythmPhrasesTypes
-      .map((t) => pianoHighRhythm.get(t))
-      .flat();
+    const degres = pianoHigh.get(part.chordPhrasesType) ?? [];
+    const rhythms = pianoHighRhythm.get(part.rhythmPhrasesType) ?? [];
 
     const bars: ChordBar[] = getChordBarsFromProgression({
       note: part.rootNote,
@@ -55,36 +49,34 @@ export const MinorBossaNova = () => {
       .flat();
   };
 
-
   const PianoLowResult = (part: PartGenerationParams): Array<BarInfo> => {
-    const partInfo = [
-      ...(PianoLow.get(part.chordPhrasesTypes[0]) ?? []),
-      ...(PianoLow.get(part.chordPhrasesTypes[1]) ?? []),
-      ...(PianoLow.get(part.chordPhrasesTypes[2]) ?? []),
-    ];
-
-     const rhythms = part.rhythmPhrasesTypes
-      .map((t) => pianoHighRhythm.get(t))
-      .flat();
+    const partInfo = PianoLow.get(part.chordPhrasesType) ?? [];
+    const rhythms = pianoHighRhythm.get(part.rhythmPhrasesType) ?? [];
 
     return partInfo.flatMap((v, i) => {
       const currentRhythm = rhythms[i];
-      const note = getInterval(part.rootNote, v.value, v.interval, v.octave, "dorian");
+      const note = getInterval(
+        part.rootNote,
+        v.value,
+        v.interval,
+        v.octave,
+        "dorian"
+      );
       if (currentRhythm) {
-          return {
-            note: [note],
-            rhythm: currentRhythm.rType,
-            version: currentRhythm.version,
-            noteCount: currentRhythm.noteCount,
-          };
-        } else {
-          return {
-            note: [note],
-            rhythm: defaultRhythm.rType,
-            version: defaultRhythm.version,
-            noteCount: defaultRhythm.noteCount,
-          };
-        }
+        return {
+          note: [note],
+          rhythm: currentRhythm.rType,
+          version: currentRhythm.version,
+          noteCount: currentRhythm.noteCount,
+        };
+      } else {
+        return {
+          note: [note],
+          rhythm: defaultRhythm.rType,
+          version: defaultRhythm.version,
+          noteCount: defaultRhythm.noteCount,
+        };
+      }
     });
   };
 

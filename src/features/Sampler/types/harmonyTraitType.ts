@@ -1,10 +1,7 @@
 export const HARMONY_TRAITS = {
-  CALM: "calm",
-  TENSE: "tense",
-  BRIGHT: "bright", 
-  DARK: "dark",
-  COMPLEX: "complex",
   SIMPLE: "simple",
+  MODERATE: "moderate",
+  COMPLEX: "complex",
 } as const;
 
 export type HarmonyTraitType = (typeof HARMONY_TRAITS)[keyof typeof HARMONY_TRAITS];
