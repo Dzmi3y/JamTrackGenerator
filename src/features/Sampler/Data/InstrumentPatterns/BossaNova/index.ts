@@ -3,12 +3,13 @@ import {
   getChordBarsFromProgression,
   type ChordBar,
 } from "../../../utils/progressionUtil";
-import { getDrumBarInfoById } from "../../patterns/drumPatterns";
 import { getInterval } from "../../../utils/chordUtils";
 import type { PartGenerationParams } from "../../../types/partGenerationParams";
 import { pianoHigh, pianoHighRhythm } from "./PianoHigh";
 import { PianoLow } from "./PianoLow";
 import type { RhythmInfo } from "../../Rhythms";
+import type { RhythmTraitType } from "../../../types/rhythmTraitType";
+import { drums } from "./Drums";
 
 export const MinorBossaNova = () => {
   const defaultRhythm: RhythmInfo = {
@@ -80,15 +81,11 @@ export const MinorBossaNova = () => {
     });
   };
 
-  const Drums = (): Array<BarInfo[] | null> => {
-    const BARS_COUNT = 12;
-    const evenBar = getDrumBarInfoById("Bossanova_part1");
-    const oddBar = getDrumBarInfoById("Bossanova_part2");
-
-    return Array.from({ length: BARS_COUNT }, (_, i) =>
-      i % 2 === 0 ? evenBar : oddBar
-    );
+  const DrumsResult = (
+    rhythmPhraseType: RhythmTraitType
+  ): Array<BarInfo[] | null> => {
+    return drums.get(rhythmPhraseType) ?? [];
   };
 
-  return { PianoHighResult, Drums, PianoLowResult };
+  return { PianoHighResult, DrumsResult, PianoLowResult };
 };

@@ -10,9 +10,9 @@ export const PianoLow: Map<
     "simple",
     [
       { value: 1, octave: 2, interval: 8 },
-      { value: 4, octave: 2, interval: 8 },
-      { value: 5, octave: 2, interval: 8 },
       { value: 1, octave: 2, interval: 8 },
+      { value: 1, octave: 2, interval: 8 },
+      { value: 5, octave: 2, interval: 8 },
 
       { value: 2, octave: 2, interval: 8 },
       { value: 5, octave: 2, interval: 8 },

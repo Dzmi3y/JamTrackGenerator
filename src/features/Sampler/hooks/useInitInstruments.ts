@@ -26,7 +26,7 @@ export function useInitInstruments() {
       isMinor: true,
       rootNote: "A",
       chordPhrasesType: "simple",
-      rhythmPhrasesType: "moderate",
+      rhythmPhrasesType: "complex",
     };
     const barsForA = bossaPattern.PianoHighResult(part);
     return buildPatternBars(barsForA);
@@ -38,7 +38,7 @@ export function useInitInstruments() {
       isMinor: true,
       rootNote: "A",
       chordPhrasesType: "simple",
-      rhythmPhrasesType: "moderate",
+      rhythmPhrasesType: "complex",
     };
     const barsForA = bossaPattern.PianoLowResult(part);
     return buildPatternBars(barsForA);
@@ -56,7 +56,7 @@ export function useInitInstruments() {
 
   const defaultDrumBars = useMemo(() => {
     const bossaPattern = MinorBossaNova();
-    const bars = bossaPattern.Drums();
+    const bars = bossaPattern.DrumsResult("complex");
     return buildDrumPatternBars(bars);
   }, []);
 

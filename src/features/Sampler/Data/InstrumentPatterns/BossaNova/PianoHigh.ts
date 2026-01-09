@@ -9,9 +9,9 @@ export const pianoHigh: Map<HarmonyTraitType, (Degree[] | undefined)[]> =
       "simple",
       [
         [{ value: 1, octave: 4, concreteChordType: "m7" }],
-        [{ value: 4, octave: 4, concreteChordType: "6th" }],
+        [{ value: 1, octave: 4, concreteChordType: "m7" }],
+        [{ value: 1, octave: 4, concreteChordType: "m7" }],
         [{ value: 5, octave: 4, concreteChordType: "7th" }],
-        [{ value: 1, octave: 5, concreteChordType: "6th" }],
 
         [{ value: 2, octave: 4, concreteChordType: "m7" }],
         [{ value: 5, octave: 4, concreteChordType: "7th" }],
