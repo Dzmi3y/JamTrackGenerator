@@ -19,18 +19,18 @@ export const pianoHigh: (Degree[] | undefined)[] = [
 ];
 
 export const pianoHighRhythm: Array<RhythmInfo | null> = [
-  { rType: "basic", version: 1, noteCount: 1 },
-  { rType: "basic", version: 1, noteCount: 1 },
-  { rType: "basic", version: 1, noteCount: 1 },
-  { rType: "basic", version: 1, noteCount: 1 },
+  { rType: "basic", version: 1, noteCount: 2 },
+  { rType: "basic", version: 1, noteCount: 2 },
+  { rType: "basic", version: 1, noteCount: 2 },
+  { rType: "basic", version: 1, noteCount: 2 },
 
-  { rType: "basic", version: 1, noteCount: 1 },
-  { rType: "basic", version: 1, noteCount: 1 },
-  { rType: "basic", version: 1, noteCount: 1 },
-  { rType: "basic", version: 1, noteCount: 1 },
+  { rType: "basic", version: 1, noteCount: 2 },
+  { rType: "basic", version: 1, noteCount: 2 },
+  { rType: "basic", version: 1, noteCount: 2 },
+  { rType: "basic", version: 1, noteCount: 2 },
 
-  { rType: "basic", version: 1, noteCount: 1 },
-  { rType: "basic", version: 1, noteCount: 1 },
-  { rType: "basic", version: 1, noteCount: 1 },
-  { rType: "basic", version: 1, noteCount: 1 },
+  { rType: "basic", version: 1, noteCount: 2 },
+  { rType: "basic", version: 1, noteCount: 2 },
+  { rType: "basic", version: 1, noteCount: 2 },
+  { rType: "basic", version: 1, noteCount: 2 },
 ];

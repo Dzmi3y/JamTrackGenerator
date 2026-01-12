@@ -12,6 +12,8 @@ export const DrumRhythmIds = {
   Grove_Basic_Rock_Beat: "Grove Basic Rock Beat",
   Bossanova_part1: "Bossanova_part1",
   Bossanova_part2: "Bossanova_part2",
+  Basic_Blues_Beat: "Basic_Blues_Beat",
+  Grove_Basic_Blues_Beat: "Grove_Basic_Blues_Beat",
 } as const;
 
 export type DrumRhythmId = keyof typeof DrumRhythmIds;
@@ -111,6 +113,58 @@ export const drumRhythmsMap = new Map<DrumRhythmId, DrumRhythm>([
           rhythm: Rhythms.bossanova,
           version: 2,
           noteCount: 3,
+        },
+        {
+          note: [drumMap.hihat],
+          rhythm: Rhythms.basic,
+          version: 1,
+          noteCount: 8,
+        },
+      ],
+    },
+  ],
+  [
+    "Basic_Blues_Beat",
+    {
+      id: "Basic_Blues_Beat",
+      patterns: [
+        {
+          note: [drumMap.kick],
+          rhythm: Rhythms.basic,
+          version: 1,
+          noteCount: 1,
+        },
+        {
+          note: [drumMap.snare],
+          rhythm: Rhythms.backbeat,
+          version: 1,
+          noteCount: 1,
+        },
+        {
+          note: [drumMap.hihat],
+          rhythm: Rhythms.basic,
+          version: 1,
+          noteCount: 8,
+        },
+      ],
+    },
+  ],
+  [
+    "Grove_Basic_Blues_Beat",
+    {
+      id: "Grove_Basic_Blues_Beat",
+      patterns: [
+        {
+          note: [drumMap.kick],
+          rhythm: Rhythms.groove,
+          version: 2,
+          noteCount: 2,
+        },
+        {
+          note: [drumMap.snare],
+          rhythm: Rhythms.backbeat,
+          version: 1,
+          noteCount: 1,
         },
         {
           note: [drumMap.hihat],

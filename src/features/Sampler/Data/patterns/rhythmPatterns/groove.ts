@@ -2,4 +2,5 @@ import type { RhythmPattern } from "../../../types/rhythmPattern";
 
 export const grooveMap = new Map<string, RhythmPattern>([
   ["groove_v1_n2", { pattern: "x____x__" }],
+  ["groove_v2_n2", { pattern: "x_____x_" }],
 ]);

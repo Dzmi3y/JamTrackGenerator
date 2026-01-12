@@ -19,17 +19,17 @@ export const PianoLow: { value: number; octave: number; interval: number }[] = [
 
 export const pianoLowRhythm: Array<RhythmInfo | null> = [
   { rType: "basic", version: 1, noteCount: 1 },
+  null,
   { rType: "basic", version: 1, noteCount: 1 },
+  null,
+
   { rType: "basic", version: 1, noteCount: 1 },
+  null,
   { rType: "basic", version: 1, noteCount: 1 },
+  null,
 
   { rType: "basic", version: 1, noteCount: 1 },
   { rType: "basic", version: 1, noteCount: 1 },
   { rType: "basic", version: 1, noteCount: 1 },
-  { rType: "basic", version: 1, noteCount: 1 },
-
-  { rType: "basic", version: 1, noteCount: 1 },
-  { rType: "basic", version: 1, noteCount: 1 },
-  { rType: "basic", version: 1, noteCount: 1 },
-  { rType: "basic", version: 1, noteCount: 1 },
+  null,
 ];

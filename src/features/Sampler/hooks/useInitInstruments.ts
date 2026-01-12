@@ -7,7 +7,7 @@ import {
 import { useMusicStore } from "../../../store/musicStore";
 // import { MinorBossaNova } from "../Data/InstrumentPatterns/BossaNova";
 import type { PartGenerationParams } from "../types/partGenerationParams";
-import { MinorRock } from "../Data/InstrumentPatterns/Rock";
+import { InstrumentPatterns } from "../Data/InstrumentPatterns/intex";
 
 const useBpm = () => useMusicStore((state) => state.bpm);
 const useAddInstrumentTrack = () =>
@@ -21,25 +21,27 @@ export function useInitInstruments() {
   const addInstrumentTrack = useAddInstrumentTrack();
   const isInitializedRef = useRef<boolean>(false);
 
-  const defaultPianoBars = useMemo(() => {
-    const bossaPattern = MinorRock();
-    const part: PartGenerationParams = {
-      isMinor: true,
-      rootNote: "A",
-    };
-    const barsForA = bossaPattern.PianoHighResult(part);
-    return buildPatternBars(barsForA);
+  const pattern = useMemo(() => {
+    return InstrumentPatterns("Blues");
   }, []);
 
-  const defaultLowPianoBars = useMemo(() => {
-    const bossaPattern = MinorRock();
+  const defaultPianoBars = useMemo(() => {
     const part: PartGenerationParams = {
       isMinor: true,
       rootNote: "A",
     };
-    const barsForA = bossaPattern.PianoLowResult(part);
+    const barsForA = pattern.PianoHigh(part);
     return buildPatternBars(barsForA);
-  }, []);
+  }, [pattern]);
+
+  const defaultLowPianoBars = useMemo(() => {
+    const part: PartGenerationParams = {
+      isMinor: true,
+      rootNote: "A",
+    };
+    const barsForA = pattern.PianoLow(part);
+    return buildPatternBars(barsForA);
+  }, [pattern]);
 
   const pianoSequence = useMemo(
     () => instrumentPartService.getPart("piano", defaultPianoBars, bpm),
@@ -52,10 +54,9 @@ export function useInitInstruments() {
   );
 
   const defaultDrumBars = useMemo(() => {
-    const bossaPattern = MinorRock();
-    const bars = bossaPattern.DrumsResult();
+    const bars = pattern.Drums();
     return buildDrumPatternBars(bars);
-  }, []);
+  }, [pattern]);
 
   const drumSequence = useMemo(
     () => instrumentPartService.getPart("drums", defaultDrumBars, bpm),

@@ -1,6 +1,6 @@
 import type { RhythmInfo } from "../../Rhythms";
 
-export const PianoLow: { value: number; octave: number; interval: number }[] = [
+export const pianoLow: { value: number; octave: number; interval: number }[] = [
   { value: 1, octave: 2, interval: 8 },
   { value: 1, octave: 2, interval: 8 },
   { value: 6, octave: 1, interval: 8 },
