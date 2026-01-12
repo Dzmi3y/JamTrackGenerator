@@ -5,8 +5,9 @@ import {
   buildPatternBars,
 } from "../utils/buildPatternBars";
 import { useMusicStore } from "../../../store/musicStore";
-import { MinorBossaNova } from "../Data/InstrumentPatterns/BossaNova";
+// import { MinorBossaNova } from "../Data/InstrumentPatterns/BossaNova";
 import type { PartGenerationParams } from "../types/partGenerationParams";
+import { MinorRock } from "../Data/InstrumentPatterns/Rock";
 
 const useBpm = () => useMusicStore((state) => state.bpm);
 const useAddInstrumentTrack = () =>
@@ -21,7 +22,7 @@ export function useInitInstruments() {
   const isInitializedRef = useRef<boolean>(false);
 
   const defaultPianoBars = useMemo(() => {
-    const bossaPattern = MinorBossaNova();
+    const bossaPattern = MinorRock();
     const part: PartGenerationParams = {
       isMinor: true,
       rootNote: "A",
@@ -31,7 +32,7 @@ export function useInitInstruments() {
   }, []);
 
   const defaultLowPianoBars = useMemo(() => {
-    const bossaPattern = MinorBossaNova();
+    const bossaPattern = MinorRock();
     const part: PartGenerationParams = {
       isMinor: true,
       rootNote: "A",
@@ -51,7 +52,7 @@ export function useInitInstruments() {
   );
 
   const defaultDrumBars = useMemo(() => {
-    const bossaPattern = MinorBossaNova();
+    const bossaPattern = MinorRock();
     const bars = bossaPattern.DrumsResult();
     return buildDrumPatternBars(bars);
   }, []);
