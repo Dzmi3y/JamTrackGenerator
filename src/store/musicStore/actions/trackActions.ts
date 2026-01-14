@@ -2,6 +2,7 @@ import type { MusicStore, SetState } from "../types";
 import type { PatternBar } from "../../../features/Sampler/types/patternBlock";
 import { instrumentPartService } from "../../../features/Sampler/services/instrumentPartService";
 import type { ScaleNotesInfo } from "../../../features/Sampler/types/scaleNotesInfo";
+import type { InstrumentTrackNames } from "../../../interfaces/InstrumentTrack";
 
 export const createTrackActions = (
   set: SetState
@@ -15,15 +16,15 @@ export const createTrackActions = (
   | "clearInstrumentTracks"
 > => ({
   updateInstrumentTrackBars: (
-    id: string,
+    instrumentName: InstrumentTrackNames,
     newBars: PatternBar[],
     scaleNotesInfo?: ScaleNotesInfo
   ) => {
     set((state) => {
-      if (!id) return state;
+      if (!instrumentName) return state;
 
       const instrumentTracks = state.instrumentTracks.map((it) => {
-        if (it.id !== id) return it;
+        if (it.instrumentName !== instrumentName) return it;
 
         return {
           ...it,
