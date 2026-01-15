@@ -19,3 +19,4 @@ export const Notes = {
 } as const;
 
 export type NoteType = keyof typeof Notes;
+export const NoteList = Object.keys(Notes) as NoteType[];

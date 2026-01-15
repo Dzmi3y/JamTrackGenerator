@@ -27,7 +27,6 @@ export function useInitInstruments() {
 
   const defaultPianoBars = useMemo(() => {
     const part: PartGenerationParams = {
-      isMinor: true,
       rootNote: "A",
     };
     const barsForA = pattern.PianoHigh(part);
@@ -36,7 +35,6 @@ export function useInitInstruments() {
 
   const defaultLowPianoBars = useMemo(() => {
     const part: PartGenerationParams = {
-      isMinor: true,
       rootNote: "A",
     };
     const barsForA = pattern.PianoLow(part);

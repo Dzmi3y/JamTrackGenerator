@@ -1,7 +1,7 @@
 import { usePlayer } from "./hooks/usePlayer";
 import { useMusicStore } from "../../store/musicStore";
 import { useInitInstruments } from "../Sampler/hooks/useInitInstruments";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PlayerScrollbar from "./components/PlayerScrollbar/PlayerScrollbar";
 import buttonStyles from "./PlayerButton.module.css";
 import playerStyles from "./Player.module.css";
@@ -12,18 +12,27 @@ import RepeatIcon from "/src/assets/images/player/repeat-icon.png";
 import StopIcon from "/src/assets/images/player/stop-icon.png";
 import PlayerTrack from "./components/PlayerTrack/PlayerTrack";
 import { useInstruments } from "./hooks/useInstruments";
+import { NoteList, type NoteType } from "../Sampler/Data/Notes";
+import {
+  MusicalStyleList,
+  type MusicalStyleType,
+} from "../Sampler/Data/InstrumentPatterns/MusicalStyleType";
+import { useChangeTrack } from "../Sampler/hooks/useChangeTrack";
 
 const useBpm = () => useMusicStore((state) => state.bpm);
 const useSetBpm = () => useMusicStore((state) => state.setBpm);
 // const useInstrumentTracks = () =>
 //   useMusicStore((state) => state.instrumentTracks);
 
-const Player: React.FC = () => {
+const Player = () => {
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [isLooping, setIsLooping] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const instruments = useInstruments(setIsLoading);
 
+  const [rootNote, setRootNote] = useState<NoteType>("A");
+  const [musicalStyle, setMusicalStyle] = useState<MusicalStyleType>("Blues");
+  const instruments = useInstruments(setIsLoading);
+  const changeTrack = useChangeTrack();
   const bpm = useBpm();
   const setBpm = useSetBpm();
   useInitInstruments();
@@ -54,6 +63,20 @@ const Player: React.FC = () => {
       setBpm(value);
     }
   };
+
+  const onChangeNote = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const newNote = e.currentTarget.value as NoteType;
+    setRootNote(newNote);
+  };
+
+  const onChangeStyle = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const newStyle = e.currentTarget.value as MusicalStyleType;
+    setMusicalStyle(newStyle);
+  };
+
+  useEffect(() => {
+    changeTrack(rootNote, musicalStyle);
+  }, [musicalStyle, rootNote, changeTrack]);
 
   return (
     <div>
@@ -121,6 +144,35 @@ const Player: React.FC = () => {
         />
       </div>
       <div>
+        <label htmlFor="notes">Note</label>
+        <select
+          name="notes"
+          id="notes"
+          defaultValue={"A"}
+          onChange={onChangeNote}
+        >
+          {NoteList.map((n) => (
+            <option key={n} value={n}>
+              {n}
+            </option>
+          ))}
+        </select>
+
+        <label htmlFor="styles">Styles</label>
+        <select
+          name="styles"
+          id="styles"
+          defaultValue={"Blues"}
+          onChange={onChangeStyle}
+        >
+          {MusicalStyleList.map((s) => (
+            <option key={s} value={s}>
+              {s}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div>
         {[...instruments.values()].map((instr) => (
           <div key={instr.id} style={{ display: "flex" }}>
             <PlayerTrack key={instr.id} instrument={instr} />
@@ -131,5 +183,4 @@ const Player: React.FC = () => {
     </div>
   );
 };
-
 export default Player;

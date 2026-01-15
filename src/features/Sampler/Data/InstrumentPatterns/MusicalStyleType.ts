@@ -5,3 +5,4 @@ export const MusicalStyles = {
 } as const;
 
 export type MusicalStyleType = keyof typeof MusicalStyles;
+export const MusicalStyleList = Object.keys(MusicalStyles) as MusicalStyleType[];
