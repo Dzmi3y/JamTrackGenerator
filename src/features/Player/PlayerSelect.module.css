@@ -1,0 +1,127 @@
+.select {
+  width: 100%;
+  padding: 12px;
+  background: var(--color-surface);
+  border: 2px solid var(--color-secondary);
+  border-radius: 8px;
+  color: var(--color-text);
+  font-family: var(--font-family-base);
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.select:hover {
+  border-color: var(--color-accent);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.select:focus {
+  outline: none;
+  border-color: var(--color-pastel-mint);
+  transform: scale(1.02);
+}
+
+/* Контейнер для опций (для кастомного селекта) */
+.options-container {
+  position: absolute;
+  width: 100%;
+  background: var(--color-surface);
+  border: 2px solid var(--color-secondary);
+  border-radius: 8px;
+  margin-top: 5px;
+  overflow: hidden;
+  z-index: 100;
+}
+
+/* Анимация появления опций */
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+    max-height: 0;
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    max-height: 300px;
+  }
+}
+
+/* Анимация скрытия опций */
+@keyframes slideUp {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+    max-height: 300px;
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-10px);
+    max-height: 0;
+  }
+}
+
+.options-container.show {
+  animation: slideDown 0.3s ease forwards;
+}
+
+.options-container.hide {
+  animation: slideUp 0.3s ease forwards;
+}
+
+.option {
+  padding: 10px 12px;
+  background: var(--color-surface);
+  color: var(--color-text);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.option:last-child {
+  border-bottom: none;
+}
+
+.option:hover {
+  background: var(--color-accent);
+  padding-left: 20px;
+}
+
+.option.selected {
+  background: var(--color-pastel-teal);
+  color: var(--color-background);
+  font-weight: bold;
+  animation: pulse 0.5s ease;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+  100% { transform: scale(1); }
+}
+
+/* Для нативного селекта */
+select {
+  width: 100%;
+  padding: 12px;
+  background: var(--color-surface);
+  border: 2px solid var(--color-secondary);
+  border-radius: 8px;
+  color: var(--color-text);
+  font-family: var(--font-family-base);
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+select:hover {
+  border-color: var(--color-accent);
+  transform: translateY(-2px);
+}
+
+select:focus {
+  outline: none;
+  border-color: var(--color-pastel-mint);
+}

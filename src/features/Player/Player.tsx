@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import PlayerScrollbar from "./components/PlayerScrollbar/PlayerScrollbar";
 import buttonStyles from "./PlayerButton.module.css";
 import playerStyles from "./Player.module.css";
+import selectStyles from "./PlayerSelect.module.css";
 import playerInputStyles from "./PlayerInput.module.css";
 import PlayIcon from "/src/assets/images/player/play-icon.png";
 import PauseIcon from "/src/assets/images/player/pause-icon.png";
@@ -143,30 +144,31 @@ const Player = () => {
           changePosition={scrollbarHandleChangePosition}
         />
       </div>
-      <div>
+      <div className={playerStyles.changeTrackContainer}>
         <label htmlFor="notes">Note</label>
         <select
           name="notes"
           id="notes"
           defaultValue={"A"}
+          className={selectStyles.select}
           onChange={onChangeNote}
         >
           {NoteList.map((n) => (
-            <option key={n} value={n}>
+            <option className={selectStyles.option} key={n} value={n}>
               {n}
             </option>
           ))}
         </select>
 
         <label htmlFor="styles">Styles</label>
-        <select
+        <select className={selectStyles.select}
           name="styles"
           id="styles"
           defaultValue={"Blues"}
           onChange={onChangeStyle}
         >
           {MusicalStyleList.map((s) => (
-            <option key={s} value={s}>
+            <option className={selectStyles.option} key={s} value={s}>
               {s}
             </option>
           ))}
